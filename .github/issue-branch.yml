@@ -2,8 +2,6 @@ branchName: '${issue.number}'
 branches:
   - label: '🐞 Bug Fix'
     prefix: bug/
-  - label: '📱 Client'
-    prefix: client/
   - label: '🌎 Deploy'
     prefix: deploy/
   - label: '📜 Document'
@@ -12,8 +10,6 @@ branches:
     prefix: feat/
   - label: '🔨Refactoring'
     prefix: refactoring/
-  - label: '🖥️ Server'
-    prefix: server/
   - label: '✅ Test'
     prefix: test/
     
