@@ -3,9 +3,9 @@ name: client-deploy-action
 on:
   push:
     branches:
-      - feat/123
-    # paths:
-    #   - 'client/**'
+      - develop
+    paths:
+      - 'client/**'
 
 jobs:
   build:
