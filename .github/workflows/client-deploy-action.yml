@@ -3,7 +3,9 @@ name: client-deploy-action
 on:
   push:
     branches:
-      - deploy-test
+      - feat/123
+    paths:
+      - 'client/**'
 
 jobs:
   build:
@@ -16,7 +18,7 @@ jobs:
         with:
           node-version: 16.x
 
-      - name: Cache node modules  # node modules 캐싱
+      - name: Cache node modules # node modules 캐싱
         uses: actions/cache@v1
         with:
           path: node_modules
@@ -34,14 +36,15 @@ jobs:
       - name: Build
         run: yarn build
         env:
-          CI: "" # CI 생략
+          CI: '' # CI 생략
 
-      - name: Deploy 
+      - name: Deploy
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
-          aws s3 cp \
+          aws s3 sync \
             --recursive \
+            --delete \
             --region ap-northeast-2 \
             build s3://seektam-deploy
