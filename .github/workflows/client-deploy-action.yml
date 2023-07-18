@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - feat/123
-    paths:
-      - 'client/**'
+    # paths:
+    #   - 'client/**'
 
 jobs:
   build:
