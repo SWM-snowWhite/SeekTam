@@ -1,18 +1,22 @@
 import React from 'react'
-import ReactDOM from 'react-dom/client'
+import ReactDOM from 'react-dom'
 import "./tailwind.css";
 import App from './App'
 import { BrowserRouter, Route, RouterProvider, Routes, createBrowserRouter } from 'react-router-dom'
 import Keyword from './pages/Keyword'
 import Barcode from './pages/Barcode'
+import NotFound from './pages/NotFound';
 
-const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
-root.render(
+const rootElement = document.getElementById('root');
+ReactDOM.render(
 	<React.StrictMode>
 		<BrowserRouter>
 			<Routes>
-				<Route path='/' element={<App />} />
+				<Route path="/" element={<App />} />
+				<Route path="/keyword" element={<Keyword />} />
+				<Route path="/barcode" element={<Barcode />} />
+				{/* <Route path="*" element={<NotFound />} /> */}
 			</Routes>
-		</BrowserRouter>
-	</React.StrictMode>,
+    	</BrowserRouter>
+	</React.StrictMode>,rootElement
 )

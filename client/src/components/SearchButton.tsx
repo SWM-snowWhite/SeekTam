@@ -11,11 +11,13 @@ type SearchButtonProps = {
 
 export default function SearchButton(props: SearchButtonProps): JSX.Element {
 	return (
-		<div>
+		<div className="flex items-center justify-center w-full p-5">
 			<Link to={props.type === 'barcode' ? '/barcode' : '/keyword'}>
-				<button className='absolute bg-main'>
-					{props.type === 'barcode' ? <BiBarcode size={50} /> : <AiOutlineSearch size={50} />}
-					<span className=''>{props.title}</span>
+				<button className='flex items-center border-solid rounded-2xl justify-left w-320 h-65 border-main border-1'>
+					{props.type === 'barcode' 
+					? <BiBarcode className="m-30 text-main" size={50} /> 
+					: <AiOutlineSearch className="m-30 text-main" size={50} />}
+					<span className='m-30 text-main text-24 bold'>{props.title}</span>
 				</button>
 			</Link>
 		</div>

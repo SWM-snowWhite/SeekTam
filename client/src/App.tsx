@@ -1,11 +1,9 @@
 import React from 'react'
 import "./tailwind.css";
 import SearchButton from './components/SearchButton'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import Keyword from './pages/Keyword'
-import Barcode from './pages/Barcode'
 
 function App() {
+	const logo = "/logo.png"
 	const iconsInfo = [
 		{
 			type: 'keyword',
@@ -18,18 +16,19 @@ function App() {
 	]
 
 	return (
-		<div>
+		<div className='flex-row h-full border-solid border-1 w-500 border-main'>
 			{/* <Routes> */}
-        <text className="text-center w-1 text-white">알고싶은 성분을 검색어 입력 또는 바코드 촬영을 눌러 탐색 해 보세요!</text>
+			<div className="flex justify-center w-full bg-black">
+				<img src={logo} className="w-320"/>
+			</div>
+			<div className="w-320 flex bg-[#F9F9F9] justify-center mx-auto my-10 p-10 rounded-lg">
+				<span className="font-bold text-14">알고싶은 성분을 [키워드 검색] <br/>또는 [바코드 검색]을 눌러 탐색 해 보세요!</span>
+			</div>
 			{iconsInfo.map(
 				icon => (
-					// <Route path={`/${icon.type}`} element={icon.type === "keyword" ? <Keyword/> : <Barcode/>}>
-					<SearchButton type={icon.type} title={icon.title} />
-				),
-				// </Route>
-			)}
-			{/* </Routes> */}
-		</div>
+						<SearchButton type={icon.type} title={icon.title} />
+				))}
+				</div>
 	)
 }
 
