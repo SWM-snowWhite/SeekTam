@@ -6,7 +6,6 @@ build/
 !**/src/test/**/build/
 
 ### STS ###
-application.yml
 .apt_generated
 .classpath
 .factorypath
@@ -17,6 +16,9 @@ application.yml
 bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
+
+### ignore config ###
+*.yml
 
 ### IntelliJ IDEA ###
 .idea
