@@ -18,7 +18,7 @@ public class FoodDTO {
     private List<String> materialNameList;
     private Map<String,Integer> ewgTotalScoreList;
     private List<Map<String, Object>> ewgScoreList;
-//    private Map<String,Integer> iarcTotalScore;
+    //    private Map<String,Integer> iarcTotalScore;
 //    private Map<String,Integer> iarcScoreList;
 //    private List<String> allergyNameList;
     private Map<String,Integer> fodmapMaxScoreList;
