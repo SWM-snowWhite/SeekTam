@@ -8,7 +8,13 @@ module.exports = {
   theme: {
     colors: {
       main: '#E95368',
-      sub: '#FFA7B3'
+      sub: '#FFA7B3',
+      good: '#1ABB6E',
+      low_danger: '#FFA34F',
+      high_danger: '#FF6E4F',
+      unknown: '#96918C',
+      info: '#F0F0F0',
+      info_s: '#767676'
     },
     extend: {
       borderWidth: px0_10,
