@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { Route } from 'react-router-dom'
+import { Route, useNavigate } from 'react-router-dom'
 import KeywordSearchBar from '../components/KeywordSearchBar'
 import axios from 'axios';
 import KeywordComponent from '../components/KeywordComponent';
+import NavigatorExceptSearch from '../components/NavigatorExceptSearch';
 
 export default function Keyword() {
 	const [relatedFoodList, setRelatedFoodList] = useState([]);
 	const [keyword, setKeyword] = useState('');
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		// 키워드가 초기화 될 경우 푸드 리스트도 초기화
@@ -41,11 +43,31 @@ export default function Keyword() {
             console.log('err: ', err);
         })
     }
+
+	const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
+		if (e.key === 'Enter') {
+			if (relatedFoodList.length === 0) {
+				return
+			}
+			goToFirstKeyword()
+		}
+	}
+
+	const handleSearchClick = () => {
+		if (relatedFoodList.length === 0) {
+			return
+		}
+		goToFirstKeyword()
+	}
+
+	const goToFirstKeyword = () => {
+        navigate(`/foods/detail/${relatedFoodList[0]}`)
+    }
 	
 	return (
 		<div className='flex-row align-center w-390 border-1 border-main'>
-			<h1 className='font-bold text-center text-24 text-main'>키워드 검색 페이지</h1>
-			<KeywordSearchBar searchKeyword={searchKeyword} keyword={keyword} changeKeyword={changeKeyword} deleteKeyword={deleteKeyword}/>
+			<NavigatorExceptSearch/>
+			<KeywordSearchBar searchKeyword={searchKeyword} keyword={keyword} changeKeyword={changeKeyword} deleteKeyword={deleteKeyword} handleKeyUp={handleKeyUp} handleSearchClick={handleSearchClick}/>
 			{relatedFoodList.length > 0 
             ? <KeywordComponent relatedFoodList={relatedFoodList} keyword={keyword}/> 
             : <></>}
