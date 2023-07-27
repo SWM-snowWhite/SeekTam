@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @Getter
-public class FoodMain {
+public class FoodMainEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long foodId;
@@ -19,7 +19,7 @@ public class FoodMain {
     private Integer haccpStatus;
 
     @OneToMany(mappedBy = "foodId")
-    private List<FoodMaterial> foodMaterial;
+    private List<FoodMaterialEntity> foodMaterialEntity;
 
 
 }

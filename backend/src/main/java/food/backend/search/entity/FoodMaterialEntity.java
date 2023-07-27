@@ -6,21 +6,21 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-public class FoodMaterial {
+public class FoodMaterialEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long foodMaterialId;
 
     @ManyToOne
     @JoinColumn(name = "food_id")
-    private FoodMain foodId;
+    private FoodMainEntity foodId;
 
     @ManyToOne
     @JoinColumn(name = "material_id")
-    private Material material;
+    private MaterialEntity materialEntity;
 
     public Long getMaterialId() {
-        return material.getMaterialId();
+        return materialEntity.getMaterialId();
     }
 
 }
