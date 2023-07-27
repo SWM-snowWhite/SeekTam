@@ -17,9 +17,6 @@ bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
 
-### ignore config ###
-*.yml
-
 ### IntelliJ IDEA ###
 .idea
 *.iws
