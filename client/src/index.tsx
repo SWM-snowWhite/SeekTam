@@ -7,6 +7,7 @@ import Keyword from './pages/Keyword'
 import Barcode from './pages/Barcode'
 import FoodsDetail from './pages/FoodsDetail';
 import NotFound from './pages/NotFound';
+import InfoModal from './components/modal/InfoModal';
 
 const rootElement = document.getElementById('root');
 ReactDOM.render(

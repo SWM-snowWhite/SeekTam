@@ -1,10 +1,13 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
-import DetailViewBtn from '../components/DetailViewBtn';
+import DetailViewOpenBtn from '../components/btn/DetailViewOpenBtn';
 import EwgDetail from '../components/detail/EwgDetail';
 import CancerDetail from '../components/detail/CancerDetail';
 import AllergyDetail from '../components//detail/AllergyDetail';
 import FodmapDetail from '../components/detail/FodmapDetail';
+import DetailViewCloseBtn from '../components/btn/DetailViewCloseBtn';
+import Navigator from '../components/Navigator';
+import InfoModal from '../components/modal/InfoModal';
 
 export interface ViewOptions {
     ewg: string,
@@ -47,9 +50,11 @@ export default function FoodsDetail() {
             .catch(err => console)
     }
     return (
-        <div className='flex-row items-center justify-center h-full m-auto w-390 border-1 border-main'>
+        <div className='flex-row items-center justify-center m-auto w-390 border-1 border-main'>
+            <InfoModal/>
+            <Navigator />
             <div className="flex-row items-center justify-center m-auto w-150 ">
-                <img src="/logo.png" className='shadow-md w-150 h-150'></img>
+                <img src="https://thumbnail9.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/62299451926905-56e4e59b-41cb-4c98-92b2-25c0ea876873.png" className='shadow-md w-150 h-150'></img>
                 <p className='mt-10 text-center text-[#767676] text-12 font-bold'>농심</p>
                 <p className='m-5 font-semibold text-center text-15'>진라면</p>
             </div>
@@ -82,19 +87,36 @@ export default function FoodsDetail() {
                         </div>
                     </div>
                     {viewOptions.ewg ? <EwgDetail /> : <></>}
-                    <DetailViewBtn toggleViewOptions={toggleViewOptions} view={"ewg"}/>
+                    {
+                        viewOptions.ewg 
+                        ? <DetailViewCloseBtn toggleViewOptions={toggleViewOptions} view={"ewg"} />
+                        : <DetailViewOpenBtn toggleViewOptions={toggleViewOptions} view={"ewg"} />
+                    }
                 </div>
                 <div className='flex-row m-auto mb-10 w-300 bg-[#F0F0F0] rounded-[10px]'>
                     <p className='mt-5 ml-16 font-bold text-14'>발암물질</p>
                     <p className='mt-10 ml-16 text-12'>발암 물질이 포함되지 않았습니다.</p>
-                    {viewOptions.cancer ? <CancerDetail /> : <></>}
-                    <DetailViewBtn toggleViewOptions={toggleViewOptions} view={"cancer"}/>
+                    {
+                        viewOptions.cancer ? <CancerDetail /> : <></>
+                    }
+                    {
+                        viewOptions.cancer 
+                        ? <DetailViewCloseBtn toggleViewOptions={toggleViewOptions} view={"cancer"} />
+                        : <DetailViewOpenBtn toggleViewOptions={toggleViewOptions} view={"cancer"} />
+                    }
                 </div>
                 <div className='flex-row m-auto mb-10 w-300 bg-[#F0F0F0] rounded-[10px]'>
                     <p className='mt-5 ml-16 font-bold text-14'>알레르기 유발 성분</p>
                     <p className='mt-10 ml-16 bg-[#F0F0F0] border-none text-12 focus:outline-none'>밀, 대두, 계란, 쇠고기, 돼지고기, 닭고기, 조개류(굴, 홍합 포함) 함유</p>
-                    {viewOptions.allergy ? <AllergyDetail /> : <></>}
-                    <DetailViewBtn toggleViewOptions={toggleViewOptions} view={"allergy"}/>
+                    {
+                        viewOptions.allergy ? <AllergyDetail /> : <></>
+                    }
+                    {
+                        viewOptions.allergy 
+                        ? <DetailViewCloseBtn toggleViewOptions={toggleViewOptions} view={"allergy"} />
+                        : <DetailViewOpenBtn toggleViewOptions={toggleViewOptions} view={"allergy"} />
+                        
+                    }
                 </div>
                 <div className='flex-row m-auto mb-10 w-300 bg-[#F0F0F0] rounded-[10px]'>
                     <p className='mt-5 ml-16 font-bold text-14'>포드맵 유의 성분</p>
@@ -141,8 +163,15 @@ export default function FoodsDetail() {
                         </div>
                     </div>
                     <span className='font-bold text-10 text-[#767676] flex justify-center'>각 항목별 가장 많은 함유 등급이 표시 됩니다.</span>
-                    {viewOptions.fodmap ? <FodmapDetail /> : <></>}
-                    <DetailViewBtn toggleViewOptions={toggleViewOptions} view={"fodmap"} />
+                    {
+                        viewOptions.fodmap ? <FodmapDetail /> : <></>
+                    }
+                    {
+                        viewOptions.fodmap 
+                        ? <DetailViewCloseBtn toggleViewOptions={toggleViewOptions} view={"fodmap"} />
+                        : <DetailViewOpenBtn toggleViewOptions={toggleViewOptions} view={"fodmap"} />
+                    }
+                    
                 </div>
                 <div className='flex-row m-auto mb-10 w-300 bg-[#F0F0F0] rounded-[10px]'>
                     <p className='mt-5 ml-16 font-bold text-14'>원재료명</p>

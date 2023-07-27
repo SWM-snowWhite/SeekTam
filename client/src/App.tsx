@@ -1,6 +1,6 @@
 import React from 'react'
 import "./tailwind.css";
-import SearchButton from './components/SearchButton'
+import SearchButton from './components/btn/SearchBtn'
 
 function App() {
 	const logo = "/logo.png"
