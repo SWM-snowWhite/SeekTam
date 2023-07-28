@@ -11,13 +11,13 @@ export default function Navigator() {
     }
 
     return (
-        <div className='flex justify-between mt-15 mx-20'>
+        <div className='flex justify-between mx-20 mt-15'>
             <button>
                 <FiArrowLeftCircle size={26} className='text-main' onClick={handleClick}/>
             </button>
             <Link to='/'>
                 <button>
-                    <span className='text-main text-20 font-bold'>식탐</span>
+                    <span className='font-bold text-main text-20'>식탐</span>
                 </button>
             </Link>
             <Link to='/keyword'>
