@@ -29,6 +29,9 @@ dependencies {
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation("org.springframework.boot:spring-boot-starter-jdbc:2.7.14")
+	testImplementation 'org.assertj:assertj-core:3.24.2'
+
 }
 
 tasks.named('test') {
