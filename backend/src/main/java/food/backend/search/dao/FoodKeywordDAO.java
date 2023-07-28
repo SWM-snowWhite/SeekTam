@@ -1,5 +1,4 @@
-package food.backend.search.repository;
-
+package food.backend.search.dao;
 
 import food.backend.search.dto.RelatedFoodDto;
 import org.springframework.jdbc.core.RowMapper;
@@ -12,11 +11,11 @@ import javax.sql.DataSource;
 import java.util.List;
 
 @Repository
-public class FoodRepository {
+public class FoodKeywordDAO {
 
     private NamedParameterJdbcTemplate jdbcTemplate;
 
-    public FoodRepository(DataSource dataSource) {
+    public FoodKeywordDAO(DataSource dataSource) {
         this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
