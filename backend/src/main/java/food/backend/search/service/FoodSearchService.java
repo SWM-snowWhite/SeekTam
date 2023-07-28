@@ -1,9 +1,11 @@
 package food.backend.search.service;
 
 import food.backend.search.dto.FoodDTO;
+import food.backend.search.dto.RelatedFoodDto;
 import food.backend.search.entity.FoodMain;
 import food.backend.search.entity.FoodMaterial;
 import food.backend.search.repository.FoodMainRepository;
+import food.backend.search.repository.FoodRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +16,7 @@ import java.util.*;
 public class FoodSearchService {
 
     private final FoodMainRepository foodMainRepository;
-
+    private final FoodRepository foodRepository;
     public FoodDTO getFoodInfoByFoodId(Long foodId) {
         FoodMain foodMain = foodMainRepository.findByFoodId(foodId);
 
@@ -94,5 +96,11 @@ public class FoodSearchService {
                 .fodmapMaxScoreList(fodmapMaxScores)
                 .build();
     }
+
+    public List<RelatedFoodDto> getFoodByNameContaining(String name) {
+        return foodRepository.getFoodByNameContaining(name);
+    }
+
+
 
 }
