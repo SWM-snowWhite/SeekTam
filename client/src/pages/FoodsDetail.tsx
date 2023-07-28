@@ -8,13 +8,14 @@ import FodmapDetail from '../components/detail/FodmapDetail';
 import DetailViewCloseBtn from '../components/btn/DetailViewCloseBtn';
 import Navigator from '../components/Navigator';
 import InfoModal from '../components/modal/InfoModal';
-
+import { AiOutlineInfoCircle } from 'react-icons/ai';
 export interface ViewOptions {
-    ewg: string,
-    cancer: string,
-    allergy: string,
-    fodmap: string
+    "ewg": boolean,
+    "cancer": boolean,
+    "allergy": boolean,
+    "fodmap": boolean
 }
+export type View = "ewg" | "cancer" | "allergy" | "fodmap" | null;
 
 export default function FoodsDetail() {
     const [viewOptions, setViewOptions] = React.useState({
@@ -24,9 +25,8 @@ export default function FoodsDetail() {
         fodmap: false
     });
 
-    useEffect(() => {
-        console.log(`viewOptions: ${JSON.stringify(viewOptions)}`)
-    }, [viewOptions])
+    const [currentView, setCurrentView] = React.useState<View>(null);
+
     useEffect(() => {
         const url: string = window.location.href;
         const foodName: string | undefined = url.split("/").pop();
@@ -35,23 +35,28 @@ export default function FoodsDetail() {
         getFoodDetail(decodedFoodName)
     },[])
 
-    const toggleViewOptions = (viewOption: keyof ViewOptions) => {
-        let toggle = viewOptions[viewOption]
-        const newViewOptions = {...viewOptions, [viewOption]: !toggle}
-        console.log(`toggle: ${toggle}, viewOption: ${viewOption}, newViewOptions: ${JSON.stringify(newViewOptions)}`)
-        setViewOptions(newViewOptions)
-    }
     
     const getFoodDetail = (foodName: string) => {
         axios.get(`http://localhost:3003/foods/detail/${foodName}`)
-            .then(response => {
-                console.log(response.data)
-            })
-            .catch(err => console)
+        .then(response => {
+            console.log(response.data)
+        })
+        .catch(err => console)
+    }
+    
+    const toggleViewOptions = (viewOption: keyof ViewOptions) => {
+        let toggle = viewOptions[viewOption]
+        const newViewOptions = {...viewOptions, [viewOption]: !toggle}
+        setViewOptions(newViewOptions)
+    }
+
+    const handleModalClick = (option: View) => {
+        setCurrentView(option);
     }
     return (
         <div className='flex-row items-center justify-center m-auto w-390 border-1 border-main'>
-            {/* <InfoModal/> */}
+            {!currentView ? <></> : <InfoModal handleModalClick={handleModalClick} currentView={currentView}/>}   
+
             <Navigator />
             <div className="flex-row items-center justify-center m-auto w-150 ">
                 <img src="https://thumbnail9.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/62299451926905-56e4e59b-41cb-4c98-92b2-25c0ea876873.png" className='shadow-md w-150 h-150'></img>
@@ -61,7 +66,12 @@ export default function FoodsDetail() {
             <div className='flex-row items-center justify-center '>
                 <h1 className='font-semibold ml-34 text-20'>성분 정보</h1>
                 <div className='flex-row m-auto mb-10 w-300 bg-[#F0F0F0] rounded-[10px]'>
-                    <p className='mt-5 ml-16 font-bold text-14'>EWG 등급</p>
+                    <div className='flex items-center'>
+                        <span className='mt-5 ml-16 font-bold text-14'>EWG 등급</span>
+                        <button>
+                            <AiOutlineInfoCircle onClick={() => handleModalClick("ewg")} size={16} className='ml-7 mt-7 text-modal'/>
+                        </button>
+                    </div>
                     <div className='m-auto mt-10 flex items-center justify-center w-260 bg-[white] rounded-s-md rounded-e-md'>
                         <div className='w-[10%] m-2 text-[white] text-center bg-good'>1</div>
                         <div className='w-[20%] m-2 text-[white] text-center bg-low_danger'>2</div>
@@ -94,7 +104,10 @@ export default function FoodsDetail() {
                     }
                 </div>
                 <div className='flex-row m-auto mb-10 w-300 bg-[#F0F0F0] rounded-[10px]'>
-                    <p className='mt-5 ml-16 font-bold text-14'>발암물질</p>
+                <div className='flex items-center'>
+                        <span className='mt-5 ml-16 font-bold text-14'>발암 물질</span>
+                        <AiOutlineInfoCircle onClick={() => handleModalClick("cancer")} size={16} className='mt-7 ml-7 text-modal'/>
+                    </div>
                     <p className='mt-10 ml-16 text-12'>발암 물질이 포함되지 않았습니다.</p>
                     {
                         viewOptions.cancer ? <CancerDetail /> : <></>
@@ -106,7 +119,10 @@ export default function FoodsDetail() {
                     }
                 </div>
                 <div className='flex-row m-auto mb-10 w-300 bg-[#F0F0F0] rounded-[10px]'>
-                    <p className='mt-5 ml-16 font-bold text-14'>알레르기 유발 성분</p>
+                <div className='flex items-center'>
+                        <span className='mt-5 ml-16 font-bold text-14'>알레르기 유발 성분</span>
+                        <AiOutlineInfoCircle onClick={() => handleModalClick("allergy")} size={16} className='mt-7 ml-7 text-modal'/>
+                    </div>
                     <p className='mt-10 ml-16 bg-[#F0F0F0] border-none text-12 focus:outline-none'>밀, 대두, 계란, 쇠고기, 돼지고기, 닭고기, 조개류(굴, 홍합 포함) 함유</p>
                     {
                         viewOptions.allergy ? <AllergyDetail /> : <></>
@@ -119,7 +135,10 @@ export default function FoodsDetail() {
                     }
                 </div>
                 <div className='flex-row m-auto mb-10 w-300 bg-[#F0F0F0] rounded-[10px]'>
-                    <p className='mt-5 ml-16 font-bold text-14'>포드맵 유의 성분</p>
+                <div className='flex items-center'>
+                        <span className='mt-5 ml-16 font-bold text-14'>포드맵 유의 성분</span>
+                        <AiOutlineInfoCircle onClick={() => handleModalClick("fodmap")} size={16} className='mt-7 ml-7 text-modal'/>
+                    </div>
                     <div>
                         <div className='flex justify-around m-auto mb-5 w-250'>
                             <div>
