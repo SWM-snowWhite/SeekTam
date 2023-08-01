@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -12,9 +13,9 @@ public class FoodDetailDAO {
 
     private final JdbcTemplate template;
 
-    public Map<String, Object> getFoodDataById(String foodId) {
+    public List<Map<String, Object>> getFoodDataById(Long foodId) {
         String sql = "SELECT * FROM food_main WHERE food_id = ?";
-        return template.queryForMap(sql, foodId);
+        return template.queryForList(sql, foodId);
     }
 
 }

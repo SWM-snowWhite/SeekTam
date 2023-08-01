@@ -21,7 +21,7 @@ public class FoodController {
     }
 
     @GetMapping("/detail")
-    public Map<String, Object> getFoodDetail(@RequestParam String foodId) {
+    public List<Map<String, Object>> getFoodDetail(@RequestParam Long foodId) {
         return foodSearchService.getFoodDetailById(foodId);
     }
 

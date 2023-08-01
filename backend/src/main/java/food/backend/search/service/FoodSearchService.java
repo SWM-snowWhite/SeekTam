@@ -19,7 +19,7 @@ public class FoodSearchService {
         return foodKeywordDAO.getFoodByNameContaining(name);
     }
 
-    public Map<String, Object> getFoodDetailById(String foodId) {
+    public List<Map<String, Object>> getFoodDetailById(Long foodId) {
         return foodDetailDAO.getFoodDataById(foodId);
     }
 
