@@ -1,0 +1,29 @@
+import React from 'react';
+import { SearchOptionObjectType, SearchTitleType } from '../pages/Keyword';
+
+export default function SearchOption(
+    {
+        optionKey,
+        searchOption, 
+        toggleOption,
+        handleChangeGram,
+        handleCondition
+    }: {
+        optionKey: SearchTitleType;
+        searchOption: SearchOptionObjectType;
+        toggleOption: (title: SearchTitleType) => void;
+        handleChangeGram: (title: SearchTitleType, event: React.ChangeEvent<HTMLInputElement>) => void;
+        handleCondition: (title: SearchTitleType) => void;
+    }
+    ): JSX.Element {
+
+    return (
+        <div className={`flex m-5 rounded-md text-12 p-3 text-[white] ${searchOption.view ? 'bg-info_s' : 'bg-info'}`}>
+            <button onClick={() => toggleOption(optionKey)} className={`${searchOption.view ? 'bg-main' : 'bg-sub'} rounded-lg w-55 m-3`}>{searchOption.title}</button>
+            <input value={!searchOption.gram ? "" : searchOption.gram} onChange={(e) => handleChangeGram(optionKey, e)} disabled={searchOption.view ? false : true} className='bg-info text-center m-3 p-5 text-info_s rounded-lg' placeholder='함량을 입력해주세요'></input>
+            <button onClick={() => handleCondition(optionKey)} className={`${searchOption.condition ? 'bg-main' : 'bg-sub'} rounded-lg p-7 m-5`}>이상</button>
+            <button onClick={() => handleCondition(optionKey)} className={`${!searchOption.condition ? 'bg-main' : 'bg-sub'} rounded-lg p-7 m-5`}>이하</button>
+        </div>
+    );
+}
+
