@@ -1,6 +1,6 @@
 import React from 'react'
 import "./tailwind.css";
-import SearchButton from './components/btn/SearchBtn'
+import SearchBtn from './components/btn/SearchBtn'
 
 function App() {
 	const logo = "/logo.png"
@@ -26,7 +26,7 @@ function App() {
 			</div>
 			{iconsInfo.map(
 				icon => (
-						<SearchButton type={icon.type} title={icon.title} />
+						<SearchBtn type={icon.type} title={icon.title} />
 				))}
 				</div>
 	)
