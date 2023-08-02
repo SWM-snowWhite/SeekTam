@@ -1,5 +1,6 @@
 package food.backend.search.controller;
 
+import food.backend.search.dto.FoodListDTO;
 import food.backend.search.dto.RelatedFoodDto;
 import food.backend.search.service.FoodSearchService;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,11 @@ public class FoodController {
     @GetMapping("/syllable")
     public List<RelatedFoodDto> searchAllRelatedFood(@RequestParam String name) {
         return foodSearchService.getFoodByNameContaining(name);
+    }
+
+    @GetMapping
+    public List<FoodListDTO> getFoodListByNameContaining(@RequestParam Map<String, String> params) {
+        return foodSearchService.getFoodListByNameContaining(params);
     }
 
     @GetMapping("/detail")

@@ -11,11 +11,11 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class FoodDetailDAO {
 
-    private final JdbcTemplate template;
+    private final JdbcTemplate jdbcTemplate;
 
     public List<Map<String, Object>> getFoodDataById(Long foodId) {
         String sql = "SELECT * FROM food_main WHERE food_id = ?";
-        return template.queryForList(sql, foodId);
+        return jdbcTemplate.queryForList(sql, foodId);
     }
 
 }
