@@ -3,12 +3,13 @@ import { Link } from 'react-router-dom';
 
 type KeywordComponentProps = {
     relatedFoodList: string[],
-    keyword: string
+    keyword: string,
+    search: (keyword?: string | undefined) => void
 };
 
 
 export default function KeywordComponent({
-    relatedFoodList, keyword
+    relatedFoodList, keyword, search
 }: KeywordComponentProps) {
     return (
         <div className='h-auto m-auto rounded-xl w-320 border-1 border-main'>
@@ -21,18 +22,18 @@ export default function KeywordComponent({
                     
                 if (keywordIdx === -1) {
                     return (
-                        <Link to={`/foods/detail/123`} key={index}>
-                            <div key={index}>
-                                <button>
+                        // <Link to={`/foods/detail/123`} key={index}>
+                            <div className='cursor-grab' onClick={() => search(food)} key={index}>
+                                <button >
                                     <span className='ml-5 text-main'>{food}</span>
                                 </button>
                             </div>
-                        </Link>
+                        // </Link>
                     )
                 } else {
                     return (
-                        <Link to={`/foods/detail/123`} key={index}>
-                            <div key={index} className='flex h-30 rounded-xl  hover:bg-[#f9e3e3]'>
+                        // <Link to={`/foods/detail/123`} key={index}>
+                            <div onClick={() => search(food)} key={index} className='flex h-30 rounded-xl cursor-pointer hover:bg-[#f9e3e3]'>
                                 <button>
                                         {
                                             prefix !== "" ? <span className="ml-5 text-[black]">{prefix}</span> : <></>
@@ -43,7 +44,7 @@ export default function KeywordComponent({
                                         }
                                 </button>
                             </div>
-                        </Link>
+                        // </Link>
                     )
                 }
             })}

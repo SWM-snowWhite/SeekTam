@@ -17,8 +17,8 @@ export default function SearchOptionBar(
 ) {
  
     return (
-        <div className=' border-dotted border-1 flex-row m-auto mt-10 border-main w-320'>
-            <span className='text-12 text-info_s m-10'>검색 옵션</span>
+        <div className='flex-row m-auto mt-10 border-dotted border-1 border-main w-320'>
+            {/* <p className='text-center text-12 text-info_s'>검색 옵션</p> */}
             {
             Object.keys(searchOptions).map((key: string) => {
                 return <

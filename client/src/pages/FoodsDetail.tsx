@@ -25,14 +25,11 @@ export default function FoodsDetail() {
     });
 
     useEffect(() => {
-        console.log(`viewOptions: ${JSON.stringify(viewOptions)}`)
-    }, [viewOptions])
-    useEffect(() => {
         const url: string = window.location.href;
-        const foodName: string | undefined = url.split("/").pop();
-        const decodedFoodName: string | undefined = decodeURIComponent(foodName || "");
+        const foodId: number = Number(url.split("/").pop());
+        console.log(`foodId: ${foodId}`)
 
-        getFoodDetail(decodedFoodName)
+        getFoodDetail(foodId)
     },[])
 
     const toggleViewOptions = (viewOption: keyof ViewOptions) => {
@@ -42,8 +39,8 @@ export default function FoodsDetail() {
         setViewOptions(newViewOptions)
     }
     
-    const getFoodDetail = (foodName: string) => {
-        axios.get(`http://localhost:3003/foods/detail/${foodName}`)
+    const getFoodDetail = (foodId: number) => {
+        axios.get(`http://localhost:3003/api/foods/detail?food_id=${foodId}`)
             .then(response => {
                 console.log(response.data)
             })

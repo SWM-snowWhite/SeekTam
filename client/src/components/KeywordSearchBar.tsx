@@ -9,14 +9,14 @@ export default function KeywordSearchBar({
     changeKeyword,
     deleteKeyword,
     handleKeyUp,
-    handleSearchClick
+    search
 }: {
     searchKeyword: (keyword: string) => void, 
     keyword: string,
     changeKeyword: (event: React.ChangeEvent<HTMLInputElement>) => void,
     deleteKeyword: () => void,
     handleKeyUp: (event: React.KeyboardEvent<HTMLInputElement>) => void,
-    handleSearchClick: () => void
+    search: () => void
 }) {
     useEffect(() => {
         searchKeyword(keyword)
@@ -31,7 +31,7 @@ export default function KeywordSearchBar({
                 </button>
                 : <></>
             }
-            <button onClick={handleSearchClick}>
+            <button onClick={() => search()}>
                 <PiMagnifyingGlass size={26} className='mr-10 text-main' />
             </button>
         </div>
