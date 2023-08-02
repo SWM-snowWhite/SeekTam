@@ -21,8 +21,8 @@ public class FoodController {
     }
 
     @GetMapping("/syllable")
-    public List<RelatedFoodDto> searchAllRelatedFood(@RequestParam String name) {
-        return foodSearchService.getFoodByNameContaining(name);
+    public List<String> searchAllRelatedFood(@RequestParam String keyword) {
+        return foodSearchService.getFoodByNameContaining(keyword);
     }
 
 }

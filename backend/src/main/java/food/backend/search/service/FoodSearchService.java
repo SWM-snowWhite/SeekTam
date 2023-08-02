@@ -20,8 +20,8 @@ public class FoodSearchService {
         return foodInfoDAO.getFoodById(foodId);
     }
 
-    public List<RelatedFoodDto> getFoodByNameContaining(String name) {
-        return foodKeywordDAO.getFoodByNameContaining(name);
+    public List<String> getFoodByNameContaining(String keyword) {
+        return foodKeywordDAO.getFoodByNameContaining(keyword);
     }
 
 
