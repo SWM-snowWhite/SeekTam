@@ -5,6 +5,7 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 .DS_Store
+application.yml
 
 ### STS ###
 .apt_generated
@@ -19,10 +20,11 @@ bin/
 !**/src/test/**/bin/
 
 ### ignore config ###
-#*.yml
+application.yml
 
 ### IntelliJ IDEA ###
 .idea
+*.yml
 *.iws
 *.iml
 *.ipr

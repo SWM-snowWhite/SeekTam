@@ -1,8 +1,9 @@
 package food.backend.search.service;
 
-import food.backend.search.dao.FoodInfoDAO;
+import food.backend.search.dao.FoodDetailDAO;
+import food.backend.search.dao.FoodListDAO;
+import food.backend.search.dto.FoodListDTO;
 import food.backend.search.dto.RelatedFoodDto;
-import food.backend.search.dto.FoodInfoDTO;
 import food.backend.search.dao.FoodKeywordDAO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,14 +15,20 @@ import java.util.*;
 public class FoodSearchService {
 
     private final FoodKeywordDAO foodKeywordDAO;
-    private final FoodInfoDAO foodInfoDAO;
+    private final FoodListDAO foodListDAO;
+    private final FoodDetailDAO foodDetailDAO;
 
-    public List<FoodInfoDTO> getFoodInfoById(Long foodId) {
-        return foodInfoDAO.getFoodById(foodId);
+    public List<String> getFoodByNameContaining(String keyword) {
+        return foodKeywordDAO.getFoodByNameContaining(keyword);
     }
 
-    public List<RelatedFoodDto> getFoodByNameContaining(String name) {
-        return foodKeywordDAO.getFoodByNameContaining(name);
+    public List<FoodListDTO> getFoodListByNameContaining(Map<String, String> params) {
+        return foodListDAO.getFoodListByNameContaining(params);
+
+    }
+
+    public List<Map<String, Object>> getFoodDetailById(Long foodId) {
+        return foodDetailDAO.getFoodDataById(foodId);
     }
 
 

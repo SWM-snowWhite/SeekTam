@@ -19,26 +19,30 @@ public class FoodKeywordDAO {
         this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
-    public List<RelatedFoodDto> getFoodByNameContaining(String name) {
+    public List<String> getFoodByNameContaining(String keyword) {
+
+        // ALTER TABLE food_test ADD FULLTEXT INDEX food_name (food_name) WITH PARSER ngram;
+        // ngram_token_size = 2
 
         final int LIMIT_NUM = 10;
 
-        String sql = "SELECT food_id, food_name FROM food_main WHERE food_name LIKE :name limit :LIMIT_NUM";
+        String sql = "SELECT food_name FROM food_test WHERE MATCH(food_name) AGAINST(:substring IN boolean MODE)" +
+                "limit :LIMIT_NUM;";
+
+        keyword = keyword.length() == 1 ? keyword + "*" : keyword;
 
         SqlParameterSource params = new MapSqlParameterSource()
-                .addValue("name", "%" + name + "%")
+                .addValue("substring", keyword)
                 .addValue("LIMIT_NUM", LIMIT_NUM);
 
         return jdbcTemplate.query(sql, params, foodRowMapper());
 
     }
 
-    private RowMapper<RelatedFoodDto> foodRowMapper() {
+    private RowMapper<String> foodRowMapper() {
         return (rs, rowNum) ->
-                RelatedFoodDto.builder()
-                        .foodId(rs.getInt("food_id"))
-                        .foodName(rs.getString("food_name"))
-                        .build();
+                        rs.getString("food_name");
+
 
     }
 

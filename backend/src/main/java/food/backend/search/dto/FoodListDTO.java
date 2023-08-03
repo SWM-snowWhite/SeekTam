@@ -5,9 +5,9 @@ import lombok.Builder;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 @Builder
-public class RelatedFoodDto {
+public class FoodListDTO {
 
+    private Long foodId;
     private String foodName;
-
+    private String companyName;
 }
-
