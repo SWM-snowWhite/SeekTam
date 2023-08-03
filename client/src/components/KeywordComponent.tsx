@@ -1,16 +1,23 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 type KeywordComponentProps = {
     relatedFoodList: string[],
     keyword: string,
+    focusedFoodIdx: number
     search: (keyword?: string | undefined) => void
 };
 
 
 export default function KeywordComponent({
-    relatedFoodList, keyword, search
+    relatedFoodList, keyword, search, focusedFoodIdx
 }: KeywordComponentProps) {
+    const divRef = useRef<HTMLDivElement>(null);
+
+    useLayoutEffect(() => {
+        console.log(`current, ${divRef}`)
+        if (divRef.current !== null) divRef.current.focus()
+    });
     return (
         <div className='h-auto m-auto rounded-xl w-320 border-1 border-main'>
             {
@@ -22,18 +29,15 @@ export default function KeywordComponent({
                     
                 if (keywordIdx === -1) {
                     return (
-                        // <Link to={`/foods/detail/123`} key={index}>
                             <div className='cursor-grab' onClick={() => search(food)} key={index}>
                                 <button >
                                     <span className='ml-5 text-main'>{food}</span>
                                 </button>
                             </div>
-                        // </Link>
                     )
                 } else {
                     return (
-                        // <Link to={`/foods/detail/123`} key={index}>
-                            <div onClick={() => search(food)} key={index} className='flex h-30 rounded-xl cursor-pointer hover:bg-[#f9e3e3]'>
+                            <div ref={divRef} onClick={() => search(food)} key={index} className='flex h-30 rounded-xl cursor-pointer hover:bg-[#f9e3e3]'>
                                 <button>
                                         {
                                             prefix !== "" ? <span className="ml-5 text-[black]">{prefix}</span> : <></>
@@ -44,7 +48,6 @@ export default function KeywordComponent({
                                         }
                                 </button>
                             </div>
-                        // </Link>
                     )
                 }
             })}

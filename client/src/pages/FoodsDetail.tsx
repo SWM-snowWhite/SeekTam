@@ -27,10 +27,17 @@ export default function FoodsDetail() {
         <div className='flex-row items-center justify-center m-auto w-390 border-1 border-main'>
             {/* <InfoModal/> */}
             <Navigator />
-            <div className="flex-row items-center justify-center m-auto w-150 ">
-                <img src="https://thumbnail9.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/62299451926905-56e4e59b-41cb-4c98-92b2-25c0ea876873.png" className='shadow-md w-150 h-150'></img>
-                <p className='mt-10 text-center text-[#767676] text-12 font-bold'>농심</p>
-                <p className='m-5 font-semibold text-center text-15'>진라면</p>
+            <div className="flex-row items-center justify-center m-auto w-250 ">
+                {/* <img src="https://thumbnail9.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/62299451926905-56e4e59b-41cb-4c98-92b2-25c0ea876873.png" className='shadow-md w-150 h-150'></img> */}
+                {foodInfo 
+                ? 
+                <div>
+                    <p className='mt-10 text-center text-[#767676] text-12 font-bold'>{foodInfo.companyNm}</p>
+                    <p className='w-auto m-5 font-semibold text-center text-15'>{foodInfo.foodNm}</p>
+                </div>
+                : <></>
+            }
+                
             </div>
             {
                 foodInfo 
@@ -38,10 +45,6 @@ export default function FoodsDetail() {
                 <FoodInfoComponent foodInfo={foodInfo}/>
                 : <></>
                 }
-            
-            
-            
-            
         </div>
     );
 }

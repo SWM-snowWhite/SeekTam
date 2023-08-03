@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Route, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import KeywordSearchBar from '../components/KeywordSearchBar'
 import axios from 'axios';
 import KeywordComponent from '../components/KeywordComponent';
@@ -63,14 +63,24 @@ export default function Keyword() {
 	const [keyword, setKeyword] = useState<string>('');
     const [optionView, setOptionView] = useState<Boolean>(false)
     const [foodList, setFoodList] = useState<FoodListType>([])
+    const [selectedKeyword, setSelectedKeyword] = useState("")
+    const [focusedFoodIdx, setFocusedFoodIdx] = useState<number>(-1)
+    const [isSearched, setIsSearched] = useState(false);
 	const navigate = useNavigate();
 
+    // 키워드가 초기화 될 경우 관련 검색어 초기화
 	useEffect(() => {
-		// 키워드가 초기화 될 경우 푸드 리스트도 초기화
 		if (keyword === "") {
 			setRelatedFoodList([])
 		}
 	}, [keyword])
+
+    // 푸드 리스트가 변경 시 관련 검색어, 키워드 초기화
+    useEffect(() => {
+			setRelatedFoodList([])
+            setKeyword("")
+	}, [foodList])
+
 	const changeKeyword = (e: React.ChangeEvent<HTMLInputElement>) => {
         setKeyword(e.target.value)
     }
@@ -91,7 +101,7 @@ export default function Keyword() {
 			// 테스트 코드 종료
 
 			// 실제 코드
-			// setRelatedFoodList(res.data.related_food_list) 
+			// setRelatedFoodList(res.data.related_food_list)
 
         })
         .catch((err) => {
@@ -101,10 +111,19 @@ export default function Keyword() {
 
 	const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		if (e.key === 'Enter') {
-			if (relatedFoodList.length === 0) {
-				return
-			}
+			if (relatedFoodList.length === 0) return
+            search();
+            return
 		}
+
+        if (e.key === 'ArrowUp') {
+            if (relatedFoodList.length === 0) return 
+            if (focusedFoodIdx < relatedFoodList.length - 1) setFocusedFoodIdx(focusedFoodIdx + 1)
+        }
+        if (e.key === 'ArrowDown') {
+            if (relatedFoodList.length === 0) return 
+            if (focusedFoodIdx > -1 || focusedFoodIdx < relatedFoodList.length - 1) setFocusedFoodIdx(focusedFoodIdx - 1)
+        }
 	}
 
 	const toggleOption = (title: SearchTitleType) => {
@@ -121,7 +140,9 @@ export default function Keyword() {
         setSearchOptions(newSearchOptions);
     }
 
-    
+    const handleSelectedFood = (foodName: string) => {
+        setSelectedKeyword(foodName)
+    }
     
     const changeGram = (title: SearchTitleType, gram: number) => {
         const newSearchOptions = {...searchOptions, [title]: {...searchOptions[title], gram}};
@@ -158,10 +179,12 @@ export default function Keyword() {
         const url = await getUrl(clicked)
         const foodName = clicked ? clicked : keyword
 
-        // console.log(`urL: ${url}, foodName: ${foodName}`)
+        setSelectedKeyword(foodName)
+        
         try {
             const response = await axios.get(url)
-            setFoodList(response.data.data)
+            setFoodList(response.data)
+            setIsSearched(true)
         } catch(e) {
             alert("검색 결과가 없습니다.")
             console.log(e)
@@ -199,9 +222,8 @@ export default function Keyword() {
 			<NavigatorExceptSearch/>
 			<KeywordSearchBar search={search} searchKeyword={searchKeyword} keyword={keyword} changeKeyword={changeKeyword} deleteKeyword={deleteKeyword} handleKeyUp={handleKeyUp}/>
 			{relatedFoodList.length > 0 
-            ? <KeywordComponent relatedFoodList={relatedFoodList} keyword={keyword} search={search}/> 
+            ? <KeywordComponent relatedFoodList={relatedFoodList} keyword={keyword} search={search} focusedFoodIdx={focusedFoodIdx}/> 
             : <></>}
-            
             {
                 !optionView 
                 ? <div onClick={handleOptionViewClick} className='flex items-center justify-center p-5 mt-10 rounded-lg h-30 ml-35 w-320 border-1 border-info text-12'>
@@ -225,7 +247,7 @@ export default function Keyword() {
                 />
                 : <></>
             }
-            <FoodList foodList={foodList}/>
+            <FoodList foodList={foodList} selectedKeyword={selectedKeyword} isSearched={isSearched}/>
 		</div>
 	)
 }

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { PiMagnifyingGlass } from 'react-icons/pi';
 import { GiCancel } from 'react-icons/gi';
-import { Link } from 'react-router-dom';
 
 export default function KeywordSearchBar({
     searchKeyword, 
