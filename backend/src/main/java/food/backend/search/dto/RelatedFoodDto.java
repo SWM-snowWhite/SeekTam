@@ -7,7 +7,6 @@ import lombok.Builder;
 @Builder
 public class RelatedFoodDto {
 
-    private int foodId;
     private String foodName;
 
 }

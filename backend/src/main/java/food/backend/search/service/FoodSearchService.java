@@ -18,8 +18,8 @@ public class FoodSearchService {
     private final FoodListDAO foodListDAO;
     private final FoodDetailDAO foodDetailDAO;
 
-    public List<RelatedFoodDto> getFoodByNameContaining(String name) {
-        return foodKeywordDAO.getFoodByNameContaining(name);
+    public List<String> getFoodByNameContaining(String keyword) {
+        return foodKeywordDAO.getFoodByNameContaining(keyword);
     }
 
     public List<FoodListDTO> getFoodListByNameContaining(Map<String, String> params) {
