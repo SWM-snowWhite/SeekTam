@@ -2,6 +2,7 @@ package food.backend.search.service;
 
 import food.backend.search.dao.FoodDetailDAO;
 import food.backend.search.dao.FoodListDAO;
+import food.backend.search.dto.FoodDetailDTO;
 import food.backend.search.dto.FoodListDTO;
 import food.backend.search.dto.RelatedFoodDto;
 import food.backend.search.dao.FoodKeywordDAO;
@@ -27,7 +28,7 @@ public class FoodSearchService {
 
     }
 
-    public List<Map<String, Object>> getFoodDetailById(Long foodId) {
+    public FoodDetailDTO getFoodDetailById(Long foodId) {
         return foodDetailDAO.getFoodDataById(foodId);
     }
 
