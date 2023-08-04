@@ -1,5 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
 
 type KeywordComponentProps = {
     relatedFoodList: string[],
@@ -8,36 +7,36 @@ type KeywordComponentProps = {
     search: (keyword?: string | undefined) => void
 };
 
+// type FoodListInfo = {
+//     foodName: string,
+//     foodId: number,
+//     companyNm: string
+// }
 
 export default function KeywordComponent({
     relatedFoodList, keyword, search, focusedFoodIdx
 }: KeywordComponentProps) {
-    const divRef = useRef<HTMLDivElement>(null);
 
-    useLayoutEffect(() => {
-        console.log(`current, ${divRef}`)
-        if (divRef.current !== null) divRef.current.focus()
-    });
     return (
         <div className='h-auto m-auto rounded-xl w-320 border-1 border-main'>
             {
-            relatedFoodList.map((food, index) => {
-                const keywordIdx = food.indexOf(keyword)
+            relatedFoodList.map((foodName: string, index: number) => {
+                const keywordIdx = foodName.indexOf(keyword)
                 const keywordLength = keyword.length
-                const prefix = food.slice(0, keywordIdx)
-                const postfix = food.slice(keywordIdx + keywordLength)
+                const prefix = foodName.slice(0, keywordIdx)
+                const postfix = foodName.slice(keywordIdx + keywordLength)
                     
                 if (keywordIdx === -1) {
                     return (
-                            <div className='cursor-grab' onClick={() => search(food)} key={index}>
+                            <div className='cursor-grab' onClick={() => search(foodName)} key={index}>
                                 <button >
-                                    <span className='ml-5 text-main'>{food}</span>
+                                    <span className='ml-5 text-main'>{foodName}</span>
                                 </button>
                             </div>
                     )
                 } else {
                     return (
-                            <div ref={divRef} onClick={() => search(food)} key={index} className='flex h-30 rounded-xl cursor-pointer hover:bg-[#f9e3e3]'>
+                            <div onClick={() => search(foodName)} key={index} className={`flex ${index === focusedFoodIdx ? 'bg-[#f9e3e3] ' : ''}h-30 rounded-xl cursor-pointer hover:bg-[#f9e3e3]`}>
                                 <button>
                                         {
                                             prefix !== "" ? <span className="ml-5 text-[black]">{prefix}</span> : <></>

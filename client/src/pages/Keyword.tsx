@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import KeywordSearchBar from '../components/KeywordSearchBar'
 import axios from 'axios';
 import KeywordComponent from '../components/KeywordComponent';
@@ -66,12 +65,12 @@ export default function Keyword() {
     const [selectedKeyword, setSelectedKeyword] = useState("")
     const [focusedFoodIdx, setFocusedFoodIdx] = useState<number>(-1)
     const [isSearched, setIsSearched] = useState(false);
-	const navigate = useNavigate();
 
     // 키워드가 초기화 될 경우 관련 검색어 초기화
 	useEffect(() => {
 		if (keyword === "") {
 			setRelatedFoodList([])
+            setFocusedFoodIdx(-1)
 		}
 	}, [keyword])
 
@@ -92,37 +91,35 @@ export default function Keyword() {
 	const searchKeyword = (keyword: string) => {
 		if (keyword === "") return
 		
-        axios.get(`http://localhost:3003/api/foods/search/${keyword}`)
+        axios.get(`http://localhost:8080/foods/search/syllable?keyword=${keyword}`)
         .then((res) => {
-			// 테스트 코드 시작
-			const randomNumber = Math.round((Math.random()) * 10)
-			const newSetList = res.data.related_food_list.filter((food: string, idx: number) => idx < randomNumber)
-            setRelatedFoodList(newSetList)
-			// 테스트 코드 종료
-
-			// 실제 코드
-			// setRelatedFoodList(res.data.related_food_list)
-
+            setRelatedFoodList(res.data)
         })
         .catch((err) => {
-            console.log('err: ', err);
+            alert("검색에 실패하였습니다.")
+            console.log("검색에 실패하였습니다.", err);
         })
     }
 
 	const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		if (e.key === 'Enter') {
 			if (relatedFoodList.length === 0) return
-            search();
+            if (focusedFoodIdx === -1) {
+                search();
+                return
+            }
+            search(relatedFoodList[focusedFoodIdx]) ;
             return
 		}
 
         if (e.key === 'ArrowUp') {
             if (relatedFoodList.length === 0) return 
-            if (focusedFoodIdx < relatedFoodList.length - 1) setFocusedFoodIdx(focusedFoodIdx + 1)
+            if (focusedFoodIdx > -1 && focusedFoodIdx < relatedFoodList.length) setFocusedFoodIdx(focusedFoodIdx - 1)
         }
-        if (e.key === 'ArrowDown') {
-            if (relatedFoodList.length === 0) return 
-            if (focusedFoodIdx > -1 || focusedFoodIdx < relatedFoodList.length - 1) setFocusedFoodIdx(focusedFoodIdx - 1)
+    if (e.key === 'ArrowDown') {
+        if (relatedFoodList.length === 0) return 
+        if (focusedFoodIdx < relatedFoodList.length - 1) setFocusedFoodIdx(focusedFoodIdx + 1)
+            
         }
 	}
 
@@ -140,9 +137,9 @@ export default function Keyword() {
         setSearchOptions(newSearchOptions);
     }
 
-    const handleSelectedFood = (foodName: string) => {
-        setSelectedKeyword(foodName)
-    }
+    // const handleSelectedFood = (foodName: string) => {
+    //     setSelectedKeyword(foodName)
+    // }
     
     const changeGram = (title: SearchTitleType, gram: number) => {
         const newSearchOptions = {...searchOptions, [title]: {...searchOptions[title], gram}};
@@ -154,7 +151,7 @@ export default function Keyword() {
             changeGram(title, 0)
             return
         }
-        console.log(typeof(Number(e.target.value)))
+
         if (typeof(Number(e.target.value)) !== "number") {
             alert("숫자만 입력 가능합니다.")
             return
@@ -180,27 +177,20 @@ export default function Keyword() {
         const foodName = clicked ? clicked : keyword
 
         setSelectedKeyword(foodName)
-        
+        console.log(`url: ${url}`)
         try {
             const response = await axios.get(url)
             setFoodList(response.data)
             setIsSearched(true)
         } catch(e) {
-            alert("검색 결과가 없습니다.")
-            console.log(e)
+            // alert("검색 결과가 없습니다.")
+            console.log("검색 결과가 없습니다.", e)
         }
     }
 
     const getUrl = async (clicked?: string) => {
         
-        let url = "http://localhost:3003/api/foods/search?";
-        
-        if (clicked) {
-            url += `keyword=${clicked}&`;
-        } else if (keyword !== "") {
-            console.log(`keyword ${keyword}`)
-            url += `keyword=${keyword}&`;
-        }
+        let url = `http://localhost:8080/foods/search?keyword=${clicked ? clicked : keyword}&`;
 
         await Object.keys(searchOptions).forEach((key: string) => {
             const option = searchOptions[key as SearchTitleType];
