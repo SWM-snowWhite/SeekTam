@@ -6,10 +6,11 @@ import FoodInfoComponent from '../components/FoodInfoComponent';
 export type FoodInfoType = {
     [key: string]: string
 }
+export type View = "ewg" | "cancer" | "allergy" | "fodmap" | null;
 
 export default function FoodsDetail() {
     const [foodInfo, setFoodInfo] = React.useState<FoodInfoType>({});
-
+  
     useEffect(() => {
         const url: string = window.location.href;
         const foodId: number = Number(url.split("/").pop());
@@ -25,7 +26,8 @@ export default function FoodsDetail() {
     }
     return (
         <div className='flex-row items-center justify-center m-auto w-390 border-1 border-main'>
-            {/* <InfoModal/> */}
+            {!currentView ? <></> : <InfoModal handleModalClick={handleModalClick} currentView={currentView}/>}   
+
             <Navigator />
             <div className="flex-row items-center justify-center m-auto w-250 ">
                 {/* <img src="https://thumbnail9.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/62299451926905-56e4e59b-41cb-4c98-92b2-25c0ea876873.png" className='shadow-md w-150 h-150'></img> */}
@@ -37,7 +39,6 @@ export default function FoodsDetail() {
                 </div>
                 : <></>
             }
-                
             </div>
             {
                 foodInfo 

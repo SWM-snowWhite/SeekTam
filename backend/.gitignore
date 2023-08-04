@@ -4,6 +4,8 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
+.DS_Store
+application.yml
 
 ### STS ###
 .apt_generated
@@ -17,8 +19,12 @@ bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
 
+### ignore config ###
+application.yml
+
 ### IntelliJ IDEA ###
 .idea
+*.yml
 *.iws
 *.iml
 *.ipr

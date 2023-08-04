@@ -14,7 +14,8 @@ module.exports = {
       high_danger: '#FF6E4F',
       unknown: '#96918C',
       info: '#F0F0F0',
-      info_s: '#767676'
+      info_s: '#767676',
+      modal: "#007BFF"
     },
     extend: {
       borderWidth: px0_10,
