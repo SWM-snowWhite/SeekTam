@@ -1,6 +1,7 @@
 package food.backend.search.dao;
 
 import food.backend.search.dto.FoodListDTO;
+import food.backend.search.model.KeywordAndNutrient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
-import java.util.Map;
 
 @Repository
 @RequiredArgsConstructor
@@ -17,72 +17,67 @@ public class FoodListDAO {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
-    public List<FoodListDTO> getFoodListByNameContaining(Map<String, String> params) {
+    public List<FoodListDTO> getFoodListByNameContaining(KeywordAndNutrient params) {
         String sql = "SELECT food_id, food_name, company_name FROM food_main WHERE 1=1";
 
         MapSqlParameterSource paramMap = new MapSqlParameterSource()
-                .addValue("food_name", "%" + params.get("keyword") + "%")
-                .addValue("enerc", params.get("kcal"))
-                .addValue("enerc_con", params.get("kcal_con")) //없는 컬럼
-                .addValue("chocdf", params.get("carb"))
-                .addValue("chocdf_con", params.get("carb_con")) //없는 컬럼
-                .addValue("prot", params.get("prot"))
-                .addValue("prot_con", params.get("prot_con")) //없는 컬럼
-                .addValue("fatce", params.get("fat"))
-                .addValue("fatce_con", params.get("fat_con")); //없는 컬럼
+                .addValue("food_name", "%" + params.getKeyword() + "%")
+                .addValue("enerc", params.getEnerc())
+                .addValue("chocdf", params.getChocdf())
+                .addValue("prot", params.getProt())
+                .addValue("fatce", params.getFatce());
 
-        if (StringUtils.hasText(params.get("keyword"))) {
+        if (StringUtils.hasText(params.getKeyword())) {
             sql += " AND food_name LIKE :food_name";
         }
 
-        if (StringUtils.hasText(params.get("kcal"))) {
+        if (StringUtils.hasText(params.getEnerc())) {
             sql += " AND enerc";
         }
 
-        if (StringUtils.hasText(params.get("kcal_con"))) {
-            if (params.get("kcal_con").equals("1")) {
+        if (StringUtils.hasText(params.getEnercCon())) {
+            if (params.getEnercCon().equals("1")) {
                 sql += " >= :enerc";
             } else {
                 sql += " <= :enerc";
             }
         }
 
-        if (StringUtils.hasText(params.get("carb"))) {
+        if (StringUtils.hasText(params.getChocdf())) {
             sql += " AND chocdf";
         }
 
-        if (StringUtils.hasText(params.get("carb_con"))) {
-            if (params.get("carb_con").equals("1")) {
+        if (StringUtils.hasText(params.getChocdfCon())) {
+            if (params.getChocdfCon().equals("1")) {
                 sql += " >= :chocdf";
             } else {
                 sql += " <= :chocdf";
             }
         }
 
-        if (StringUtils.hasText(params.get("prot"))) {
+        if (StringUtils.hasText(params.getProt())) {
             sql += " AND prot";
         }
 
-        if (StringUtils.hasText(params.get("prot_con"))) {
-            if (params.get("prot_con").equals("1")) {
+        if (StringUtils.hasText(params.getProtCon())) {
+            if (params.getProtCon().equals("1")) {
                 sql += " >= :prot";
             } else {
                 sql += " <= :prot";
             }
         }
 
-        if (StringUtils.hasText(params.get("fat"))) {
+        if (StringUtils.hasText(params.getFatce())) {
             sql += " AND fatce";
         }
 
-        if (StringUtils.hasText(params.get("fat_con"))) {
-            if (params.get("fat_con").equals("1")) {
+        if (StringUtils.hasText(params.getFatceCon())) {
+            if (params.getFatceCon().equals("1")) {
                 sql += " >= :fatce";
             } else {
                 sql += " <= :fatce";
             }
         }
-
         return jdbcTemplate.query(sql, paramMap, foodRowMapper());
     }
 
