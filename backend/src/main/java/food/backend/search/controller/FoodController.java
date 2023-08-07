@@ -1,5 +1,6 @@
 package food.backend.search.controller;
 
+import food.backend.search.dto.FoodDetailDTO;
 import food.backend.search.dto.FoodListDTO;
 import food.backend.search.dto.RelatedFoodDto;
 import food.backend.search.service.FoodSearchService;
@@ -27,7 +28,7 @@ public class FoodController {
     }
 
     @GetMapping("/detail")
-    public List<Map<String, Object>> getFoodDetail(@RequestParam Long foodId) {
+    public FoodDetailDTO getFoodDetail(@RequestParam Long foodId) {
         return foodSearchService.getFoodDetailById(foodId);
     }
 
