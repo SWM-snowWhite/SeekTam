@@ -9,7 +9,7 @@ type SearchButtonProps = {
 	title: string
 }
 
-export default function SearchButton(props: SearchButtonProps): JSX.Element {
+export default function SearchBtn(props: SearchButtonProps): JSX.Element {
 	return (
 		<div className="flex items-center justify-center w-full p-5">
 			<Link to={props.type === 'barcode' ? '/barcode' : '/keyword'}>
