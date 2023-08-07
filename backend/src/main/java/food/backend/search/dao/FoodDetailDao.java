@@ -1,28 +1,42 @@
 package food.backend.search.dao;
 
-import food.backend.search.dto.FoodDetailDTO;
+import food.backend.search.dto.FoodDetailDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.Map;
-
+/**
+ * 실제 DB에 접근해 음식의 상세정보를 요청하는 DAO 클래스
+ */
 @Repository
 @RequiredArgsConstructor
-public class FoodDetailDAO {
+public class FoodDetailDao {
 
+    /**
+     * JdbcTemplate을 사용해 DB에 접근
+     * @see JdbcTemplate
+     */
     private final JdbcTemplate jdbcTemplate;
 
-    public FoodDetailDTO getFoodDataById(Long foodId) {
+    /**
+     * 음식의 고유번호를 통해 음식의 상세정보를 반환하는 메소드
+     * @param foodId 컨트롤러에서 쿼리파라미터로 전달받은 음식의 고유번호
+     * @return 음식의 고유번호를 통해 검색된 음식의 상세정보를 FoodDetailDTO 객체로 반환
+     */
+    public FoodDetailDto getFoodDataById(Long foodId) {
         String sql = "SELECT * FROM food_main WHERE food_id = ?";
         return jdbcTemplate.queryForObject(sql, foodRowMapper(), foodId);
     }
 
-    private RowMapper<FoodDetailDTO> foodRowMapper() {
+    /**
+     * DB에서 검색된 음식의 상세정보를 FoodDetailDTO 객체로 매핑해주는 메소드
+     *              @see FoodDetailDto
+     * @return DB에서 검색된 음식의 상세정보를 FoodDetailDTO 객체로 매핑해주는 RowMapper
+     */
+    private RowMapper<FoodDetailDto> foodRowMapper() {
         return (rs, rowNum) ->
-            FoodDetailDTO.builder()
+            FoodDetailDto.builder()
                     .foodId(rs.getLong("food_id"))
                     .foodCd(rs.getString("food_code"))
                     .foodNm(rs.getString("food_name"))

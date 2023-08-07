@@ -1,6 +1,6 @@
 package food.backend.search.dao;
 
-import food.backend.search.dto.FoodListDTO;
+import food.backend.search.dto.FoodListDto;
 import food.backend.search.model.KeywordAndNutrient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.RowMapper;
@@ -11,13 +11,26 @@ import org.springframework.util.StringUtils;
 
 import java.util.List;
 
+/**
+ * 실제 DB에 접근해 키워드를 포함하며 영양소 조건을 만족하는 음식의 foodId,foodName,companyName를 요청하는 DAO 클래스
+ */
 @Repository
 @RequiredArgsConstructor
-public class FoodListDAO {
+public class FoodListDao {
 
+    /**
+     * JdbcTemplate에서 제공하는 NamedParameterJdbcTemplate을 사용해 DB 접근<br>
+     * NamedParameterJdbcTemplate는 쿼리문에 파라미터를 바인딩할 때 파라미터의 이름을 사용할 수 있도록 해줌
+     * @see NamedParameterJdbcTemplate
+     */
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
-    public List<FoodListDTO> getFoodListByNameContaining(KeywordAndNutrient params) {
+    /**
+     * 키워드를 포함하는 음식 리스트에서 영양소 조건에 맞는 음식 리스트를 반환하는 메소드
+     * @param params 컨트롤러에서 쿼리파라미터로 전달받은 키워드와 영양소 조건을 담은 객체
+     * @return 키워드를 포함하는 음식 리스트에서 영양소 조건에 맞는 음식의 foodId,foodName,companyName 리스트
+     */
+    public List<FoodListDto> getFoodListByNameContaining(KeywordAndNutrient params) {
         String sql = "SELECT food_id, food_name, company_name FROM food_main WHERE 1=1";
 
         MapSqlParameterSource paramMap = new MapSqlParameterSource()
@@ -81,9 +94,13 @@ public class FoodListDAO {
         return jdbcTemplate.query(sql, paramMap, foodRowMapper());
     }
 
-    private RowMapper<FoodListDTO> foodRowMapper() {
+    /**
+     * 키워드를 포함하는 음식 리스트에서 영양소 조건에 맞는 음식 리스트를 반환하는 메소드
+     * @return 키워드를 포함하는 음식 리스트에서 영양소 조건에 맞는 음식의 foodId,foodName,companyName 리스트
+     */
+    private RowMapper<FoodListDto> foodRowMapper() {
         return (rs, rowNum) ->
-                FoodListDTO.builder()
+                FoodListDto.builder()
                         .foodId(rs.getLong("food_id"))
                         .foodName(rs.getString("food_name"))
                         .companyName(rs.getString("company_name"))
