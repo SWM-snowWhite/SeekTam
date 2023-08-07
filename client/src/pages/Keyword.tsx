@@ -65,6 +65,7 @@ export default function Keyword() {
     const [selectedKeyword, setSelectedKeyword] = useState("")
     const [focusedFoodIdx, setFocusedFoodIdx] = useState<number>(-1)
     const [isSearched, setIsSearched] = useState(false);
+    const SERVER_API_URL = process.env.REACT_APP_SERVER_API_URL;
 
     // 키워드가 초기화 될 경우 관련 검색어 초기화
 	useEffect(() => {
@@ -91,7 +92,7 @@ export default function Keyword() {
 	const searchKeyword = (keyword: string) => {
 		if (keyword === "") return
 		
-        axios.get(`http://localhost:8080/foods/search/syllable?keyword=${keyword}`)
+        axios.get(`${SERVER_API_URL}/foods/search/syllable?keyword=${keyword}`)
         .then((res) => {
             setRelatedFoodList(res.data)
         })
@@ -190,7 +191,7 @@ export default function Keyword() {
 
     const getUrl = async (clicked?: string) => {
         
-        let url = `http://localhost:8080/foods/search?keyword=${clicked ? clicked : keyword}&`;
+        let url = `${SERVER_API_URL}/foods/search?keyword=${clicked ? clicked : keyword}&`;
 
         await Object.keys(searchOptions).forEach((key: string) => {
             const option = searchOptions[key as SearchTitleType];

@@ -10,7 +10,7 @@ export type View = "ewg" | "cancer" | "allergy" | "fodmap" | null;
 
 export default function FoodsDetail() {
     const [foodInfo, setFoodInfo] = React.useState<FoodInfoType>({});
-  
+    const SERVER_API_URL = process.env.REACT_APP_SERVER_API_URL;
     useEffect(() => {
         const url: string = window.location.href;
         const foodId: number = Number(url.split("/").pop());
@@ -18,7 +18,7 @@ export default function FoodsDetail() {
     },[])
     
     const getFoodDetail = (foodId: number) => {
-        axios.get(`http://localhost:8080/foods/search/detail?foodId=${foodId}`)
+        axios.get(`${SERVER_API_URL}/foods/search/detail?foodId=${foodId}`)
             .then(response => {
                 setFoodInfo(response.data[0])
             })
@@ -26,8 +26,6 @@ export default function FoodsDetail() {
     }
     return (
         <div className='flex-row items-center justify-center m-auto w-390 border-1 border-main'>
-            {!currentView ? <></> : <InfoModal handleModalClick={handleModalClick} currentView={currentView}/>}   
-
             <Navigator />
             <div className="flex-row items-center justify-center m-auto w-250 ">
                 {/* <img src="https://thumbnail9.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/62299451926905-56e4e59b-41cb-4c98-92b2-25c0ea876873.png" className='shadow-md w-150 h-150'></img> */}
