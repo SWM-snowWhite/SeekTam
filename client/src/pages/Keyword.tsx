@@ -6,6 +6,7 @@ import NavigatorExceptSearch from '../components/NavigatorExceptSearch';
 import SearchOptionBar from '../components/SearchOptionBar';
 import {LuArrowDownWideNarrow, LuArrowUpNarrowWide} from 'react-icons/lu';
 import FoodList from '../components/FoodList';
+import InfoModal from '../components/modal/InfoModal';
 
 export type SearchTitleType = "kcal" | "carb" | "prot" | "fat";
 export type SearchOptionObjectType = {
@@ -65,6 +66,7 @@ export default function Keyword() {
     const [selectedKeyword, setSelectedKeyword] = useState("")
     const [focusedFoodIdx, setFocusedFoodIdx] = useState<number>(-1)
     const [isSearched, setIsSearched] = useState(false);
+    const [selectedFoodIdx, setSelectedFoodIdx] = useState<number>(-1)
     const SERVER_API_URL = process.env.REACT_APP_SERVER_API_URL;
 
     // 키워드가 초기화 될 경우 관련 검색어 초기화
@@ -97,7 +99,7 @@ export default function Keyword() {
             setRelatedFoodList(res.data)
         })
         .catch((err) => {
-            alert("검색에 실패하였습니다.")
+            // alert("검색에 실패하였습니다.")
             console.log("검색에 실패하였습니다.", err);
         })
     }
@@ -137,10 +139,6 @@ export default function Keyword() {
         
         setSearchOptions(newSearchOptions);
     }
-
-    // const handleSelectedFood = (foodName: string) => {
-    //     setSelectedKeyword(foodName)
-    // }
     
     const changeGram = (title: SearchTitleType, gram: number) => {
         const newSearchOptions = {...searchOptions, [title]: {...searchOptions[title], gram}};
@@ -208,8 +206,14 @@ export default function Keyword() {
         setOptionView(!optionView)
     }
     
+    const handleSelectedFood = (idx: number) => {
+        setSelectedFoodIdx(idx)
+    }
+    
 	return (
 		<div className='flex-row align-center w-390 border-1 border-main'>
+            {selectedFoodIdx !== -1 ? <InfoModal selectedFoodIdx={selectedFoodIdx} handleSelectedFood={handleSelectedFood}/> : <></>}
+            
 			<NavigatorExceptSearch/>
 			<KeywordSearchBar search={search} searchKeyword={searchKeyword} keyword={keyword} changeKeyword={changeKeyword} deleteKeyword={deleteKeyword} handleKeyUp={handleKeyUp}/>
 			{relatedFoodList.length > 0 
@@ -238,7 +242,7 @@ export default function Keyword() {
                 />
                 : <></>
             }
-            <FoodList foodList={foodList} selectedKeyword={selectedKeyword} isSearched={isSearched}/>
+            <FoodList foodList={foodList} selectedKeyword={selectedKeyword} isSearched={isSearched} handleSelectedFood={handleSelectedFood}/>
 		</div>
 	)
 }
