@@ -7,6 +7,8 @@ import SearchOptionBar from '../components/SearchOptionBar';
 import {LuArrowDownWideNarrow, LuArrowUpNarrowWide} from 'react-icons/lu';
 import FoodList from '../components/FoodList';
 import InfoModal from '../components/modal/InfoModal';
+import ComparisonModal from '../components/modal/ComparisonModal';
+import ComparisonViewModal from '../components/modal/ComparisonViewModal';
 
 export type SearchTitleType = "kcal" | "carb" | "prot" | "fat";
 export type SearchOptionObjectType = {
@@ -67,6 +69,8 @@ export default function Keyword() {
     const [focusedFoodIdx, setFocusedFoodIdx] = useState<number>(-1)
     const [isSearched, setIsSearched] = useState(false);
     const [selectedFoodIdx, setSelectedFoodIdx] = useState<number>(-1)
+    const [comparison, setComparison] = useState<FoodListType>([])
+    const [viewComparison, setViewComparison] = useState(false)
     const SERVER_API_URL = process.env.REACT_APP_SERVER_API_URL;
 
     // 키워드가 초기화 될 경우 관련 검색어 초기화
@@ -99,7 +103,6 @@ export default function Keyword() {
             setRelatedFoodList(res.data)
         })
         .catch((err) => {
-            // alert("검색에 실패하였습니다.")
             console.log("검색에 실패하였습니다.", err);
         })
     }
@@ -176,13 +179,11 @@ export default function Keyword() {
         const foodName = clicked ? clicked : keyword
 
         setSelectedKeyword(foodName)
-        console.log(`url: ${url}`)
         try {
             const response = await axios.get(url)
             setFoodList(response.data)
             setIsSearched(true)
         } catch(e) {
-            // alert("검색 결과가 없습니다.")
             console.log("검색 결과가 없습니다.", e)
         }
     }
@@ -209,15 +210,75 @@ export default function Keyword() {
     const handleSelectedFood = (idx: number) => {
         setSelectedFoodIdx(idx)
     }
+
+    const addComparison = (foodItem: FoodType) => {
+        if (comparison.length > 1) {
+            alert("비교는 2개까지만 가능합니다.")
+            return
+        }
+
+        const newComparison = [...comparison, {...foodItem}]
+        setComparison(newComparison)
+    }
+    
+    const deleteAllComparison = () => {
+        setComparison([])
+    }
+
+    const deleteSpecificComparison = (idx: number) => {
+        const newComparison = comparison.filter((item, index) => index !== idx)
+        setComparison(newComparison)
+    }
+
+    const handleComparisonView = () => {
+        setViewComparison(!viewComparison)
+        
+    }
+
     
 	return (
 		<div className='flex-row align-center w-390 border-1 border-main'>
-            {selectedFoodIdx !== -1 ? <InfoModal selectedFoodIdx={selectedFoodIdx} handleSelectedFood={handleSelectedFood}/> : <></>}
-            
+            {
+                selectedFoodIdx !== -1 
+                ? <InfoModal 
+                    selectedFoodIdx={selectedFoodIdx} 
+                    handleSelectedFood={handleSelectedFood}/> 
+                : <></>
+            }
+            {
+                viewComparison ? <ComparisonViewModal 
+                    comparison={comparison}
+                    handleComparisonView={handleComparisonView}
+                    />
+                : <></>
+            }
+            {
+                comparison.length > 0 
+                ? <ComparisonModal 
+                    comparison={comparison} 
+                    addComparison={addComparison}
+                    deleteAllComparison={deleteAllComparison}
+                    deleteSpecificComparison={deleteSpecificComparison}
+                    handleComparisonView={handleComparisonView}
+                    /> 
+                : <></>
+            }
 			<NavigatorExceptSearch/>
-			<KeywordSearchBar search={search} searchKeyword={searchKeyword} keyword={keyword} changeKeyword={changeKeyword} deleteKeyword={deleteKeyword} handleKeyUp={handleKeyUp}/>
+			<KeywordSearchBar 
+                search={search} 
+                searchKeyword={searchKeyword} 
+                keyword={keyword} 
+                changeKeyword={changeKeyword} 
+                deleteKeyword={deleteKeyword} 
+                handleKeyUp={handleKeyUp}
+            />
 			{relatedFoodList.length > 0 
-            ? <KeywordComponent relatedFoodList={relatedFoodList} keyword={keyword} search={search} focusedFoodIdx={focusedFoodIdx}/> 
+            ? <KeywordComponent 
+                relatedFoodList={relatedFoodList} 
+                keyword={keyword} 
+                search={search} 
+                focusedFoodIdx={focusedFoodIdx}
+                /> 
             : <></>}
             {
                 !optionView 
@@ -226,7 +287,9 @@ export default function Keyword() {
                     <span className='text-14'>검색 옵션</span>
                 </div>
                 :
-                <div onClick={handleOptionViewClick} className='flex items-center justify-center p-5 mt-10 rounded-lg h-30 ml-35 w-320 border-1 border-info text-12'>
+                <div 
+                    onClick={handleOptionViewClick} 
+                    className='flex items-center justify-center p-5 mt-10 rounded-lg h-30 ml-35 w-320 border-1 border-info text-12'>
                     <LuArrowUpNarrowWide className='w-12 h-12 mx-5'/>
                     <span className='text-14'>닫기</span>
                 </div>
@@ -242,7 +305,13 @@ export default function Keyword() {
                 />
                 : <></>
             }
-            <FoodList foodList={foodList} selectedKeyword={selectedKeyword} isSearched={isSearched} handleSelectedFood={handleSelectedFood}/>
+            <FoodList 
+                foodList={foodList} 
+                selectedKeyword={selectedKeyword} 
+                isSearched={isSearched} 
+                handleSelectedFood={handleSelectedFood}
+                addComparison={addComparison}
+            />
 		</div>
 	)
 }

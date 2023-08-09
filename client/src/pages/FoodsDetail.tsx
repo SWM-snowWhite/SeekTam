@@ -3,8 +3,18 @@ import React, { useEffect } from 'react';
 import FoodInfoComponent from '../components/FoodInfoComponent';
 
 export type FoodInfoType = {
-    [key: string]: string
+    food_id: number,
+    food_name: number,
+    enerc: number,
+    prot: number,
+    fatce: number,
+    chocdf: number,
+    food_size: number,
+    company_name: string,
+    nutConSrtrQua: number,
+    sugar: number,
 }
+
 export type View = "ewg" | "cancer" | "allergy" | "fodmap" | null;
 
 export default function FoodsDetail(
@@ -13,7 +23,7 @@ export default function FoodsDetail(
     }: {
         selectedFoodIdx: number,
     }) {
-    const [foodInfo, setFoodInfo] = React.useState<FoodInfoType>({});
+    const [foodInfo, setFoodInfo] = React.useState<FoodInfoType>({food_id: 0, food_name: 0, enerc: 0, prot: 0, fatce: 0, chocdf: 0, food_size: 0, company_name: "", nutConSrtrQua: 0, sugar: 0});
     const SERVER_API_URL = process.env.REACT_APP_SERVER_API_URL;
     useEffect(() => {
         getFoodDetail()
@@ -27,8 +37,8 @@ export default function FoodsDetail(
             .catch(err => console)
     }
     return (
-        <div className='flex-row items-center justify-center m-auto w-390 border-1 border-main'>
-            <div className="flex-row items-center justify-center m-auto w-250 ">
+        <div className='flex-row items-center justify-center m-auto border-main'>
+            <div className="flex-row items-center justify-center m-auto">
                 {foodInfo
                 ? 
                 <div>
