@@ -1,6 +1,5 @@
 package food.backend.search.dao;
 
-import food.backend.search.dto.RelatedFoodDto;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -10,15 +9,31 @@ import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.util.List;
 
+/**
+ * 실제 DB에 접근해 키워드를 포함하는 음식명 리스트를 요청하는 DAO 클래스
+ */
 @Repository
-public class FoodKeywordDAO {
+public class FoodKeywordDao {
 
+    /**
+     * JdbcTemplate에서 제공하는 NamedParameterJdbcTemplate을 사용해 DB 접근<br>
+     * NamedParameterJdbcTemplate는 쿼리문에 파라미터를 바인딩할 때 파라미터의 이름을 사용할 수 있도록 해줌
+     */
     private NamedParameterJdbcTemplate jdbcTemplate;
 
-    public FoodKeywordDAO(DataSource dataSource) {
+    /**
+     * 생성자를 통해 의존 주입
+     * @param dataSource DB 접근을 위한 DataSource
+     */
+    public FoodKeywordDao(DataSource dataSource) {
         this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
+    /**
+     * 키워드를 포함하는 음식 리스트를 반환하는 메소드
+     * @param keyword 컨트롤러에서 쿼리파라미터로 전달받은 키워드
+     * @return 키워드를 포함하는 음식 리스트
+     */
     public List<String> getFoodByNameContaining(String keyword) {
 
         // ALTER TABLE food_test ADD FULLTEXT INDEX food_name (food_name) WITH PARSER ngram;
@@ -39,6 +54,10 @@ public class FoodKeywordDAO {
 
     }
 
+    /**
+     * 키워드를 포함하는 음식명을 반환
+     * @return 키워드를 포함하는 음식명
+     */
     private RowMapper<String> foodRowMapper() {
         return (rs, rowNum) ->
                         rs.getString("food_name");

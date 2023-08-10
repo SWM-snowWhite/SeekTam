@@ -35,6 +35,11 @@ dependencies {
 
 }
 
+javadoc {
+	source = sourceSets.main.java.srcDirs
+	options.encoding = 'UTF-8'
+}
+
 tasks.named('test') {
 	useJUnitPlatform()
 }

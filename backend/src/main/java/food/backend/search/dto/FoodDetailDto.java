@@ -3,9 +3,13 @@ package food.backend.search.dto;
 import lombok.Builder;
 import lombok.Data;
 
+/**
+ * 컨트롤러에서 getFoodDetail 메소드의 리턴값으로 사용되는 객체<br>
+ * 식품 상세정보를 담고 있음
+ */
 @Builder
 @Data
-public class FoodDetailDTO {
+public class FoodDetailDto {
     private Long foodId;
     private String foodCd;
     private String foodNm;

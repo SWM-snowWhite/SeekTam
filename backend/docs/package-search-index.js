@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"config"},{"l":"food.backend"},{"l":"food.backend.search.controller"},{"l":"food.backend.search.dao"},{"l":"food.backend.search.dto"},{"l":"food.backend.search.model"},{"l":"food.backend.search.service"}];updateSearchResults();
