@@ -16,8 +16,6 @@ ReactDOM.render(
 				<Route path="/" element={<App />} />
 				<Route path="/keyword" element={<Keyword />} />
 				<Route path="/barcode" element={<Barcode />} />
-				<Route path="/foods/detail/*" element={<FoodsDetail />} />
-				{/* <Route path="*" element={<NotFound />} /> */}
 			</Routes>
-    	</BrowserRouter>,rootElement
+		</BrowserRouter>,rootElement
 )

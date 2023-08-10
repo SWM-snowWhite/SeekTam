@@ -1,34 +1,44 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
-import Navigator from '../components/Navigator';
 import FoodInfoComponent from '../components/FoodInfoComponent';
 
 export type FoodInfoType = {
-    [key: string]: string
+    food_id: number,
+    food_name: number,
+    enerc: number,
+    prot: number,
+    fatce: number,
+    chocdf: number,
+    food_size: number,
+    company_name: string,
+    nutConSrtrQua: number,
+    sugar: number,
 }
+
 export type View = "ewg" | "cancer" | "allergy" | "fodmap" | null;
 
-export default function FoodsDetail() {
-    const [foodInfo, setFoodInfo] = React.useState<FoodInfoType>({});
+export default function FoodsDetail(
+    {
+        selectedFoodIdx,
+    }: {
+        selectedFoodIdx: number,
+    }) {
+    const [foodInfo, setFoodInfo] = React.useState<FoodInfoType>({food_id: 0, food_name: 0, enerc: 0, prot: 0, fatce: 0, chocdf: 0, food_size: 0, company_name: "", nutConSrtrQua: 0, sugar: 0});
     const SERVER_API_URL = process.env.REACT_APP_SERVER_API_URL;
     useEffect(() => {
-        const url: string = window.location.href;
-        const foodId: number = Number(url.split("/").pop());
-        getFoodDetail(foodId)
+        getFoodDetail()
     },[])
     
-    const getFoodDetail = (foodId: number) => {
-        axios.get(`${SERVER_API_URL}/foods/search/detail?foodId=${foodId}`)
+    const getFoodDetail = () => {
+        axios.get(`${SERVER_API_URL}/foods/search/detail?foodId=${selectedFoodIdx}`)
             .then(response => {
                 setFoodInfo(response.data[0])
             })
             .catch(err => console)
     }
     return (
-        <div className='flex-row items-center justify-center m-auto w-390 border-1 border-main'>
-            <Navigator />
-            <div className="flex-row items-center justify-center m-auto w-250 ">
-                {/* <img src="https://thumbnail9.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/62299451926905-56e4e59b-41cb-4c98-92b2-25c0ea876873.png" className='shadow-md w-150 h-150'></img> */}
+        <div className='flex-row items-center justify-center m-auto border-main'>
+            <div className="flex-row items-center justify-center m-auto">
                 {foodInfo
                 ? 
                 <div>
@@ -40,10 +50,9 @@ export default function FoodsDetail() {
             </div>
             {
                 foodInfo 
-                ? 
-                <FoodInfoComponent foodInfo={foodInfo}/>
+                ? <FoodInfoComponent foodInfo={foodInfo}/>
                 : <></>
-                }
+            }
         </div>
     );
 }
