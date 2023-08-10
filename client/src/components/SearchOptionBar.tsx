@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import SearchOption from './SearchOption';
-import { SearchOptionObjectType, SearchOptionType, SearchTitleType } from '../pages/Keyword';
+import { SearchOptionType, SearchTitleType } from '../pages/Keyword';
 
 export default function SearchOptionBar(
     {
         searchOptions, 
-        toggleOption,
+        handleViewToggle,
         handleChangeGram,
         handleCondition
     }: {
         searchOptions: SearchOptionType;
-        toggleOption: (title: SearchTitleType) => void;
+        handleViewToggle: (title: SearchTitleType) => void;
         handleChangeGram: (title: SearchTitleType, event: React.ChangeEvent<HTMLInputElement>) => void;
         handleCondition: (title: SearchTitleType) => void;
     }
@@ -18,7 +18,6 @@ export default function SearchOptionBar(
  
     return (
         <div className='flex-row m-auto mt-10 border-dotted border-1 border-main w-320'>
-            {/* <p className='text-center text-12 text-info_s'>검색 옵션</p> */}
             {
             Object.keys(searchOptions).map((key: string) => {
                 return <
@@ -26,7 +25,7 @@ export default function SearchOptionBar(
                         key={key} 
                         optionKey={key as SearchTitleType}
                         searchOption={searchOptions[key as SearchTitleType]} 
-                        toggleOption={toggleOption} 
+                        handleViewToggle={handleViewToggle} 
                         handleChangeGram={handleChangeGram}
                         handleCondition={handleCondition}
                 />

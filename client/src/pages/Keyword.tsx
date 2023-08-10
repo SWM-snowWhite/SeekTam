@@ -10,7 +10,7 @@ import InfoModal from '../components/modal/InfoModal';
 import ComparisonModal from '../components/modal/ComparisonModal';
 import ComparisonViewModal from '../components/modal/ComparisonViewModal';
 
-export type SearchTitleType = "kcal" | "carb" | "prot" | "fat";
+export type SearchTitleType = "enerc" | "chocdf" | "prot" | "fatce";
 export type SearchOptionObjectType = {
     title: string,
     gram: number,
@@ -31,13 +31,13 @@ export type FoodType = {
 export type FoodListType = Array<FoodType> | []
 
 const searchOptionList: SearchOptionType = {
-    "kcal": {
+    "enerc": {
         title: "칼로리",
         gram: 0,
         condition: 1,
         view: 0,
     },
-    "carb": {
+    "chocdf": {
         title: "탄수화물",
         gram: 0,
         condition: 1,
@@ -49,7 +49,7 @@ const searchOptionList: SearchOptionType = {
         condition: 1,
         view: 0,
     },
-    "fat": {
+    "fatce": {
         title: "지방",
         gram: 0,
         condition: 1,
@@ -87,15 +87,15 @@ export default function Keyword() {
             setKeyword("")
 	}, [foodList])
 
-	const changeKeyword = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleChangeKeyword = (e: React.ChangeEvent<HTMLInputElement>) => {
         setKeyword(e.target.value)
     }
 
-	const deleteKeyword = () => {
+	const clearKeyword = () => {
         setKeyword("")
     }
 
-	const searchKeyword = (keyword: string) => {
+	const fetchKeywordSearch = (keyword: string) => {
 		if (keyword === "") return
 		
         axios.get(`${SERVER_API_URL}/foods/search/syllable?keyword=${keyword}`)
@@ -111,10 +111,10 @@ export default function Keyword() {
 		if (e.key === 'Enter') {
 			if (relatedFoodList.length === 0) return
             if (focusedFoodIdx === -1) {
-                search();
+                fetchOptionKeywordSearch();
                 return
             }
-            search(relatedFoodList[focusedFoodIdx]) ;
+            fetchOptionKeywordSearch(relatedFoodList[focusedFoodIdx]) ;
             return
 		}
 
@@ -122,30 +122,29 @@ export default function Keyword() {
             if (relatedFoodList.length === 0) return 
             if (focusedFoodIdx > -1 && focusedFoodIdx < relatedFoodList.length) setFocusedFoodIdx(focusedFoodIdx - 1)
         }
-    if (e.key === 'ArrowDown') {
-        if (relatedFoodList.length === 0) return 
-        if (focusedFoodIdx < relatedFoodList.length - 1) setFocusedFoodIdx(focusedFoodIdx + 1)
-            
+
+        if (e.key === 'ArrowDown') {
+            if (relatedFoodList.length === 0) return 
+            if (focusedFoodIdx < relatedFoodList.length - 1) setFocusedFoodIdx(focusedFoodIdx + 1)
         }
 	}
 
-	const toggleOption = (title: SearchTitleType) => {
-        const newView = searchOptions[title].view === 0 ? 1 : 0;
+	const handleViewToggle = (title: SearchTitleType) => {
+        const isView = searchOptions[title].view === 0 ? 1 : 0;
         let newSearchOptions;
 
         // 뷰가 꺼지면 gram을 0으로 되돌림
-        if (newView === 0) {
-            newSearchOptions = {...searchOptions, [title]: {...searchOptions[title], view: newView, gram: 0}};
+        if (isView === 0) {
+            newSearchOptions = {...searchOptions, [title]: {...searchOptions[title], view: isView, gram: 0}};
         } else {
-            newSearchOptions = {...searchOptions, [title]: {...searchOptions[title], view: newView}};
+            newSearchOptions = {...searchOptions, [title]: {...searchOptions[title], view: isView}};
         }
         
         setSearchOptions(newSearchOptions);
     }
     
     const changeGram = (title: SearchTitleType, gram: number) => {
-        const newSearchOptions = {...searchOptions, [title]: {...searchOptions[title], gram}};
-        setSearchOptions(newSearchOptions);
+        setSearchOptions({...searchOptions, [title]: {...searchOptions[title], gram}});
     }
     
     const handleChangeGram = (title: SearchTitleType, e: React.ChangeEvent<HTMLInputElement>) => {
@@ -172,15 +171,16 @@ export default function Keyword() {
         setSearchOptions(newSearchOptions);
     }
 
-    const search = async (clicked?: string) => {
+    const fetchOptionKeywordSearch = async (clicked?: string) => {
         if (!clicked && keyword === "") return
 
-        const url = await getUrl(clicked)
+        const optionKeywordUrl = await makeOptionKeywordUrl(clicked)
         const foodName = clicked ? clicked : keyword
 
         setSelectedKeyword(foodName)
+        
         try {
-            const response = await axios.get(url)
+            const response = await axios.get(optionKeywordUrl)
             setFoodList(response.data)
             setIsSearched(true)
         } catch(e) {
@@ -188,7 +188,7 @@ export default function Keyword() {
         }
     }
 
-    const getUrl = async (clicked?: string) => {
+    const makeOptionKeywordUrl = async (clicked?: string) => {
         
         let url = `${SERVER_API_URL}/foods/search?keyword=${clicked ? clicked : keyword}&`;
 
@@ -216,23 +216,19 @@ export default function Keyword() {
             alert("비교는 2개까지만 가능합니다.")
             return
         }
-
-        const newComparison = [...comparison, {...foodItem}]
-        setComparison(newComparison)
+        setComparison([...comparison, {...foodItem}])
     }
     
-    const deleteAllComparison = () => {
+    const clearComparison = () => {
         setComparison([])
     }
 
     const deleteSpecificComparison = (idx: number) => {
-        const newComparison = comparison.filter((item, index) => index !== idx)
-        setComparison(newComparison)
+        setComparison(comparison.filter((item, index) => index !== idx))
     }
 
     const handleComparisonView = () => {
         setViewComparison(!viewComparison)
-        
     }
 
     
@@ -256,8 +252,7 @@ export default function Keyword() {
                 comparison.length > 0 
                 ? <ComparisonModal 
                     comparison={comparison} 
-                    addComparison={addComparison}
-                    deleteAllComparison={deleteAllComparison}
+                    clearComparison={clearComparison}
                     deleteSpecificComparison={deleteSpecificComparison}
                     handleComparisonView={handleComparisonView}
                     /> 
@@ -265,18 +260,18 @@ export default function Keyword() {
             }
 			<NavigatorExceptSearch/>
 			<KeywordSearchBar 
-                search={search} 
-                searchKeyword={searchKeyword} 
+                fetchOptionKeywordSearch={fetchOptionKeywordSearch} 
+                fetchKeywordSearch={fetchKeywordSearch} 
                 keyword={keyword} 
-                changeKeyword={changeKeyword} 
-                deleteKeyword={deleteKeyword} 
+                handleChangeKeyword={handleChangeKeyword} 
+                clearKeyword={clearKeyword} 
                 handleKeyUp={handleKeyUp}
             />
 			{relatedFoodList.length > 0 
             ? <KeywordComponent 
                 relatedFoodList={relatedFoodList} 
                 keyword={keyword} 
-                search={search} 
+                fetchOptionKeywordSearch={fetchOptionKeywordSearch} 
                 focusedFoodIdx={focusedFoodIdx}
                 /> 
             : <></>}
@@ -299,7 +294,7 @@ export default function Keyword() {
                 optionView 
                 ? <SearchOptionBar
                     searchOptions={searchOptions} 
-                    toggleOption={toggleOption}
+                    handleViewToggle={handleViewToggle}
                     handleChangeGram={handleChangeGram}
                     handleCondition={handleCondition}
                 />

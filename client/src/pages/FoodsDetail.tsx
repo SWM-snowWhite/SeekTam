@@ -3,15 +3,14 @@ import React, { useEffect } from 'react';
 import FoodInfoComponent from '../components/FoodInfoComponent';
 
 export type FoodInfoType = {
-    food_id: number,
-    food_name: number,
+    foodId: number,
+    foodNm: number,
     enerc: number,
     prot: number,
     fatce: number,
     chocdf: number,
-    food_size: number,
-    company_name: string,
-    nutConSrtrQua: number,
+    foodSize: number,
+    companyName: string,
     sugar: number,
 }
 
@@ -23,8 +22,9 @@ export default function FoodsDetail(
     }: {
         selectedFoodIdx: number,
     }) {
-    const [foodInfo, setFoodInfo] = React.useState<FoodInfoType>({food_id: 0, food_name: 0, enerc: 0, prot: 0, fatce: 0, chocdf: 0, food_size: 0, company_name: "", nutConSrtrQua: 0, sugar: 0});
+    const [foodInfo, setFoodInfo] = React.useState<FoodInfoType>({foodId: 0, foodNm: 0, enerc: 0, prot: 0, fatce: 0, chocdf: 0, foodSize: 0, companyName: "", sugar: 0});
     const SERVER_API_URL = process.env.REACT_APP_SERVER_API_URL;
+    
     useEffect(() => {
         getFoodDetail()
     },[])
@@ -32,9 +32,9 @@ export default function FoodsDetail(
     const getFoodDetail = () => {
         axios.get(`${SERVER_API_URL}/foods/search/detail?foodId=${selectedFoodIdx}`)
             .then(response => {
-                setFoodInfo(response.data[0])
+                setFoodInfo(response.data)
             })
-            .catch(err => console)
+            .catch(err => console.log(`상품 상세 정보 받아오기가 실패하였습니다.`, err))
     }
     return (
         <div className='flex-row items-center justify-center m-auto border-main'>
@@ -42,8 +42,8 @@ export default function FoodsDetail(
                 {foodInfo
                 ? 
                 <div>
-                    <p className='mt-10 text-center text-[#767676] text-12 font-bold'>{foodInfo.company_name}</p>
-                    <p className='w-auto m-5 font-semibold text-center text-15'>{foodInfo.food_name}</p>
+                    <p className='mt-10 text-center text-[#767676] text-12 font-bold'>{foodInfo.companyName}</p>
+                    <p className='w-auto m-5 font-semibold text-center text-15'>{foodInfo.foodNm}</p>
                 </div>
                 : <></>
             }
