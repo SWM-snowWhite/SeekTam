@@ -7,14 +7,12 @@ import { IoIosArrowUp, IoIosArrowDown } from 'react-icons/io';
 export default function ComparisonModal(
     {
         comparison,
-        addComparison,
-        deleteAllComparison,
+        clearComparison,
         deleteSpecificComparison,
         handleComparisonView,
     }: {
         comparison: FoodListType,
-        addComparison: (foodItem: FoodType) => void,
-        deleteAllComparison: () => void,
+        clearComparison: () => void,
         deleteSpecificComparison: (idx: number) => void
         handleComparisonView: () => void,
     }
@@ -39,7 +37,7 @@ export default function ComparisonModal(
                         <IoIosArrowDown onClick={handleOpenModal} size={24} className='rounded-none cursor-pointer text-info_s'/>
                     </div>
                     <div>
-                    <div onClick={deleteAllComparison} className='flex justify-end mx-10 mt-10 cursor-pointer'>
+                    <div onClick={clearComparison} className='flex justify-end mx-10 mt-10 cursor-pointer'>
                         <RxReload size={16} className='mx-5 text-info_s'/>
                         <span className='font-semibold text-info_s text-12'>초기화</span>
                     </div>

@@ -25,7 +25,7 @@ export default function ComparisonViewModal(
             const newComparisonInfo = await Promise.all(
                 comparison.map(async (item) => {
                     const response = await axios.get(`${SERVER_API_URL}/foods/search/detail?foodId=${item.foodId}`)
-                    return response.data[0]
+                    return response.data
                 })
             )
             setComparisonInfo(newComparisonInfo)
@@ -33,15 +33,15 @@ export default function ComparisonViewModal(
             console.log("Error fetching comparison info:", error);
         }
     }
-    const foodNames = comparisonInfo.map((item) => item.food_name)
+
+    const foodNames = comparisonInfo.map((item) => item.foodNm)
     const energies = comparisonInfo.map((item) => item.enerc)
     const proteins = comparisonInfo.map((item) => item.prot)
     const fats = comparisonInfo.map((item) => item.fatce)
     const carbons = comparisonInfo.map((item) => item.chocdf)
-    const companyNames = comparisonInfo.map((item) => item.company_name)
-    const foodSizes = comparisonInfo.map((item) => item.food_size)
+    const companyNames = comparisonInfo.map((item) => item.companyName)
+    const foodSizes = comparisonInfo.map((item) => item.foodSize)
     const sugars = comparisonInfo.map((item) => item.sugar)
-    const nutConSrtrQuas = comparisonInfo.map((item) => item.nutConSrtrQua)
 
     return (
         <div className='h-full fixed bg-[black] w-390 bg-opacity-50 flex justify-center items-center'>
@@ -76,11 +76,11 @@ export default function ComparisonViewModal(
                             </div>
                         </div>
                         <div className='m-10 mb-30'>
-                            <div className='flex justify-center w-full p-3 m-5 font-bold rounded-md text-16'>열량</div>
+                            <div className='flex justify-center w-full p-3 m-5 font-bold rounded-md text-16'>칼로리</div>
                             <hr></hr>
                             <div className='flex justify-center'>
                                 {energies.map((name, idx) => (
-                                    <span className='m-5 text-center text-info_s w-[50%]' key={idx}>{name}g</span>
+                                    <span className='m-5 text-center text-info_s w-[50%]' key={idx}>{name}kcal</span>
                                 ))}
                             </div>
                         </div>

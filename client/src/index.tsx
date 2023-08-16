@@ -4,10 +4,6 @@ import "./tailwind.css";
 import App from './App'
 import { BrowserRouter, Route, RouterProvider, Routes, createBrowserRouter } from 'react-router-dom'
 import Keyword from './pages/Keyword'
-import Barcode from './pages/Barcode'
-import FoodsDetail from './pages/FoodsDetail';
-import NotFound from './pages/NotFound';
-import InfoModal from './components/modal/InfoModal';
 
 const rootElement = document.getElementById('root');
 ReactDOM.render(
@@ -15,7 +11,6 @@ ReactDOM.render(
 			<Routes>
 				<Route path="/" element={<App />} />
 				<Route path="/keyword" element={<Keyword />} />
-				<Route path="/barcode" element={<Barcode />} />
 			</Routes>
 		</BrowserRouter>,rootElement
 )

@@ -9,10 +9,6 @@ export default function FoodInfoComponent({foodInfo}: {foodInfo: FoodInfoType}) 
                 <span className='p-3 m-5 text-info_s'>{foodInfo.enerc ? foodInfo.enerc : 0}</span>
             </div>
             <div className='flex justify-between'>
-                <span className='p-3 m-5 rounded-md border-1 border-sub'>기준량</span>
-                <span className='p-3 m-5 text-info_s'>{foodInfo.nutConSrtrQua ? foodInfo.nutConSrtrQua : 0}</span>
-            </div>
-            <div className='flex justify-between'>
                 <span className='p-3 m-5 rounded-md border-1 border-sub'>탄수화물</span>
                 <span className='p-3 m-5 text-info_s'>{foodInfo.chocdf ? foodInfo.chocdf : 0}g</span>
             </div>
