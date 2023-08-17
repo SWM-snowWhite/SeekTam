@@ -28,7 +28,7 @@ public class JobScheduler {
     private final JobLauncher jobLauncher;
     private final FetchFoodDataJob fetchFoodDataJob;
 
-    @Scheduled(cron = "1 * * * * *")
+    @Scheduled(cron = "0 0 2 * * *")
     public void fetchFoodDataSchedule() {
         Map<String, JobParameter> confMap = new HashMap<>();
         Date currentDate = new Date();
