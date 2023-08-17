@@ -8,6 +8,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 /**
  * Spring Boot Application 클래스
  */
+@EnableScheduling
+@EnableBatchProcessing
 @SpringBootApplication
 public class BackendApplication {
 
