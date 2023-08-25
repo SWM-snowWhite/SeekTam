@@ -181,7 +181,9 @@ export default function Keyword() {
         
         try {
             const response = await axios.get(optionKeywordUrl)
-            setFoodList(response.data)
+            //Todo 추후 서버 API에서 갯수 조절 or 페이징 처리
+            let fetchedFoodList = response.data.slice(0, 10)
+            setFoodList(fetchedFoodList)
             setIsSearched(true)
         } catch(e) {
             console.log("검색 결과가 없습니다.", e)

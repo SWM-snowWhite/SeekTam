@@ -10,24 +10,20 @@ type KeywordComponentProps = {
 export default function KeywordComponent({
     relatedFoodList, keyword, fetchOptionKeywordSearch, focusedFoodIdx
 }: KeywordComponentProps) {
-
     return (
         <div className='h-auto m-auto rounded-xl w-320 border-1 border-main'>
             {
             relatedFoodList && relatedFoodList.map((foodName: string, index: number) => {
+                if (foodName.length > 22) {
+                    foodName = foodName.slice(0, 22) + "..."
+                }
                 const keywordIdx = foodName.indexOf(keyword)
                 const keywordLength = keyword.length
                 const prefix = foodName.slice(0, keywordIdx)
                 const postfix = foodName.slice(keywordIdx + keywordLength)
                     
                 if (keywordIdx === -1) {
-                    return (
-                            <div className='cursor-grab' onClick={() => fetchOptionKeywordSearch(foodName)} key={index}>
-                                <button >
-                                    <span className='ml-5 text-main'>{foodName}</span>
-                                </button>
-                            </div>
-                    )
+                    return 
                 } else {
                     return (
                             <div onClick={() => fetchOptionKeywordSearch(foodName)} key={index} className={`flex ${index === focusedFoodIdx ? 'bg-[#f9e3e3] ' : ''}h-30 rounded-xl cursor-pointer hover:bg-[#f9e3e3]`}>
