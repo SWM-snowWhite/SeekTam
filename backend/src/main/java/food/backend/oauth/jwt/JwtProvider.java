@@ -24,7 +24,7 @@ public class JwtProvider {
                 .setSubject(subject)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(new Date().getTime() + jwtExpirationMs))
-                .signWith(getKey(), SignatureAlgorithm.ES256)
+                .signWith(getKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
