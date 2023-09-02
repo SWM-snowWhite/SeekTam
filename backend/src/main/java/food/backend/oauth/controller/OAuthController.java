@@ -2,30 +2,28 @@ package food.backend.oauth.controller;
 
 
 import food.backend.oauth.entity.KakaoToken;
+import food.backend.oauth.kakao.KakaoLoginParams;
+import food.backend.oauth.service.OAuthLoginService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
+import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 @Controller
-@RequestMapping("/oauth/kakao")
+@RequestMapping("/api/oauth")
 @RequiredArgsConstructor
-public class KakaoOauthController {
+public class OAuthController {
 
     private final String GRANT_TYPE = "authorization_code";
     private RestTemplate restTemplate = new RestTemplate();
-
+    private final OAuthLoginService oAuthLoginService;
     @Value("${oauth.kakao.client_id}")
     private String clientId;
 
@@ -34,6 +32,13 @@ public class KakaoOauthController {
 
     @Value("${oauth.kakao.auth_uri}")
     private String authURI;
+
+    @PostMapping("/kakao")
+    public ResponseEntity<Void> loginKakao(@RequestBody KakaoLoginParams kakaoLoginParams, HttpServletResponse response) {
+        oAuthLoginService.login(kakaoLoginParams, response);
+
+        return ResponseEntity.ok().build();
+    }
     @GetMapping("/authorize")
     public String redirectLoginPage() {
 

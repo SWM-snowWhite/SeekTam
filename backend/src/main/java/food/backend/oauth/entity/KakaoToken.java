@@ -1,6 +1,7 @@
 package food.backend.oauth.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import food.backend.oauth.TokenInfo;
 import lombok.Getter;
 
 @Getter
@@ -22,4 +23,8 @@ public class KakaoToken {
 
     @JsonProperty("scope")
     private String scope;
+
+    public TokenInfo of() {
+        return new TokenInfo(accessToken, refreshToken);
+    }
 }
