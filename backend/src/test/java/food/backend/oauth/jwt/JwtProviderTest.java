@@ -14,14 +14,14 @@ public class JwtProviderTest {
 
     @Test
     public void CreateJwt() {
-        String jwt = jwtProvider.createJwt("accessToken");
+        String jwt = jwtProvider.createJwt("accessToken",11);
         Assertions.assertNotNull(jwt);
     }
 
     @Test
     public void getMemberIdFromJwt() {
         String memberId = "123412";
-        String jwt = jwtProvider.createJwt(memberId);
+        String jwt = jwtProvider.createJwt(memberId, 11);
 
         String memberIdFromJwt = jwtProvider.getMemberIdFromJwt(jwt);
 

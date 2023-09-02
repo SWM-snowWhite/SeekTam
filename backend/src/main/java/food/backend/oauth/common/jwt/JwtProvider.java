@@ -16,14 +16,11 @@ public class JwtProvider {
     @Value("${jwt.secret}")
     private String jwtSecretKey;
 
-    @Value("${jwt.expirationMs}")
-    private int jwtExpirationMs;
-
-    public String createJwt(String subject) {
+    public String createJwt(String subject, int expirationTime) {
         return Jwts.builder()
                 .setSubject(subject)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(new Date().getTime() + jwtExpirationMs))
+                .setExpiration(new Date(new Date().getTime() + expirationTime))
                 .signWith(getKey(), SignatureAlgorithm.HS256)
                 .compact();
     }

@@ -37,6 +37,12 @@ public class OAuthKakaoClient implements OAuthClient {
 
     @Value("${oauth.kakao.info_uri}")
     private String infoURI;
+
+    @Value("${jwt.accessExpirationTime}")
+    private int accessExpirationTime;
+
+    @Value("${jwt.refreshExpirationTime}")
+    private int refreshExpirationTime;
     @Override
     public OAuthType getOAuthType() {
         return OAuthType.KAKAO;
@@ -72,16 +78,16 @@ public class OAuthKakaoClient implements OAuthClient {
 
         KakaoUserInfo kakaoUserInfo = restTemplate.postForObject(tokenInfoURI, request, KakaoUserInfo.class);
 
-        return makeJwt(kakaoUserInfo.getMemberId().toString());
+        return makeJwt(kakaoUserInfo.getMemberId().toString(), accessExpirationTime);
     }
 
     @Override
     public String requestRefreshToken(String refreshToken) {
-        return makeJwt(refreshToken);
+        return makeJwt(refreshToken, refreshExpirationTime);
     }
 
-    public String makeJwt(String subject) {
-        return jwtProvider.createJwt(subject);
+    public String makeJwt(String subject, int expirationTime) {
+        return jwtProvider.createJwt(subject, expirationTime);
     }
     public MultiValueMap<String, String> makeHttpBody(LoginParams loginParams) {
         KakaoLoginParams kakaoLoginParams = (KakaoLoginParams)loginParams;
