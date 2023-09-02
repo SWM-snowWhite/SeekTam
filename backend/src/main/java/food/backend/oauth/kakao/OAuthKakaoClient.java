@@ -1,11 +1,12 @@
 package food.backend.oauth.kakao;
 
-import food.backend.oauth.LoginParams;
-import food.backend.oauth.OAuthClient;
-import food.backend.oauth.OAuthType;
-import food.backend.oauth.TokenInfo;
-import food.backend.oauth.entity.KakaoToken;
-import food.backend.oauth.jwt.JwtProvider;
+import food.backend.oauth.common.LoginParams;
+import food.backend.oauth.common.OAuthClient;
+import food.backend.oauth.common.OAuthType;
+import food.backend.oauth.common.TokenInfo;
+import food.backend.oauth.common.jwt.JwtProvider;
+import food.backend.oauth.kakao.entity.KakaoToken;
+import food.backend.oauth.kakao.entity.KakaoUserInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -53,7 +54,10 @@ public class OAuthKakaoClient implements OAuthClient {
 
         KakaoToken kakaoToken = restTemplate.postForObject(tokenProviderURI, request, KakaoToken.class);
 
-        return kakaoToken.of();
+        return TokenInfo.builder()
+                .accessToken(kakaoToken.getAccessToken())
+                .refreshToken(kakaoToken.getRefreshToken())
+                .build();
     }
 
     @Override
@@ -66,9 +70,9 @@ public class OAuthKakaoClient implements OAuthClient {
 
         HttpEntity<?> request = new HttpEntity<>(new LinkedMultiValueMap<>(), httpHeaders);
 
-        Long memberId = restTemplate.postForObject(tokenInfoURI, request, Long.class);
+        KakaoUserInfo kakaoUserInfo = restTemplate.postForObject(tokenInfoURI, request, KakaoUserInfo.class);
 
-        return makeJwt(memberId.toString());
+        return makeJwt(kakaoUserInfo.getMemberId().toString());
     }
 
     @Override

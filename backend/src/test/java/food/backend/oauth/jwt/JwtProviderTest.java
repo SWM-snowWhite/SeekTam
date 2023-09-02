@@ -1,5 +1,6 @@
 package food.backend.oauth.jwt;
 
+import food.backend.oauth.common.jwt.JwtProvider;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

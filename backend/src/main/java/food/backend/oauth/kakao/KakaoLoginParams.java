@@ -1,7 +1,7 @@
 package food.backend.oauth.kakao;
 
-import food.backend.oauth.LoginParams;
-import food.backend.oauth.OAuthType;
+import food.backend.oauth.common.LoginParams;
+import food.backend.oauth.common.OAuthType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

@@ -1,4 +1,4 @@
-package food.backend.oauth.jwt;
+package food.backend.oauth.common.jwt;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

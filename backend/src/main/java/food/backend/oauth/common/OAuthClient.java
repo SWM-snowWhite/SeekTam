@@ -1,8 +1,4 @@
-package food.backend.oauth;
-
-
-import food.backend.oauth.jwt.JwtProvider;
-import org.springframework.stereotype.Component;
+package food.backend.oauth.common;
 
 
 public interface OAuthClient {

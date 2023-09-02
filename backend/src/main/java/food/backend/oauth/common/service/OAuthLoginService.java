@@ -1,9 +1,9 @@
-package food.backend.oauth.service;
+package food.backend.oauth.common.service;
 
-import food.backend.oauth.LoginParams;
-import food.backend.oauth.OAuthClient;
-import food.backend.oauth.OAuthType;
-import food.backend.oauth.TokenInfo;
+import food.backend.oauth.common.LoginParams;
+import food.backend.oauth.common.OAuthClient;
+import food.backend.oauth.common.OAuthType;
+import food.backend.oauth.common.TokenInfo;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.Cookie;
@@ -21,9 +21,6 @@ public class OAuthLoginService {
     public OAuthLoginService(List<OAuthClient> clientList) {
         this.OAuthClientHandler = clientList.stream().collect(
                 Collectors.toUnmodifiableMap(OAuthClient::getOAuthType, Function.identity()));
-
-
-        //OAuthClientHandler = Map.of(OAuthType.KAKAO, new OAuthKakaoClient(new RestTemplate()));
     }
 
     public void login(LoginParams loginParams, HttpServletResponse response) {
