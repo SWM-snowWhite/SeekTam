@@ -27,16 +27,18 @@ public class OAuthLoginService {
     }
 
     public void login(LoginParams loginParams, HttpServletResponse response) {
-
         OAuthClient oAuthClient = OAuthClientHandler.get(loginParams.getOAuthType());
         TokenInfo tokenInfo = oAuthClient.requestTokenInfo(loginParams);
 
-        setupCookies(tokenInfo, response);
+        String accessToken = oAuthClient.requestAccessToken(tokenInfo.getAccessToken());
+        String refreshToken = oAuthClient.requestRefreshToken(tokenInfo.getRefreshToken());
+
+        setupCookies(accessToken, refreshToken, response);
     }
 
-    private void setupCookies(TokenInfo tokenInfo, HttpServletResponse response) {
-        Cookie accessTokenCookie = new Cookie("access_token", tokenInfo.getAccessToken());
-        Cookie refreshTokenCookie = new Cookie("refresh_token", tokenInfo.getRefreshToken());
+    private void setupCookies(String accessToken, String refreshToken, HttpServletResponse response) {
+        Cookie accessTokenCookie = new Cookie("access_token", accessToken);
+        Cookie refreshTokenCookie = new Cookie("refresh_token", refreshToken);
 
         accessTokenCookie.setMaxAge(3600);
         refreshTokenCookie.setMaxAge(3600);
