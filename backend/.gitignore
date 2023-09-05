@@ -21,6 +21,7 @@ bin/
 ### ignore config ###
 application.yml
 
+
 ### IntelliJ IDEA ###
 .idea
 *.yml
