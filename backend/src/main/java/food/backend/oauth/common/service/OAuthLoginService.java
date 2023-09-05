@@ -10,6 +10,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -23,6 +24,14 @@ public class OAuthLoginService {
                 Collectors.toUnmodifiableMap(OAuthClient::getOAuthType, Function.identity()));
     }
 
+    public Optional<OAuthClient> getOAuthClientFromOAuthType(OAuthType targetOAuthType) {
+        return OAuthClientHandler.entrySet()
+                .stream()
+                .filter(entry -> targetOAuthType == entry.getKey())
+                .map(Map.Entry::getValue)
+                .findFirst();
+    }
+
     public void login(LoginParams loginParams, HttpServletResponse response) {
         OAuthClient oAuthClient = OAuthClientHandler.get(loginParams.getOAuthType());
         TokenInfo tokenInfo = oAuthClient.requestTokenInfo(loginParams);
@@ -33,7 +42,7 @@ public class OAuthLoginService {
         setupCookies(accessToken, refreshToken, response);
     }
 
-    private void setupCookies(String accessToken, String refreshToken, HttpServletResponse response) {
+    public void setupCookies(String accessToken, String refreshToken, HttpServletResponse response) {
         Cookie accessTokenCookie = new Cookie("access_token", accessToken);
         Cookie refreshTokenCookie = new Cookie("refresh_token", refreshToken);
 

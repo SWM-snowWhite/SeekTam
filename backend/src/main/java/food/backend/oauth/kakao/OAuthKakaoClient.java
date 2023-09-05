@@ -66,6 +66,7 @@ public class OAuthKakaoClient implements OAuthClient {
                 .build();
     }
 
+
     @Override
     public String requestAccessToken(String accessToken) {
         String tokenInfoURI = infoURI + "/v2/user/me";
@@ -81,13 +82,15 @@ public class OAuthKakaoClient implements OAuthClient {
         return makeJwt(kakaoUserInfo.getMemberId().toString(), accessExpirationTime);
     }
 
+    // 주석 + 예시 데이터 추가
+
     @Override
     public String requestRefreshToken(String refreshToken) {
         return makeJwt(refreshToken, refreshExpirationTime);
     }
 
     public String makeJwt(String subject, int expirationTime) {
-        return jwtProvider.createJwt(subject, expirationTime);
+        return jwtProvider.createJwt(subject + " " + OAuthType.KAKAO, expirationTime);
     }
     public MultiValueMap<String, String> makeHttpBody(LoginParams loginParams) {
         KakaoLoginParams kakaoLoginParams = (KakaoLoginParams)loginParams;
