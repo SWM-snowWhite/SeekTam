@@ -37,4 +37,9 @@ public class LikeController {
         return likeService.getLikeList(request);
     }
 
+    @GetMapping("/like-check")
+    public boolean checkLike(@RequestBody LikeRequest likeRequest, HttpServletRequest request) {
+        return likeService.checkLike(likeRequest, request);
+    }
+
 }

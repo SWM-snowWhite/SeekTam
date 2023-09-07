@@ -39,6 +39,13 @@ public class LikeService {
         return likeDao.getLikeList(memberId);
     }
 
+    public boolean checkLike(LikeRequest likeRequest, HttpServletRequest request) {
+        String jwt = getTokenFromCookie(request, "access_token");
+        String memberId = jwtProvider.getMemberIdFromJwt(jwt);
+
+        return likeDao.checkLike(memberId, likeRequest.getFoodId());
+    }
+
 
 
     private String getTokenFromCookie(HttpServletRequest request, String tokenName) {

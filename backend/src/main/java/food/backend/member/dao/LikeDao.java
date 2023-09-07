@@ -4,6 +4,7 @@ import food.backend.member.request.LikeRequest;
 import food.backend.member.response.LikeResponse;
 import food.backend.search.dao.FoodDetailDao;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
+@Slf4j
 public class LikeDao {
 
 
@@ -55,6 +57,24 @@ public class LikeDao {
                 .addValue("member_id", memberId);
 
         return namedParameterJdbcTemplate.query(sql, params, likeRowMapper());
+    }
+
+    public boolean checkLike(String memberId, Long foodId) {
+
+        try {
+            String sql = "SELECT * from like_list where member_id = :member_id and food_id = :food_id";
+
+            SqlParameterSource params = new MapSqlParameterSource()
+                    .addValue("member_id", memberId)
+                    .addValue("food_id", foodId);
+
+            namedParameterJdbcTemplate.queryForObject(sql, params, (rs, rowNum) -> null);
+
+            return true;
+        } catch (Exception e) {
+            log.info("error, {}", e);
+            return false;
+        }
     }
 
     private RowMapper<LikeResponse> likeRowMapper() {
