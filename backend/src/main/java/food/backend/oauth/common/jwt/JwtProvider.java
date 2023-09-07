@@ -4,6 +4,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +12,7 @@ import java.security.Key;
 import java.util.Date;
 
 @Component
+@Slf4j
 public class JwtProvider {
 
     @Value("${jwt.secret}")
@@ -39,6 +41,7 @@ public class JwtProvider {
             Jwts.parserBuilder().setSigningKey(getKey()).build().parse(jwt);
             return true;
         } catch (Exception e) {
+            log.error("{}", e);
             return false;
         }
     }
