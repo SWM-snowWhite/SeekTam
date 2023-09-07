@@ -1,23 +1,23 @@
 package food.backend.member.controller;
 
 import food.backend.member.request.LikeRequest;
+import food.backend.member.response.LikeResponse;
 import food.backend.member.service.LikeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/member")
 @RequiredArgsConstructor
 public class LikeController {
 
     private final LikeService likeService;
+
+    // ArgumentResolver 활용 계획
     @PutMapping("/like")
     public ResponseEntity<Void> pushLikeFood(@RequestBody LikeRequest likeRequest, HttpServletRequest request) {
         likeService.pushLikeFood(likeRequest, request);
@@ -31,4 +31,10 @@ public class LikeController {
 
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/like-list")
+    public List<LikeResponse> getLikeList(HttpServletRequest request) {
+        return likeService.getLikeList(request);
+    }
+
 }
