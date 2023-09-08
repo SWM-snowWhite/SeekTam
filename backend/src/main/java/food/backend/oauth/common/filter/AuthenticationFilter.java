@@ -43,6 +43,8 @@ public class AuthenticationFilter implements Filter {
         String accessToken = getTokenFromCookie(httpRequest, "access_token");
         String refreshToken = getTokenFromCookie(httpRequest, "refresh_token");
 
+        log.info(accessToken);
+        log.info("is valid? {}", jwtProvider.validateJwt(accessToken));
         try {
             if (jwtProvider.validateJwt(accessToken)) {
                 chain.doFilter(request, response);
