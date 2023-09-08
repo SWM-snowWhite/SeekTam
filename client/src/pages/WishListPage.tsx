@@ -3,15 +3,16 @@ import WishListItem from '../components/WishListItem'
 import axios from 'axios'
 
 type WishListPageProps = {
-	id: number
-	title: string
-	image: string
+	food_id: number
+	food_name: string
+	image_url: string
 	like: boolean
 }
 
 export default function WishListPage() {
 	const [wishlistItems, setWishListItems] = useState<WishListPageProps[]>()
 	const REACT_APP_SERVER_API_URL = process.env.REACT_APP_SERVER_API_URL
+
 	useEffect(() => {
 		getWishListItems()
 	}, [])
@@ -22,7 +23,19 @@ export default function WishListPage() {
 				withCredentials: true,
 			})
 			.then(res => {
-				setWishListItems(res.data)
+				const data: WishListPageProps[] = res.data.map(
+					(item: WishListPageProps, idx: number) => {
+						return {
+							...item,
+							like: true,
+							image_url: `https://placekitten.com/${
+								idx + 300
+							}/200`,
+						}
+					},
+				)
+
+				setWishListItems(data)
 			})
 			.catch(err => {
 				console.log("Error: Can't get wishlist items")
@@ -34,10 +47,10 @@ export default function WishListPage() {
 				{wishlistItems ? (
 					wishlistItems.map((item: WishListPageProps) => (
 						<WishListItem
-							key={item.id}
-							id={item.id}
-							title={item.title}
-							image={item.image}
+							key={item.food_id}
+							food_id={item.food_id}
+							food_name={item.food_name}
+							image_url={item.image_url}
 							like={item.like}
 						/>
 					))

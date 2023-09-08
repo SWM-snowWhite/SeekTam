@@ -2,24 +2,30 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { AiOutlineHeart } from 'react-icons/ai'
 import { AiFillHeart } from 'react-icons/ai'
+
 export default function WishListItem({
-	id,
-	title,
-	image,
+	food_id,
+	food_name,
+	image_url,
 	like,
 }: {
-	id: number
-	title: string
-	image: string
+	food_id: number
+	food_name: string
+	image_url: string
 	like: boolean
 }) {
 	const [stateLike, setStateLike] = useState(like)
+	const REACT_APP_SERVER_API_URL = process.env.REACT_APP_SERVER_API_URL
 
 	const handleLikeFood = () => {
-		let likeOrUnLike = like ? 'like' : 'unlike'
+		let likeOrUnLike = stateLike ? 'like' : 'unlike'
 
 		axios
-			.post(`/member/${likeOrUnLike}`, { id }, { withCredentials: true })
+			.put(
+				`${REACT_APP_SERVER_API_URL}/member/${likeOrUnLike}`,
+				{ food_id },
+				{ withCredentials: true },
+			)
 			.then(_ => {
 				console.log('success')
 			})
@@ -34,8 +40,8 @@ export default function WishListItem({
 		<div className='w-170 h-210 p-4 mb-20'>
 			<div className='bg-white rounded-lg shadow-md p-4'>
 				<img
-					src={image}
-					alt={title}
+					src={image_url}
+					alt={food_name}
 					className='w-170 h-160 object-cover rounded-lg'
 				/>
 				<div className='flex w-full'>
@@ -53,7 +59,9 @@ export default function WishListItem({
 						></AiOutlineHeart>
 					)}
 
-					<span className='font-bold mw-10 mw-10 my-5'>{title}</span>
+					<span className='font-bold mw-10 mw-10 my-5'>
+						{food_name}
+					</span>
 				</div>
 			</div>
 		</div>
