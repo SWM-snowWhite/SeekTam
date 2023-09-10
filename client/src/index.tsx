@@ -2,8 +2,10 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import "./tailwind.css";
 import App from './App'
-import { BrowserRouter, Route, RouterProvider, Routes, createBrowserRouter } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Keyword from './pages/Keyword'
+import Signup from './pages/Signup';
+import WishListPage from './pages/WishListPage';
 
 const rootElement = document.getElementById('root');
 ReactDOM.render(
@@ -11,6 +13,8 @@ ReactDOM.render(
 			<Routes>
 				<Route path="/" element={<App />} />
 				<Route path="/keyword" element={<Keyword />} />
+				<Route path="/signup" element={<Signup />} />
+				<Route path="/wishlist" element={<WishListPage />} />
 			</Routes>
 		</BrowserRouter>,rootElement
 )

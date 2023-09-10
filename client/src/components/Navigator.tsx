@@ -1,32 +1,21 @@
-import React from 'react';
-import { PiMagnifyingGlass } from 'react-icons/pi';
-import { FiArrowLeftCircle } from 'react-icons/fi';
-import { Link, useNavigate } from 'react-router-dom';
+import React from 'react'
 
-export default function Navigator() {
-    const navigate = useNavigate()
+function Navigation() {
+	const onBackClick = () => {}
+	const currentPage = '검색'
+	const onSearchClick = () => {}
 
-    const handleClick = () => {
-        navigate(-1)
-    }
-
-    return (
-        <div className='flex justify-between mx-20 mt-15'>
-            <button>
-                <FiArrowLeftCircle size={26} className='text-main' onClick={handleClick}/>
-            </button>
-            <Link to='/'>
-                <button>
-                    <span className='font-bold text-main text-20'>식탐</span>
-                </button>
-            </Link>
-            <Link to='/keyword'>
-                <button>
-                    <PiMagnifyingGlass size={26} className='text-main'/>
-                </button>
-            </Link>
-            
-        </div>
-    );
+	return (
+		<div className='bg-blue-500 p-4 text-white flex justify-between items-center'>
+			<button onClick={onBackClick} className='text-lg'>
+				뒤로가기
+			</button>
+			<h1 className='text-xl'>{currentPage}</h1>
+			<button onClick={onSearchClick} className='text-lg'>
+				검색
+			</button>
+		</div>
+	)
 }
 
+export default Navigation
