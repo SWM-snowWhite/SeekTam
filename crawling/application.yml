@@ -1,0 +1,35 @@
+spring:
+  h2:
+    console:
+      enabled: true
+
+  datasource:
+    # url: jdbc:mysql://seektam-test.cmzzaiee3lj2.ap-northeast-2.rds.amazonaws.com:3306/seektam-test?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: jdbc:mysql://database-1.cvrkyws2tbvq.ap-northeast-2.rds.amazonaws.com:3306/seektamDB?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: white
+    password: tnsqor1!
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: true
+jwt:
+  secret: trhiojrthoijrthoijrthoijrthoirttirojhrthoitrhiojrthoijrthoijrthoijrthoirttirojhrthoitrhiojrthoijrthoijrthoijrthoirttirojhrthoi
+  accessExpirationTime: 50000
+  refreshExpirationTime: 100000
+oauth:
+  kakao:
+    client_id: f257cf263d8c8b829bfe18bc453c1aa7
+    redirect_uri: http://localhost:8080
+    auth_uri: https://kauth.kakao.com
+    info_uri: https://kapi.kakao.com
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type: trace
+
+    # https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=f257cf263d8c8b829bfe18bc453c1aa7&redirect_uri=http://localhost:8080
