@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * "/foods/search" 로 시작되는 URI 요청을 처리하는 컨트롤러
+ * ID : ST-C-110-J
+ * 작성자 : 임동훈(snowcrab382@naver.com), 박주혁()
+ * 버전 : 1.0.0
+ * 작성일 : 2023-10-20
  */
 @RestController
 @RequestMapping("/foods/search")

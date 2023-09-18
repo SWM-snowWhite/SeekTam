@@ -4,8 +4,10 @@ import lombok.Builder;
 import lombok.Data;
 
 /**
- * 컨트롤러에서 getFoodDetail 메소드의 리턴값으로 사용되는 객체<br>
- * 식품 상세정보를 담고 있음
+ * ID : ST-C-110-J
+ * 작성자 : 임동훈(snowcrab382@naver.com)
+ * 버전 : 1.0.0
+ * 작성일 : 2023-10-20
  */
 @Builder
 @Data

@@ -19,7 +19,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * ID : ST-C-100-J
+ * 작성자 : 임동훈(snowcrab382@naver.com)
+ * 버전 : 1.0.0
+ * 작성일 : 2023-10-20
+ */
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -28,6 +33,12 @@ public class JobScheduler {
     private final JobLauncher jobLauncher;
     private final FetchFoodDataJob fetchFoodDataJob;
 
+    /**
+     * 매일 새벽 2시에 실행
+     * 초 분 시 일 월 요일
+     * 0 0 2 * * *
+     * 현재 날짜와 시간을 Job Parameter로 부여 후 FetchFoodDataJob의 updateFoodDataJob 실행
+     */
     @Scheduled(cron = "0 0 2 * * *")
     public void fetchFoodDataSchedule() {
         Map<String, JobParameter> confMap = new HashMap<>();

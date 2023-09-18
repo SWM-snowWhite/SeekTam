@@ -6,7 +6,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 /**
- * 컨트롤러에서 searchFoodListByNutrient 메소드의 파라미터로 사용되는 객체
+ * ID : ST-C-110-J
+ * 작성자 : 임동훈(snowcrab382@naver.com)
+ * 버전 : 1.0.0
+ * 작성일 : 2023-10-20
  */
 @Data
 public class KeywordAndNutrient {

@@ -8,7 +8,12 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
+/**
+ * ID : ST-C-100-J
+ * 작성자 : 임동훈(snowcrab382@naver.com)
+ * 버전 : 1.0.0
+ * 작성일 : 2023-10-20
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -17,6 +22,13 @@ public class StoreFoodDataService {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
+    /**
+     * DTO에 담긴 데이터를 DB에 저장한다.
+     * UPSERT 쿼리 : INSERT 쿼리를 사용하여 데이터를 삽입하고, 만약 중복된 데이터가 있다면 ON DUPLICATE KEY UPDATE 쿼리를 사용하여 데이터를 업데이트하는 쿼리이다.
+     * UPSERT 쿼리를 사용하여 중복된 데이터는 업데이트하고, 새로운 데이터는 삽입한다.
+     * 이 때, DB에서 중복을 체크하는 KEY는 반드시 UNIQUE해야 한다.
+     * @param foodData DTO에 담긴 데이터
+     */
     public void saveFoodDataToDatabase(FoodNutritionDto foodData) {
         BeanPropertySqlParameterSource param = new BeanPropertySqlParameterSource(foodData);
         String sql =

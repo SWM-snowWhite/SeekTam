@@ -15,6 +15,12 @@ import org.springframework.web.reactive.function.client.WebClientRequestExceptio
 import java.util.List;
 import java.util.Map;
 
+/**
+ * ID : ST-C-100-J
+ * 작성자 : 임동훈(snowcrab382@naver.com)
+ * 버전 : 1.0.0
+ * 작성일 : 2023-10-20
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -29,16 +35,29 @@ public class FoodDataApiService {
     public final ObjectMapper objectMapper;
 
 
+    /**
+     * API 호출을 통해 전체 데이터의 개수를 가져온다.
+     * 가져온 데이터 개수를 변수 totalData에 저장한다.
+     */
     public void setTotalData() {
         log.info("setTotalData() 호출");
         totalData = extractTotalDataSize();
     }
 
+    /**
+     * 전체 데이터 개수와 1회 조회 시 가져올 데이터 개수를 나누어 전체 chunk 반복횟수를 계산한다
+     * @return 전체 chunk 반복횟수
+     */
     public int getPageSize() {
         log.info("getPageSize() 호출");
         return (totalData / readPerPage) + 1;
     }
 
+    /**
+     * API 호출을 통해 전체 데이터 개수를 가져온다.
+     * 이 경우에 첫페이지만 호출하면 되므로 pageNo = initPage로 고정한다.
+     * @return 전체 데이터 개수
+     */
     public int extractTotalDataSize() {
         log.info("extractTotalDataSize() 호출");
         String response = getFoodDataResponse(initPage);
@@ -52,6 +71,11 @@ public class FoodDataApiService {
         return jsonNode.at("/response/body/totalCount").asInt();
     }
 
+    /**
+     * API 호출을 통해 음식 데이터를 가져온다.
+     * @param pageNo 현재 실행되는 페이지 번호
+     * @return API 호출 결과(JSON)
+     */
     public String getFoodDataResponse(int pageNo) {
         String foodDataResponse = webClient
                 .get()
@@ -84,6 +108,12 @@ public class FoodDataApiService {
 
     }
 
+    /**
+     * API 호출 결과를 DTO에 바인딩한다.
+     * DTO에 바인딩된 음식 데이터를 readPerPage만큼 List에 저장 후 반환한다.
+     * @param response API 호출 결과(JSON)
+     * @return DTO에 바인딩된 음식 데이터 List
+     */
     public List<FoodNutritionDto> bindFoodDataToDto(String response) {
 
         Map<String, Object> responseObject = null;
