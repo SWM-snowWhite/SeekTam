@@ -26,10 +26,15 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-batch'
     implementation("org.springframework.boot:spring-boot-starter-jdbc:2.7.14")
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.mysql:mysql-connector-j'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'co.elastic.clients:elasticsearch-java:8.9.2'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
+    implementation 'io.netty:netty-resolver-dns-native-macos:4.1.68.Final:osx-aarch_64'
+    implementation 'redis.clients:jedis:4.3.1'
 }
 
 tasks.named('test') {
