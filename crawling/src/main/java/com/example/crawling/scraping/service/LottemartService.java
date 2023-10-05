@@ -28,11 +28,6 @@ public class LottemartService implements ShoppingMallService {
 
     @Override
     public void crawling() throws SQLException, ClassNotFoundException {
-
-        MallInfo = new HashMap<>();
-        MallInfo.put("url", urls);
-        MallInfo.put("className", className);
-
         ArrayList<String> keywordList = new ArrayList<>();
         WebDriver webDriver = webDriverObjectProvider.getObject();
 
