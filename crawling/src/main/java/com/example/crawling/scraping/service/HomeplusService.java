@@ -2,6 +2,7 @@ package com.example.crawling.scraping.service;
 
 import com.example.crawling.scraping.dao.ScrapingDao;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -17,19 +18,17 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 @Slf4j
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class HomeplusService implements ShoppingMallService {
-    private HashMap<String, Object> MallInfo;
-    private String className = "css-12cdo53-defaultStyle-Typography-ellips";
-    private List<String> urls = Arrays.asList("https://front.homeplus.co.kr/best?gnbNo=3");
-    private ObjectProvider<WebDriver> webDriverObjectProvider;
-    private ElasticSearchService elasticSearchService;
-    private ScrapingDao scrapingDao;
+    private final String className = "css-12cdo53-defaultStyle-Typography-ellips";
+    private final List<String> urls = Arrays.asList("https://front.homeplus.co.kr/best?gnbNo=3");
+    private final ElasticSearchService elasticSearchService;
+    private final ScrapingDao scrapingDao;
+    private final WebDriver webDriver;
 
     @Override
     public void crawling() throws SQLException, ClassNotFoundException {
         ArrayList<String> keywordList = new ArrayList<>();
-        WebDriver webDriver = webDriverObjectProvider.getObject();
 
         try {
             urls.forEach(url -> {
@@ -46,14 +45,14 @@ public class HomeplusService implements ShoppingMallService {
 
             // 형태소 분석 작업
             List<Map.Entry<String, Integer>> analyzedList = elasticSearchService.separateMorpheme(keywordList);
+
+            // DB 저장 작업
             scrapingDao.storeRdb(analyzedList);
             scrapingDao.storeRedis(analyzedList);
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-        } finally {
-            webDriver.close();
         }
     }
 }

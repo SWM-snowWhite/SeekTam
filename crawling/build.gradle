@@ -22,11 +22,11 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.seleniumhq.selenium:selenium-java:4.12.1'
+    implementation 'org.seleniumhq.selenium:selenium-java:4.8.3'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-batch'
-    implementation("org.springframework.boot:spring-boot-starter-jdbc:2.7.14")
-    implementation("org.springframework.boot:spring-boot-starter-webflux")
+    implementation "org.springframework.boot:spring-boot-starter-jdbc:2.7.14"
+    implementation "org.springframework.boot:spring-boot-starter-webflux"
     implementation 'org.testng:testng:7.1.0'
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.mysql:mysql-connector-j'

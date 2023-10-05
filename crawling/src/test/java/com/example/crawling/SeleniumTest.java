@@ -3,20 +3,14 @@ package com.example.crawling;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
 
-import java.sql.Time;
-import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -92,7 +86,7 @@ public class SeleniumTest {
         for (int i = 0; i < length; i++) {
             String url = emartUrls.get(i);
             driver.get(url);
-            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 
             // when
             WebElement element = driver.findElement(By.className(emartClassName));
@@ -112,7 +106,7 @@ public class SeleniumTest {
         for (int i = 0; i < length; i++) {
             String url = kurlyUrls.get(i);
             driver.get(url);
-            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 
             // when
             WebElement element = driver.findElement(By.className(kurlyClassName));
@@ -132,7 +126,7 @@ public class SeleniumTest {
         for (int i = 0; i < length; i++) {
             String url = coupangUrls.get(i);
             driver.get(url);
-            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 
             // when
             WebElement element = driver.findElement(By.className(coupangClassName));

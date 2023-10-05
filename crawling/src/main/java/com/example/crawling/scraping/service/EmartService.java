@@ -20,7 +20,6 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 @RequiredArgsConstructor
 public class EmartService implements ShoppingMallService {
-    private HashMap<String, Object> MallInfo;
     private final String className = "mnemitem_goods_tit";
     private final List<String> urls = Arrays.asList("https://emart.ssg.com/best/main.ssg");
     private final ElasticSearchService elasticSearchService;
@@ -34,7 +33,6 @@ public class EmartService implements ShoppingMallService {
         try {
             for (String url : urls) {
                 webDriver.get(url);
-//                waitForLoad(webDriver);
                 webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
                 List<WebElement> elements = webDriver.findElements(By.className(className));
                 for (WebElement element : elements) {
@@ -47,6 +45,8 @@ public class EmartService implements ShoppingMallService {
 
             // 형태소 분석 작업
             List<Map.Entry<String, Integer>> analyzedList = elasticSearchService.separateMorpheme(keywordList);
+
+            // DB 저장
             scrapingDao.storeRdb(analyzedList);
             scrapingDao.storeRedis(analyzedList);
         } catch (SQLException e) {
@@ -54,10 +54,5 @@ public class EmartService implements ShoppingMallService {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-    }
-
-    void waitForLoad(WebDriver driver) {
-        new WebDriverWait(driver, Duration.ofSeconds(20)).until((ExpectedCondition<Boolean>) wd ->
-                ((JavascriptExecutor) wd).executeScript("return document.readyState").equals("interactive"));
     }
 }
