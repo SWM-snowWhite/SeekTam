@@ -30,9 +30,9 @@ public class ScrapingScheduler {
 
             // 정상 작동
             kurlyService.crawling();
-            emartService.crawling();
-            lottemartService.crawling();
-            homeplusService.crawling();
+//            emartService.crawling();
+//            lottemartService.crawling();
+//            homeplusService.crawling();
         } catch (Exception e) {
             log.error("스케줄러 에러 발생", e);
         }

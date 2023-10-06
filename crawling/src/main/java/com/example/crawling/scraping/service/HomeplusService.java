@@ -30,29 +30,25 @@ public class HomeplusService implements ShoppingMallService {
     public void crawling() throws SQLException, ClassNotFoundException {
         ArrayList<String> keywordList = new ArrayList<>();
 
-        try {
-            urls.forEach(url -> {
-                webDriver.get(url);
-                webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-                List<WebElement> elements = webDriver.findElements(By.className(className));
-                for (WebElement element : elements) {
-                    keywordList.add(element.getText());
-                }
-            });
+        urls.forEach(url -> {
+            webDriver.get(url);
+            webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+            List<WebElement> elements = webDriver.findElements(By.className(className));
+            for (WebElement element : elements) {
+                keywordList.add(element.getText());
+            }
+        });
 
-            log.info("****************** 홈플러스 크롤링 ************************");
-            log.info("데이터 총 개수: " + keywordList.size());
+        log.info("****************** 홈플러스 크롤링 ************************");
+        log.info("데이터 총 개수: " + keywordList.size());
 
-            // 형태소 분석 작업
-            List<Map.Entry<String, Integer>> analyzedList = elasticSearchService.separateMorpheme(keywordList);
+        // 형태소 분석 작업
+        ArrayList<String> analyzedList = elasticSearchService.separateMorpheme(keywordList);
 
-            // DB 저장 작업
-            scrapingDao.storeRdb(analyzedList);
-            scrapingDao.storeRedis(analyzedList);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        // DB 저장 작업
+//            scrapingDao.storeRdb(analyzedList);
+//            scrapingDao.storeRedis(analyzedList);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
     }
 }

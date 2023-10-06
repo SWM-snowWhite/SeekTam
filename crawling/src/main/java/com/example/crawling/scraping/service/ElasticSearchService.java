@@ -14,18 +14,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
 public class ElasticSearchService implements ElasticSearch{
-    ArrayList<String> keywordList = new ArrayList<>();
-    HashMap<String, Integer> keywordRank = new HashMap<>();
+    ArrayList<String> seperatedKeywordList = new ArrayList<>();
 
-    String apiUrl = "http://localhost:9200/_analyze?pretty";
+    private String apiUrl = "http://localhost:9200/_analyze?pretty";
+
+//    @Value("${application.encodedCode}")
+    private static String encodedCode = "Basic ZWxhc3RpYzo9ME1CWnMteitXMUtvc1VJWndSeA==";
 
     @Override
-    public List<Map.Entry<String, Integer>> separateMorpheme(List<String> keywordList) {
+    public ArrayList<String> separateMorpheme(List<String> keywordList) {
+
+        log.info("****************** 엘라스틱서치 형태소 분석 ************************" + encodedCode);
+
         try {
             keywordList.stream().forEach(keyword -> {
                 Map<String, Object> result = getReqeust(apiUrl, keyword);
@@ -33,19 +37,13 @@ public class ElasticSearchService implements ElasticSearch{
 
                 tokensInfo.forEach(tokenInfo -> {
                     String word = tokenInfo.get("token");
-                    keywordRank.put(word, keywordRank.getOrDefault(word, 0) + 1);
+                    seperatedKeywordList.add(word);
+
                 });
             });
-
-            List<Map.Entry<String, Integer>> sortedList = keywordRank.entrySet()
-                    .stream()
-                    .sorted(Map.Entry.<String, Integer> comparingByValue().reversed())
-                    .collect(Collectors.toList());
-
-            ArrayList<Map.Entry<String, Integer>> sortedArrayList = new ArrayList<>(sortedList);
-            List<Map.Entry<String, Integer>> top10List = sortedArrayList.subList(0, Math.min(10, sortedArrayList.size()));
-            return top10List;
+            return seperatedKeywordList;
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
@@ -62,6 +60,7 @@ public class ElasticSearchService implements ElasticSearch{
                     .post()
                     .uri(baseUrl)
                     .header(HttpHeaders.ACCEPT, "*/*")
+                    .header(HttpHeaders.AUTHORIZATION,encodedCode)
                     .contentType(MediaType.APPLICATION_JSON)
                     .body(BodyInserters.fromValue(bodyData))
                     .retrieve()

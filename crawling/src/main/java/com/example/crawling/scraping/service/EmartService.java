@@ -25,34 +25,34 @@ public class EmartService implements ShoppingMallService {
     private final ElasticSearchService elasticSearchService;
     private final ScrapingDao scrapingDao;
     private final WebDriver webDriver;
+    private final DataProcessingService dataProcessingService;
 
     @Override
     public void crawling() throws SQLException, ClassNotFoundException {
         ArrayList<String> keywordList = new ArrayList<>();
 
-        try {
-            for (String url : urls) {
-                webDriver.get(url);
-                webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-                List<WebElement> elements = webDriver.findElements(By.className(className));
-                for (WebElement element : elements) {
-                    keywordList.add(element.getText());
-                }
+        for (String url : urls) {
+            webDriver.get(url);
+            webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+            List<WebElement> elements = webDriver.findElements(By.className(className));
+            for (WebElement element : elements) {
+                keywordList.add(element.getText());
             }
-
-            log.info("****************** 이마트 크롤링 ************************");
-            log.info("데이터 총 개수: " + keywordList.size());
-
-            // 형태소 분석 작업
-            List<Map.Entry<String, Integer>> analyzedList = elasticSearchService.separateMorpheme(keywordList);
-
-            // DB 저장
-            scrapingDao.storeRdb(analyzedList);
-            scrapingDao.storeRedis(analyzedList);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
+
+        log.info("****************** 이마트 크롤링 ************************");
+        log.info("데이터 총 개수: " + keywordList.size());
+
+        // 형태소 분석 작업
+        ArrayList<String> analyzedKeywordList = elasticSearchService.separateMorpheme(keywordList);
+
+        // 필터 작업
+        List<String> filteredList = dataProcessingService.filterUselessKeyword(analyzedKeywordList);
+        List<Map.Entry<String, Integer>> top10List = dataProcessingService.remainTop10List(filteredList);
+
+
+        // DB 저장
+//            scrapingDao.storeRdb(analyzedKeywordList);
+//            scrapingDao.storeRedis(analyzedKeywordList);
     }
 }

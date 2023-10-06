@@ -38,3 +38,4 @@ out/
 
 ### envrionment ###
 application.yml
+application.properties

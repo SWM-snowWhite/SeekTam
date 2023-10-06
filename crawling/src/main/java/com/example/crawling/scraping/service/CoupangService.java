@@ -33,33 +33,27 @@ public class CoupangService implements ShoppingMallService {
     public void crawling() throws SQLException, ClassNotFoundException {
         ArrayList<String> keywordList = new ArrayList<>();
 
-        try {
-            for (String url : urls) {
-                webDriver.navigate().to(url);
+        for (String url : urls) {
+            webDriver.navigate().to(url);
 //                webDriver.get(url);
 
-                // 최대 20초 대기
-                webDriver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-                List<WebElement> elements = webDriver.findElements(By.className(className));
+            // 최대 20초 대기
+            webDriver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+            List<WebElement> elements = webDriver.findElements(By.className(className));
 
-                for (WebElement element : elements) {
-                    keywordList.add(element.getText());
-                }
+            for (WebElement element : elements) {
+                keywordList.add(element.getText());
             }
-
-            log.info("****************** 쿠팡 크롤링 ************************");
-            log.info("데이터 총 개수: " + keywordList.size());
-
-            // 형태소 분석 작업
-            List<Map.Entry<String, Integer>> analyzedList = elasticSearchService.separateMorpheme(keywordList);
-
-            // DB 저장
-            scrapingDao.storeRdb(analyzedList);
-            scrapingDao.storeRedis(analyzedList);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
+
+        log.info("****************** 쿠팡 크롤링 ************************");
+        log.info("데이터 총 개수: " + keywordList.size());
+
+        // 형태소 분석 작업
+        ArrayList<String> analyzedList = elasticSearchService.separateMorpheme(keywordList);
+
+        // DB 저장
+//            scrapingDao.storeRdb(analyzedList);
+//            scrapingDao.storeRedis(analyzedList);
     }
 }
