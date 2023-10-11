@@ -25,7 +25,14 @@ public class WebConfig implements WebMvcConfigurer {
     private final JwtProvider jwtProvider;
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:3000", "http://localhost:8080", "http://www.seektam.com", "https://www.seektam.link", "https://www.seektam.com")
+                .allowedOrigins(
+                        "http://localhost:3000",
+                        "http://localhost:8080",
+                        "http://www.seektam.com",
+                        "https://www.seektam.link",
+                        "https://www.seektam.com"
+                )
+                .allowCredentials(true)
                 .maxAge(3000);
     }
 
