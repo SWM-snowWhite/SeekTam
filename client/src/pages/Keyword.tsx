@@ -9,6 +9,7 @@ import FoodList from '../components/FoodList';
 import InfoModal from '../components/modal/InfoModal';
 import ComparisonModal from '../components/modal/ComparisonModal';
 import ComparisonViewModal from '../components/modal/ComparisonViewModal';
+import MallRanking from '../components/MallRanking';
 
 export type SearchTitleType = "enerc" | "chocdf" | "prot" | "fatce";
 export type SearchOptionObjectType = {
@@ -56,8 +57,6 @@ const searchOptionList: SearchOptionType = {
         view: 0,
     },
 };
-
-
 
 export default function Keyword() {
 	const [relatedFoodList, setRelatedFoodList] = useState([]);
@@ -309,6 +308,7 @@ export default function Keyword() {
                 handleSelectedFood={handleSelectedFood}
                 addComparison={addComparison}
             />
+            <MallRanking/>
 		</div>
 	)
 }

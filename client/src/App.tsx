@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import './tailwind.css'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import SearchBtn from './components/btn/SearchBtn'
 
 function App() {
 	const navigate = useNavigate()
@@ -9,7 +10,7 @@ function App() {
 	const KAKAO = (window as any).Kakao
 	const isInitialMount = useRef(true)
 	const logo = '/logo.png'
-	const REDIRECT_URI = 'http://localhost:3000'
+	const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URL
 	const SERVER_API_URL = process.env.REACT_APP_SERVER_API_URL
 
 	const kakaoLogin = () => {
@@ -48,13 +49,13 @@ function App() {
 					 * 서버에서 access token, refresh token을 쿠키로 받은 뒤,
 					 * 회원가입 페이지로 전달
 					 */
-					navigate('/signup')
+					// navigate('/signup')
+					navigate('/keyword')
 				})
-				.catch(_ =>
-					alert(
-						'회원가입에 실패하였습니다. 다시 시도하여 주시기 바랍니다.',
-					),
-				)
+				.catch(error => {
+					console.log(`Error: ${error}`)
+					alert('회원가입에 실패하였습니다. 다시 시도하여 주시기 바랍니다.')
+				})
 		}, 1000)
 	}
 	return (
@@ -62,14 +63,15 @@ function App() {
 			<div className='flex justify-center m-auto'>
 				<img src={logo} className='w-320' />
 			</div>
-			<button className='flex-row justify-center align-center w-full m-auto'>
+			<button className='flex-row justify-center w-full m-auto align-center'>
 				<img
-					className='w-600 h-50 m-auto'
+					className='m-auto w-600 h-50'
 					onClick={kakaoLogin}
 					alt='카카오 로그인 버튼'
 					src='/images/kakao_login_large_wide.png'
 				/>
 			</button>
+			<SearchBtn type='keyword' title="키워드 검색"/>
 		</div>
 	)
 }
