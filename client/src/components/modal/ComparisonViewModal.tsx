@@ -24,7 +24,11 @@ export default function ComparisonViewModal(
         try {
             const newComparisonInfo = await Promise.all(
                 comparison.map(async (item) => {
-                    const response = await axios.get(`${SERVER_API_URL}/foods/search/detail?foodId=${item.foodId}`)
+                    const response = 
+                        await axios
+                            .get(`${SERVER_API_URL}/foods/search/detail?foodId=${item.foodId}`, {
+                                withCredentials: true
+                            })
                     return response.data
                 })
             )

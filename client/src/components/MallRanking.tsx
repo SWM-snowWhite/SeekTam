@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import './Ranking.css'
 
 type MallRankingProps = {
     ranking: number;
@@ -7,16 +8,19 @@ type MallRankingProps = {
 }
 
 export default function MallRanking() {
-    const REACT_APP_SERVER_API_URL = process.env.REACT_APP_SERVER_API_URL
+    const SERVER_API_URL = process.env.REACT_APP_SERVER_API_URL
     const [rankingData, setRankingData] = useState<MallRankingProps[]>();
-
+    // const [currentRank, setCurrentRank] = useState(0);
+    
     useEffect(() => {
         getMallRanking();
     }, [])
 
+    
+    
     const getMallRanking = () => {
         axios
-            .get(`${REACT_APP_SERVER_API_URL}/mall/ranking`, {
+            .get(`${SERVER_API_URL}/mall/ranking`, {
                 withCredentials: true,
             })
             .then(res => {
@@ -27,22 +31,19 @@ export default function MallRanking() {
     };
 
     return (
-        <div className='flex justify-center flex-column'>
-        <div className=''>
-            <span>실시간 트렌드 식품 검색어 👑</span>
-            <div>
+        <div className='justify-center p-0 m-auto rounded-md shadow-md align-center w-320 mt-30 border-1 border-info'>
+            <span className='flex justify-center'>실시간 트렌드 식품 검색어 👑</span>
+            <ul className='flex flex-col justify-center bg-black ranking w-320'>
                 {rankingData 
                 ? 
                     rankingData.map((item: MallRankingProps, idx: number) => (
-                        <div className='bg-[#F4F4F4]' >
-                            <span className='text-[#0E6C57] pr-10'>{item.ranking}</span>
-                            <span className=''>{item.foodKeyword}</span>
-                        </div>
-                        
+                        <li key={idx} className='bg-[#F4F4F4]'>
+                            <span className='text-[#0E6C57] ml-10'>{item.ranking}</span>
+                            <span className='ml-20'>{item.foodKeyword}</span>
+                        </li> 
                     )) 
                 : <></>}
-            </div>
-        </div>
+            </ul>
         </div>
     );
 }
