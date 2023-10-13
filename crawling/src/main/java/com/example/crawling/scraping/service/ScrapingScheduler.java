@@ -81,8 +81,6 @@ public class ScrapingScheduler {
             log.error("스케줄러 에러 발생", e);
         }
     }
-
-    //!Todo : keywordRank를 저장하는 별도의 메소드 만들기, 10개를 정렬해서 들고 오는 메소드 만들기, DB에 저장하는 메소드 만들기
     public static HashMap<String, Integer> rankKeywordListMap (List<String> keywordList) {
         HashMap<String, Integer> keywordRankMap = new HashMap<>();
         keywordList.forEach(word -> keywordRankMap.put(word, keywordRankMap.getOrDefault(word, 0) + 1));

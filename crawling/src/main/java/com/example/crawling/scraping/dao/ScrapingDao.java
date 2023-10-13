@@ -41,7 +41,7 @@ public class ScrapingDao {
             Connection connection = DriverManager.getConnection(jdbcUrl, jdbcUser, jdbcPassword);
 
             // PreparedStatement를 사용하여 데이터 삽입
-            String insertQuery = "INSERT INTO food_keyword_ranking VALUES (?, ?, ?, ?)";
+            String insertQuery = "INSERT INTO food_keyword_ranking(created_date, ranking, keyword, hits) VALUES (?, ?, ?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
 
             int rank = 1;
