@@ -31,14 +31,14 @@ public class DataProcessingService {
      * 3. keywordList에서 uselessKeywordList에 포함된 단어를 제거한다.
      * @return List<String>
      */
-    public static ArrayList<String> filterUselessKeyword(ArrayList<String> keywordList) {
+    public static List<String> filterUselessKeyword(List<String> keywordList) {
         List<String> filteredList = keywordList.stream()
                 .filter(str -> str.length() > 1)
                 .filter(str -> !isAlphaNumeric(str))
                 .filter(str -> !uselessKeywordList.contains(str))
                 .collect(Collectors.toList());
 
-        return new ArrayList<>(filteredList);
+        return new ArrayList<String>(filteredList);
     };
 
     public static boolean isAlphaNumeric(String str) {
@@ -51,17 +51,4 @@ public class DataProcessingService {
      * @param keywordList
      * @return List<String>
      */
-    public static List<Map.Entry<String, Integer>> remainTop10List(List<String> keywordList) {
-
-        keywordList.forEach(word -> keywordRank.put(word, keywordRank.getOrDefault(word, 0) + 1));
-        List<Map.Entry<String, Integer>> sortedList =
-            keywordRank.entrySet()
-                .stream()
-                .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
-                .collect(Collectors.toList());
-
-        ArrayList<Map.Entry<String, Integer>> sortedArrayList = new ArrayList<>(sortedList);
-        List<Map.Entry<String, Integer>> top10List = sortedArrayList.subList(0, Math.min(10, sortedArrayList.size()));
-        return top10List;
-    }
 }

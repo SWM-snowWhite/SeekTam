@@ -87,7 +87,7 @@ public class ScrapingDao {
         }
 
         // 랭킹을 순서대로 뽑아오기
-        List<Tuple> ranking = jedis.zrevrangeWithScores("ranking", 0, 9);
+        List<Tuple> ranking = jedis.zrevrangeWithScores("ranking", 0, 20);
 
         // 결과 출력
         for (Tuple tuple : ranking) {
