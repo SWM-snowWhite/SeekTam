@@ -5,11 +5,13 @@ spring:
 
   datasource:
     # url: jdbc:mysql://seektam-test.cmzzaiee3lj2.ap-northeast-2.rds.amazonaws.com:3306/seektam-test?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    url: jdbc:mysql://database-1.cvrkyws2tbvq.ap-northeast-2.rds.amazonaws.com:3306/seektamDB?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-
+#    url: jdbc:mysql://database-1.cvrkyws2tbvq.ap-northeast-2.rds.amazonaws.com:3306/seektamDB?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: jdbc:mysql://127.0.0.1:3306/seektamDB?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: white
-    password: tnsqor1!
+    username: root
+    password:
+#    username: white
+#    password: tnsqor1!
 
   jpa:
     hibernate:
