@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import './Ranking.css'
 
 type MallRankingProps = {
     ranking: number;
@@ -24,9 +23,9 @@ export default function MallRanking() {
                 withCredentials: true,
             })
             .then(res => {
-                const data: MallRankingProps[] = res.data;
-                setRankingData(data);
-                console.log(`data: ${JSON.stringify(data)}`);
+                // 랭킹 기준으로 내림차순 정렬
+                const sortedData: MallRankingProps[] = res.data.sort((a: MallRankingProps, b: MallRankingProps) => a.ranking - b.ranking)
+                setRankingData(sortedData);
             })
     };
 
