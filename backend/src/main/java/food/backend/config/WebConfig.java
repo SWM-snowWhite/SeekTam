@@ -33,7 +33,7 @@ public class WebConfig implements WebMvcConfigurer {
                         "https://www.seektam.com"
                 )
                 .allowCredentials(true)
-                .maxAge(3000);
+                .maxAge(3600);
     }
 
     @Override
