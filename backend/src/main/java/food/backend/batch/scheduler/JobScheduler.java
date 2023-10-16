@@ -52,6 +52,5 @@ public class JobScheduler {
                 |JobParametersInvalidException e) {
             e.getMessage();
         }
-
     }
 }

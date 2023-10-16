@@ -22,7 +22,7 @@ import java.util.Arrays;
 @Slf4j
 public class AuthenticationFilter implements Filter {
 
-    private static final String[] WHITE_LIST = {"/", "/keyword/*", "/login", "/logout", "/api/oauth/*"};
+    private static final String[] WHITE_LIST = {"/", "/keyword/*", "/login", "/logout", "/api/oauth/*", "/mall/*"};
     private final JwtProvider jwtProvider;
     private final OAuthLoginService oAuthLoginService;
 
@@ -35,17 +35,17 @@ public class AuthenticationFilter implements Filter {
 
         log.info(">>>>>>>> url {}", httpRequest.getRequestURI());
         log.info(">>>>>>>> is equal? : {}", !isLoginCheckPath(httpRequest.getRequestURI()));
-        if (!isLoginCheckPath(httpRequest.getRequestURI())) {
-            chain.doFilter(request, response);
-            return;
-        }
+        try {
+            if (!isLoginCheckPath(httpRequest.getRequestURI())) {
+                chain.doFilter(request, response);
+                return;
+            }
 
-        String accessToken = getTokenFromCookie(httpRequest, "access_token");
-        String refreshToken = getTokenFromCookie(httpRequest, "refresh_token");
+            String accessToken = getTokenFromCookie(httpRequest, "access_token");
+            String refreshToken = getTokenFromCookie(httpRequest, "refresh_token");
 
         log.info(accessToken);
         log.info("is valid? {}", jwtProvider.validateJwt(accessToken));
-        try {
             if (jwtProvider.validateJwt(accessToken)) {
                 chain.doFilter(request, response);
                 return;
@@ -53,32 +53,34 @@ public class AuthenticationFilter implements Filter {
 
             if (jwtProvider.validateJwt(refreshToken)) {
                 String memberId = jwtProvider.getMemberIdFromJwt(refreshToken);
-                accessToken = jwtProvider.createJwt(memberId, 50000);
+                accessToken = jwtProvider.createJwt(memberId, 1000*60*60*24);
 
                 oAuthLoginService.setupCookies(accessToken, refreshToken, httpResponse);
 
                 chain.doFilter(request, response);
                 return;
+            } else {
+                httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             }
-
-
-            httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-
         } catch (Exception e) {
-
+            // Handle exceptions appropriately (e.g., log or respond with an error)
+            log.error("An error occurred in the filter: " + e.getMessage());
+            httpResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
-
-
     }
 
     private String getTokenFromCookie(HttpServletRequest request, String tokenName) {
-        Cookie[] cookies = request.getCookies();
+        try {
+            Cookie[] cookies = request.getCookies();
 
-        return Arrays.stream(cookies)
-                .filter(cookie -> tokenName.equals(cookie.getName()))
-                .map(Cookie::getValue)
-                .findFirst()
-                .orElse(null);
+            return Arrays.stream(cookies)
+                    .filter(cookie -> tokenName.equals(cookie.getName()))
+                    .map(Cookie::getValue)
+                    .findFirst()
+                    .orElse(null);
+        } catch (Exception e) {
+            throw new RuntimeException("쿠키에서 토큰을 가져오는데 실패했습니다.");
+        }
     }
 
     private boolean isLoginCheckPath(String requestURI) {

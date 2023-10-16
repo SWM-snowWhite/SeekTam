@@ -9,6 +9,7 @@ import FoodList from '../components/FoodList';
 import InfoModal from '../components/modal/InfoModal';
 import ComparisonModal from '../components/modal/ComparisonModal';
 import ComparisonViewModal from '../components/modal/ComparisonViewModal';
+import MallRanking from '../components/MallRanking';
 
 export type SearchTitleType = "enerc" | "chocdf" | "prot" | "fatce";
 export type SearchOptionObjectType = {
@@ -57,8 +58,6 @@ const searchOptionList: SearchOptionType = {
     },
 };
 
-
-
 export default function Keyword() {
 	const [relatedFoodList, setRelatedFoodList] = useState([]);
 	const [searchOptions, setSearchOptions] = useState(searchOptionList);
@@ -98,7 +97,10 @@ export default function Keyword() {
 	const fetchKeywordSearch = (keyword: string) => {
 		if (keyword === "") return
 		
-        axios.get(`${SERVER_API_URL}/foods/search/syllable?keyword=${keyword}`)
+        axios
+            .get(`${SERVER_API_URL}/foods/search/syllable?keyword=${keyword}`, {
+                withCredentials: true,
+            })
         .then((res) => {
             setRelatedFoodList(res.data)
         })
@@ -180,7 +182,12 @@ export default function Keyword() {
         setSelectedKeyword(foodName)
         
         try {
-            const response = await axios.get(optionKeywordUrl)
+            const response = 
+            await axios
+                .get(optionKeywordUrl, {
+                    withCredentials: true
+                })
+                
             //Todo 추후 서버 API에서 갯수 조절 or 페이징 처리
             let fetchedFoodList = response.data.slice(0, 10)
             setFoodList(fetchedFoodList)
@@ -309,6 +316,7 @@ export default function Keyword() {
                 handleSelectedFood={handleSelectedFood}
                 addComparison={addComparison}
             />
+            <MallRanking/>
 		</div>
 	)
 }

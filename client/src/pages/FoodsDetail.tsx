@@ -30,7 +30,10 @@ export default function FoodsDetail(
     },[])
     
     const getFoodDetail = () => {
-        axios.get(`${SERVER_API_URL}/foods/search/detail?foodId=${selectedFoodIdx}`)
+        axios
+            .get(`${SERVER_API_URL}/foods/search/detail?foodId=${selectedFoodIdx}`, {
+                withCredentials: true,
+            })
             .then(response => {
                 setFoodInfo(response.data)
             })

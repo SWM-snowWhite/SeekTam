@@ -42,8 +42,8 @@ export default function WishListPage() {
 			})
 	}
 	return (
-		<div className='w-auto m-0min-h-screen p-4'>
-			<div className='max-w-screen-md mx-auto grid grid-cols-1 md:grid-cols-3 gap-4'>
+		<div className='w-auto p-4 m-0min-h-screen'>
+			<div className='grid max-w-screen-md grid-cols-1 gap-4 mx-auto md:grid-cols-3'>
 				{wishlistItems ? (
 					wishlistItems.map((item: WishListPageProps) => (
 						<WishListItem
