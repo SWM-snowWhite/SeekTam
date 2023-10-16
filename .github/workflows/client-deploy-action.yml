@@ -46,15 +46,15 @@ jobs:
       - name: Deploy
         working-directory: ./client
         env:
-          AWS_GITHUB_ACCESS_KEY: ${{ secrets.AWS_GITHUB_ACCESS_KEY }}
-          AWS_GITHUB_SECRET_ACCESS_KEY: ${{ secrets.AWS_GITHUB_SECRET_ACCESS_KEY }}
+          AWS_ACCESS_KEY: ${{ secrets.AWS_GITHUB_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_GITHUB_SECRET_ACCESS_KEY }}
         run: |
           aws s3 sync --delete --region ap-northeast-2 ./build s3://seektam-deploy
 
       - name: CDN_INVALIDATE
         working-directory: ./client
         env:
-          AWS_GITHUB_ACCESS_KEY: ${{ secrets.AWS_GITHUB_ACCESS_KEY }}
-          AWS_GITHUB_SECRET_ACCESS_KEY: ${{ secrets.AWS_GITHUB_SECRET_ACCESS_KEY }}
+          AWS_ACCESS_KEY: ${{ secrets.AWS_GITHUB_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_GITHUB_SECRET_ACCESS_KEY }}
           AWS_CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }}
         run: aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_DISTRIBUTION_ID --paths "/*" --region ap-northeast-2
