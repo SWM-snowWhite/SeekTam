@@ -57,7 +57,7 @@ function App() {
 					alert('회원가입에 실패하였습니다. 다시 시도하여 주시기 바랍니다.')
 				})
 		}, 1000)
-	}
+	} 
 	return (
 		<div className='flex-row h-full border-solid border-1 w-500 border-main'>
 			<div className='flex justify-center m-auto'>
