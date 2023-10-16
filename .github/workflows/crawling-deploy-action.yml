@@ -3,7 +3,7 @@ run-name: CICD
 on:
   push:
     branches:
-      - feat/ranking
+      - develop
     paths:
       - 'crawling/**'
 env:
