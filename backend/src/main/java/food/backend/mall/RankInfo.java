@@ -8,9 +8,8 @@ import java.util.Date;
 
 @Getter
 @RedisHash(value="rankInfo")
-@Builder
 @Data
-@AllArgsConstructor
+@NoArgsConstructor
 public class RankInfo {
     @Id
     private Long id;

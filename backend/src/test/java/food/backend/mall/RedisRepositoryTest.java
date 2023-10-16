@@ -1,5 +1,6 @@
 package food.backend.mall;
 
+import food.backend.mall.dao.MallRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -7,20 +8,20 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class RedisRepositoryTest {
     @Autowired
-    private MallRedisRepository redisRepository;
+    private MallRepository redisRepository;
 
     @Test
     void test() {
-        RankInfo rankInfo = RankInfo.builder()
-                .ranking(1)
-                .foodKeyword("test")
-                .build();
+        RankInfo rankInfo = new RankInfo();
+        rankInfo.setRanking(1);
+        rankInfo.setHits(1);
+        rankInfo.setFoodKeyword("test");
 
         // 저장
         redisRepository.save(rankInfo);
 
         // 조회
-                redisRepository.findById("1");
+        redisRepository.findById(1);
 
         // 카운트
         redisRepository.count();

@@ -1,26 +1,18 @@
 package food.backend.mall.dao;
 
 import food.backend.mall.RankInfo;
-import food.backend.mall.dto.MallRankingResponseDto;
-import food.backend.search.dto.FoodDetailDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
 @Slf4j
-public class MallRdsDao {
-    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+public class MallRdsDao extends MallRepository{
     private final JdbcTemplate jdbcTemplate;
 
     public List<RankInfo> getMallRanking() {
@@ -28,13 +20,16 @@ public class MallRdsDao {
         return jdbcTemplate.query(sql, MalLRankingMapper());
     }
     private RowMapper<RankInfo> MalLRankingMapper() {
-        return (rs, rowNum) ->
-                RankInfo.builder()
-                        .id(rs.getLong("id"))
-                        .createdDate(rs.getTimestamp("created_date"))
-                        .ranking(rs.getInt("ranking"))
-                        .foodKeyword(rs.getString("keyword"))
-                        .hits(rs.getInt("hits")).build();
+            return (rs, rowNum) -> {
+                RankInfo rankInfo = new RankInfo();
+                rankInfo.setId(rs.getLong("id"));
+                rankInfo.setCreatedDate(rs.getTimestamp("created_date"));
+                rankInfo.setRanking(rs.getInt("ranking"));
+                rankInfo.setFoodKeyword(rs.getString("keyword"));
+                rankInfo.setHits(rs.getInt("hits"));
+                return rankInfo;
+        };
     }
+
 }
 
