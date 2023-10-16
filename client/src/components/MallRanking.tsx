@@ -31,13 +31,13 @@ export default function MallRanking() {
 
     return (
         <div className='justify-center p-0 m-auto rounded-md shadow-md align-center w-320 mt-30 border-1 border-info'>
-            <span className='flex justify-center'>실시간 트렌드 식품 검색어 👑</span>
-            <ul className='flex flex-col justify-center bg-black ranking w-320'>
+            <span className='flex justify-center font-bold text-20'>실시간 트렌드 식품 검색어 👑</span>
+            <ul className='flex flex-col w-[80%] m-auto rounded-md'>
                 {rankingData 
                 ? 
                     rankingData.map((item: MallRankingProps, idx: number) => (
-                        <li key={idx} className='bg-[#F4F4F4]'>
-                            <span className='text-[#0E6C57] ml-10'>{item.ranking}</span>
+                        <li key={idx} className='bg-[#F4F4F4] text-16 rounded-sm h-30'>
+                            <span className='text-[#0E6C57] ml-10 font-bold'>{item.ranking}</span>
                             <span className='ml-20'>{item.foodKeyword}</span>
                         </li> 
                     )) 

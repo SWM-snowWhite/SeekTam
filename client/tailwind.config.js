@@ -7,7 +7,7 @@ module.exports = {
   content: ['./src/**/*.{html,js,jsx,ts,tsx}'],
   theme: {
     colors: {
-      main: '#E95368',
+      main: '#0E6C57',
       sub: '#FFA7B3',
       btn: '#2077FA',
       white: '#FFFFFF',

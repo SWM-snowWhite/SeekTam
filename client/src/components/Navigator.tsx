@@ -6,7 +6,7 @@ function Navigation() {
 	const onSearchClick = () => {}
 
 	return (
-		<div className='bg-blue-500 p-4 text-white flex justify-between items-center'>
+		<div className='flex items-center justify-between p-4 text-white bg-main-500'>
 			<button onClick={onBackClick} className='text-lg'>
 				뒤로가기
 			</button>
