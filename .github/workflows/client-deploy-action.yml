@@ -49,11 +49,8 @@ jobs:
           AWS_GITHUB_ACCESS_KEY: ${{ secrets.AWS_GITHUB_ACCESS_KEY }}
           AWS_GITHUB_SECRET_ACCESS_KEY: ${{ secrets.AWS_GITHUB_SECRET_ACCESS_KEY }}
           AWS_BUCKET_NAME: ${{ secrets.AWS_BUCKET_NAME }}
-        run: |
-          aws s3 sync \
-            --delete \
-            --region ap-northeast-2 \
-            build s3://$AWS_BUCKET_NAME
+        run:
+          aws s3 sync --delete --region ap-northeast-2 build s3://$AWS_BUCKET_NAME
 
       - name: CDN_INVALIDATE
         working-directory: ./client
