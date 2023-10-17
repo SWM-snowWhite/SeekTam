@@ -26,10 +26,12 @@ jobs:
           distribution: 'temurin'
 
       - name: gradlew에 실행 권한 부여
-        run: chmod +x gradlew
+        working-directory: ./crawliing
+        run: chmod +x ./gradlew
 
       - name: 프로젝트 빌드
-        run: ./gradlew clean build -x test
+        working-directory: ./crawliing
+        run: ./crawling/gradlew clean build -x test
 
       - name: AWS credential 설정
         uses: aws-actions/configure-aws-credentials@v1
@@ -39,7 +41,9 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_GITHUB_SECRET_ACCESS_KEY }}
 
       - name: S3에 업로드
+        working-directory: ./crawliing
         run: aws deploy push --application-name ${{ env.AWS_CODE_DEPLOY_APPLICATION }} --ignore-hidden-files --s3-location s3://$AWS_S3_BUCKET/cicdtest/$GITHUB_SHA.zip --source .
 
       - name: EC2에 배포
+        working-directory: ./crawliing
         run: aws deploy create-deployment --application-name ${{ env.AWS_CODE_DEPLOY_APPLICATION }} --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name ${{ env.AWS_CODE_DEPLOY_GROUP }} --s3-location bucket=$AWS_S3_BUCKET,key=cicdtest/$GITHUB_SHA.zip,bundleType=zip
