@@ -11,7 +11,7 @@ env:
   AWS_S3_BUCKET: seektam-crawling-deploy
   AWS_CODE_DEPLOY_APPLICATION: seektam-codedeploy
   AWS_CODE_DEPLOY_GROUP: seektam-deploy-group
-
+  GITHUB_SHA: ${{ secrets.SHA_TEST}}
 jobs:
   build-with-gradle:
     runs-on: ubuntu-20.04
@@ -41,9 +41,9 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_GITHUB_SECRET_ACCESS_KEY }}
 
       - name: S3에 업로드
-        working-directory: ./crawliing
+        # working-directory: ./crawliing
         run: aws deploy push --application-name ${{ env.AWS_CODE_DEPLOY_APPLICATION }} --ignore-hidden-files --s3-location s3://$AWS_S3_BUCKET/cicdtest/$GITHUB_SHA.zip --source .
 
       - name: EC2에 배포
-        working-directory: ./crawliing
+        # working-directory: ./crawliing
         run: aws deploy create-deployment --application-name ${{ env.AWS_CODE_DEPLOY_APPLICATION }} --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name ${{ env.AWS_CODE_DEPLOY_GROUP }} --s3-location bucket=$AWS_S3_BUCKET,key=cicdtest/$GITHUB_SHA.zip,bundleType=zip
