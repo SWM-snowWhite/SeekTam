@@ -21,7 +21,7 @@ jobs:
         uses: actions/setup-java@v3.1.1
         with:
           java-version: '1.8'
-          distribution: 'temruin'
+          distribution: 'temurin'
       - name: gradlew에 실행 권한 부여
         run: chmod +x ./gradlew
       - name: 프로젝트 빌드
