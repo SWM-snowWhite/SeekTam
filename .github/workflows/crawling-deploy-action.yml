@@ -27,11 +27,11 @@ jobs:
 
       - name: gradlew에 실행 권한 부여
         working-directory: ./crawliing
-        run: chmod +x ./gradlew
+        run: chmod +x gradlew
 
       - name: 프로젝트 빌드
         working-directory: ./crawliing
-        run: ./crawling/gradlew clean build -x test
+        run: ./gradlew clean build -x test
 
       - name: AWS credential 설정
         uses: aws-actions/configure-aws-credentials@v1
