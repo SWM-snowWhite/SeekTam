@@ -1,5 +1,6 @@
 package food.backend.search.dao;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -13,6 +14,7 @@ import java.util.List;
  * 실제 DB에 접근해 키워드를 포함하는 음식명 리스트를 요청하는 DAO 클래스
  */
 @Repository
+@Slf4j
 public class FoodKeywordDao {
 
     /**
@@ -36,12 +38,14 @@ public class FoodKeywordDao {
      */
     public List<String> getFoodByNameContaining(String keyword) {
 
+        log.info("keyword: " + keyword);
+
         // ALTER TABLE food_test ADD FULLTEXT INDEX food_name (food_name) WITH PARSER ngram;
         // ngram_token_size = 2
 
         final int LIMIT_NUM = 10;
 
-        String sql = "SELECT food_name FROM food_test WHERE MATCH(food_name) AGAINST(:substring IN boolean MODE)" +
+        String sql = "SELECT food_name FROM food_main WHERE MATCH(food_name) AGAINST(:substring IN boolean MODE)" +
                 "limit :LIMIT_NUM;";
 
         keyword = keyword.length() == 1 ? keyword + "*" : keyword;

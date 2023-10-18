@@ -1,10 +1,18 @@
 package food.backend.search.dao;
 
+import food.backend.member.Member;
 import food.backend.search.dto.FoodDetailDto;
+import food.backend.search.model.ViewsFood;
+import food.backend.search.model.ViewsRanking;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
+import java.util.Optional;
 
 /**
  * 실제 DB에 접근해 음식의 상세정보를 요청하는 DAO 클래스
@@ -13,6 +21,8 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class FoodDetailDao {
 
+    @PersistenceContext
+    private final EntityManager em;
     /**
      * JdbcTemplate을 사용해 DB에 접근
      * @see JdbcTemplate
@@ -67,5 +77,13 @@ public class FoodDetailDao {
                     .foodSize(rs.getString("food_size"))
                     .companyName(rs.getString("company_name"))
                     .build();
+        }
+
+        @Transactional
+        public void increaseViewCount(Long foodId, Long memberId) {
+            em.persist(ViewsFood.builder()
+                    .foodId(foodId)
+                    .memberId(memberId)
+                    .build());
         }
     }
