@@ -37,9 +37,6 @@ public class FoodKeywordDao {
      * @return 키워드를 포함하는 음식 리스트
      */
     public List<String> getFoodByNameContaining(String keyword) {
-
-        log.info("keyword: " + keyword);
-
         // ALTER TABLE food_test ADD FULLTEXT INDEX food_name (food_name) WITH PARSER ngram;
         // ngram_token_size = 2
 
@@ -65,10 +62,6 @@ public class FoodKeywordDao {
     private RowMapper<String> foodRowMapper() {
         return (rs, rowNum) ->
                         rs.getString("food_name");
-
-
     }
-
-
 }
 

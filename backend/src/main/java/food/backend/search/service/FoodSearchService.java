@@ -6,6 +6,7 @@ import food.backend.search.dao.FoodDetailDao;
 import food.backend.search.dao.FoodListDao;
 import food.backend.search.dto.FoodDetailDto;
 import food.backend.search.dto.FoodListDto;
+import food.backend.search.dto.FoodRankingResponseDto;
 import food.backend.search.model.KeywordAndNutrient;
 import food.backend.search.dao.FoodKeywordDao;
 import lombok.RequiredArgsConstructor;
@@ -61,10 +62,13 @@ public class FoodSearchService {
 
     private void increaseViewCount(Long foodId, String email) {
         Optional<Member> memberId = memberRepository.findByEmail(email);
-
         if (memberId != null) {
             foodDetailDao.increaseViewCount(foodId, memberId.get().getId());
         }
+    }
+
+    public List<FoodRankingResponseDto> getFoodRanking(String email) {
+        return foodDetailDao.getFoodRanking(email);
     }
 
 

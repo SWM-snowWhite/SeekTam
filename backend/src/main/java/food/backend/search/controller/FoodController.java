@@ -4,6 +4,7 @@ import com.nimbusds.oauth2.sdk.util.JWTClaimsSetUtils;
 import food.backend.oauth.common.jwt.JwtProvider;
 import food.backend.search.dto.FoodDetailDto;
 import food.backend.search.dto.FoodListDto;
+import food.backend.search.dto.FoodRankingResponseDto;
 import food.backend.search.model.KeywordAndNutrient;
 import food.backend.search.service.FoodSearchService;
 import lombok.RequiredArgsConstructor;
@@ -66,6 +67,14 @@ public class FoodController {
         String email = jwtProvider.getEmailFromJwt(token);
         log.info("email " + email);
         return foodSearchService.getFoodDetailById(foodId, email);
+    }
+
+    @GetMapping("/ranking")
+    public List<FoodRankingResponseDto> getFoodRanking(HttpServletRequest request) {
+        String token = request.getCookies()[0].getValue();
+        String email = jwtProvider.getEmailFromJwt(token);
+        log.info("email " + email);
+        return foodSearchService.getFoodRanking(email);
     }
 
 }
