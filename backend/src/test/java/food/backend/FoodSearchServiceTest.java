@@ -7,19 +7,19 @@ import food.backend.search.dao.FoodListDao;
 import food.backend.member.MemberRepository;
 import food.backend.search.dto.FoodDetailDto;
 import food.backend.search.dto.FoodListDto;
+import food.backend.search.dto.FoodRankingResponseDto;
 import food.backend.search.model.KeywordAndNutrient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.test.annotation.Rollback;
-
-import javax.transaction.Transactional;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,6 +27,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class FoodSearchServiceTest {
 
+    @Mock
+    private JdbcTemplate jdbcTemplate;
     @Mock
     private FoodKeywordDao foodKeywordDAO;
 
@@ -107,5 +109,26 @@ class FoodSearchServiceTest {
 
         // Then
         assertEquals(expectedFoodDetail, actualFoodDetail);
+    }
+
+    @Test
+    public void 식품_랭킹_조회() {
+        // Given
+        String email = "test@example.com";
+        FoodRankingResponseDto mockedResponse = FoodRankingResponseDto.builder()
+                .foodId(1L)
+                .foodName("Test Food")
+                .calories(100)
+                .ranking(1)
+                .build();
+
+        when(foodDetailDao.getFoodRanking(anyString())).thenReturn(Collections.singletonList(mockedResponse));
+
+        // When
+        List<FoodRankingResponseDto> result = foodSearchService.getFoodRanking(email);
+
+        // Then
+        assertEquals(1, result.size());
+        assertEquals(mockedResponse, result.get(0));
     }
 }
