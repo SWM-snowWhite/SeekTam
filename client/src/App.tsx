@@ -50,7 +50,7 @@ function App() {
 					 * 회원가입 페이지로 전달
 					 */
 					// navigate('/signup')
-					navigate('/keyword')
+					navigate('/signup')
 				})
 				.catch(error => {
 					console.log(`Error: ${error}`)

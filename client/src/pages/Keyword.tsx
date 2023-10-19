@@ -10,6 +10,7 @@ import InfoModal from '../components/modal/InfoModal';
 import ComparisonModal from '../components/modal/ComparisonModal';
 import ComparisonViewModal from '../components/modal/ComparisonViewModal';
 import MallRanking from '../components/MallRanking';
+import ViewsRanking from '../components/ViewsRanking';
 
 export type SearchTitleType = "enerc" | "chocdf" | "prot" | "fatce";
 export type SearchOptionObjectType = {
@@ -95,6 +96,7 @@ export default function Keyword() {
     }
 
 	const fetchKeywordSearch = (keyword: string) => {
+        console.log(`keyword: ${keyword}`)
 		if (keyword === "") return
 		
         axios
@@ -316,7 +318,8 @@ export default function Keyword() {
                 handleSelectedFood={handleSelectedFood}
                 addComparison={addComparison}
             />
-            <MallRanking/>
+            <MallRanking fetchKeywordSearch={fetchKeywordSearch}/>
+            <ViewsRanking fetchKeywordSearch={fetchKeywordSearch}/>
 		</div>
 	)
 }

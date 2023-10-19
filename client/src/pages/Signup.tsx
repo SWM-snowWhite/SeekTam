@@ -1,4 +1,6 @@
+import axios from 'axios';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function Signup() {
     const [nickname, setNickname] = useState('');
@@ -8,6 +10,7 @@ export default function Signup() {
     const [weight, setWeight] = useState('');
     const [activityLevel, setActivityLevel] = useState('');
     const [servicePurpose, setServicePurpose] = useState('');
+    const navigate = useNavigate()
 
     const handleNicknameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNickname(event.target.value);
@@ -37,10 +40,34 @@ export default function Signup() {
     setServicePurpose(selectedServicePurpose);
     };
 
-    const handleSubmit = () => {}
+    const handleSubmit = () => {
+        axios
+            .post(`${process.env.REACT_APP_SERVER_API_URL}/member/signup`, 
+                {
+                    "email": "example@email.com",
+        "applyType": "1",
+        "nickname": "userNickname",
+        "gender": "M",
+        "birthYear": 1990,
+        "status": 1,
+        "height": 175,
+        "weight": 70,
+        "activity": 2,
+        "purposeUse": 3,
+        "lastAccessDate": "2023-10-18T14:30:00"
+                }, {
+                    withCredentials: true
+                }
+                )
+            .then(res => {
+                alert("회원가입에 성공하셨습니다.")
+                navigate('/keyword')
+            })
+            .catch(err => console)
+        }
     return (
     <div className="container mx-auto mt-5">
-        <h1 className="text-2xl font-bold mb-4">회원가입</h1>
+        <h1 className="mb-4 text-2xl font-bold">회원가입</h1>
         <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700">닉네임:</label>
         <input
