@@ -1,6 +1,7 @@
 package com.example.crawling.scraping.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,7 +21,12 @@ import java.util.Map;
 public class ElasticSearchService implements ElasticSearch{
     ArrayList<String> seperatedKeywordList = new ArrayList<>();
 
-    private String apiUrl = "http://localhost:9200/_analyze?pretty";
+    private final String ELASTIC_NORI_URL;
+
+    public ElasticSearchService(
+            @Value("${spring.elastic.url}") String elasticUrl) {
+        this.ELASTIC_NORI_URL = elasticUrl + "/_analyze?pretty";
+    }
 
 //    @Value("${application.encodedCode}")
     private static String encodedCode = "Basic ZWxhc3RpYzo9ME1CWnMteitXMUtvc1VJWndSeA==";
@@ -32,7 +38,7 @@ public class ElasticSearchService implements ElasticSearch{
 
         try {
             keywordList.stream().forEach(keyword -> {
-                Map<String, Object> result = getReqeust(apiUrl, keyword);
+                Map<String, Object> result = getReqeust(ELASTIC_NORI_URL, keyword);
                 ArrayList<HashMap<String, String>> tokensInfo = (ArrayList<HashMap<String, String>>) result.get("tokens");
 
                 tokensInfo.forEach(tokenInfo -> {

@@ -22,7 +22,7 @@ import java.util.Arrays;
 @Slf4j
 public class AuthenticationFilter implements Filter {
 
-    private static final String[] WHITE_LIST = {"/", "/keyword/*", "/login", "/logout", "/api/oauth/*", "/mall/*"};
+    private static final String[] WHITE_LIST = {"/login", "/api/oauth/*", "/mall/*"};
     private final JwtProvider jwtProvider;
     private final OAuthLoginService oAuthLoginService;
 
@@ -52,8 +52,8 @@ public class AuthenticationFilter implements Filter {
             }
 
             if (jwtProvider.validateJwt(refreshToken)) {
-                String memberId = jwtProvider.getMemberIdFromJwt(refreshToken);
-                accessToken = jwtProvider.createJwt(memberId, 1000*60*60*24);
+                String email = jwtProvider.getEmailFromJwt(refreshToken);
+                accessToken = jwtProvider.createJwt(email, 1000*60*60*24);
 
                 oAuthLoginService.setupCookies(accessToken, refreshToken, httpResponse);
 
