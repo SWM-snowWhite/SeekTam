@@ -8,6 +8,7 @@ import food.backend.oauth.common.OAuthClient;
 import food.backend.oauth.common.OAuthType;
 import food.backend.oauth.common.TokenInfo;
 import food.backend.oauth.kakao.entity.KakaoUserInfo;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +43,7 @@ public class OAuthLoginService {
                 .findFirst();
     }
 
+    @Operation(summary = "OAuth 로그인 메서드", description = "OAuth를 통한 사용자 로그인을 처리합니다.")
     public Member login(LoginParams loginParams, HttpServletResponse response) {
         OAuthClient oAuthClient = OAuthClientHandler.get(loginParams.getOAuthType());
         TokenInfo tokenInfo = oAuthClient.requestTokenInfo(loginParams);
