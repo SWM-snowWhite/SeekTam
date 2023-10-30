@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function Signup() {
+    const [memberInfo, setMemberInfo] = useState({});
     const [nickname, setNickname] = useState('');
     const [gender, setGender] = useState('');
     const [birthYear, setBirthYear] = useState('');
@@ -45,26 +46,40 @@ export default function Signup() {
             .post(`${process.env.REACT_APP_SERVER_API_URL}/member/signup`, 
                 {
                     "email": "example@email.com",
-        "applyType": "1",
-        "nickname": "userNickname",
-        "gender": "M",
-        "birthYear": 1990,
-        "status": 1,
-        "height": 175,
-        "weight": 70,
-        "activity": 2,
-        "purposeUse": 3,
-        "lastAccessDate": "2023-10-18T14:30:00"
+                    "applyType": "1",
+                    "nickname": "userNickname",
+                    "gender": "M",
+                    "birthYear": 1990,
+                    "status": 1,
+                    "height": 175,
+                    "weight": 70,
+                    "activity": 2,
+                    "purposeUse": 3,
+                    "lastAccessDate": "2023-10-18T14:30:00"
                 }, {
                     withCredentials: true
                 }
                 )
             .then(res => {
+                const retrievedMemberInfo = res.data;
                 alert("회원가입에 성공하셨습니다.")
+                
+                // 회원가입 성공 후 로그인 로직
+                setMemberInfo(retrievedMemberInfo);
+                login()
                 navigate('/keyword')
             })
             .catch(err => console)
         }
+
+    const login = () => {
+        axios
+            .post(`${process.env.REACT_APP_SERVER_API_URL}/member/login`, 
+                {
+                    memberInfo
+                })
+    }
+
     return (
     <div className="container mx-auto mt-5">
         <h1 className="mb-4 text-2xl font-bold">회원가입</h1>
