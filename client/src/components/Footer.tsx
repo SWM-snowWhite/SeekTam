@@ -17,7 +17,7 @@ function Footer() {
 	}
 
 	return (
-		<div className='bg-blue-500 p-4 text-white flex justify-between'>
+		<div className='bg-blue-500 p-4 text-white flex justify-between bottom-0 absolute'>
 			<button onClick={onProfileClick} className='text-lg'>
 				내 정보
 			</button>
