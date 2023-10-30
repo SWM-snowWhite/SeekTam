@@ -31,7 +31,7 @@ public class JwtProvider {
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecretKey));
     }
 
-    public String getMemberIdFromJwt(String jwt) {
+    public String getEmailFromJwt(String jwt) {
         return Jwts.parserBuilder().setSigningKey(getKey()).build()
                 .parseClaimsJws(jwt).getBody().getSubject();
     }

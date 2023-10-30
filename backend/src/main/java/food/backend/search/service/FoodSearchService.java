@@ -1,9 +1,12 @@
 package food.backend.search.service;
 
+import food.backend.member.Member;
+import food.backend.member.MemberRepository;
 import food.backend.search.dao.FoodDetailDao;
 import food.backend.search.dao.FoodListDao;
 import food.backend.search.dto.FoodDetailDto;
 import food.backend.search.dto.FoodListDto;
+import food.backend.search.dto.FoodRankingResponseDto;
 import food.backend.search.model.KeywordAndNutrient;
 import food.backend.search.dao.FoodKeywordDao;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +27,7 @@ public class FoodSearchService {
     private final FoodKeywordDao foodKeywordDAO;
     private final FoodListDao foodListDAO;
     private final FoodDetailDao foodDetailDao;
+    private final MemberRepository memberRepository;
 
     /**
      * 키워드를 포함하는 음식명을 검색해 상위 10개의 음식명을 리스트로 반환하는 메소드
@@ -51,10 +55,21 @@ public class FoodSearchService {
      * @return 음식의 고유번호를 통해 검색된 음식의 상세정보를 FoodDetailDTO 객체로 반환
      *         @see FoodDetailDto
      */
-    public FoodDetailDto getFoodDetailById(Long foodId) {
+    public FoodDetailDto getFoodDetailById(Long foodId, String email) {
+        increaseViewCount(foodId, email);
         return foodDetailDao.getFoodDataById(foodId);
     }
 
+    private void increaseViewCount(Long foodId, String email) {
+        Optional<Member> memberId = memberRepository.findByEmail(email);
+        if (memberId != null) {
+            foodDetailDao.increaseViewCount(foodId, memberId.get().getId());
+        }
+    }
+
+    public List<FoodRankingResponseDto> getFoodRanking(String email) {
+        return foodDetailDao.getFoodRanking(email);
+    }
 
 
 }

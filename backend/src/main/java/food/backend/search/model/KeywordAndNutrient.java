@@ -1,5 +1,6 @@
 package food.backend.search.model;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -65,7 +66,10 @@ public class KeywordAndNutrient {
      * @param prot_con 요청파라미터의 prot_con값을 protCon 필드에 할당
      * @param fatce_con 요청파라미터의 fatce_con값을 fatceCon 필드에 할당
      */
-    public KeywordAndNutrient(String enerc_con, String chocdf_con, String prot_con, String fatce_con) {
+
+    @Builder
+    public KeywordAndNutrient(String keyword, String enerc_con, String chocdf_con, String prot_con, String fatce_con) {
+        this.keyword = keyword;
         this.enercCon = enerc_con;
         this.chocdfCon = chocdf_con;
         this.protCon = prot_con;

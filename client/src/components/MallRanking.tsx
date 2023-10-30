@@ -6,10 +6,13 @@ type MallRankingProps = {
     foodKeyword: string;
 }
 
-export default function MallRanking() {
+export default function MallRanking({
+        fetchKeywordSearch
+    }: {
+        fetchKeywordSearch: (keyword: string) => void
+    }) {
     const SERVER_API_URL = process.env.REACT_APP_SERVER_API_URL
     const [rankingData, setRankingData] = useState<MallRankingProps[]>();
-    // const [currentRank, setCurrentRank] = useState(0);
     
     useEffect(() => {
         getMallRanking();
@@ -27,6 +30,7 @@ export default function MallRanking() {
                 const sortedData: MallRankingProps[] = res.data.sort((a: MallRankingProps, b: MallRankingProps) => a.ranking - b.ranking)
                 setRankingData(sortedData);
             })
+            .catch(err => console.log(`getMallRanking error 발생: ${err}`))
     };
 
     return (
@@ -36,7 +40,10 @@ export default function MallRanking() {
                 {rankingData 
                 ? 
                     rankingData.map((item: MallRankingProps, idx: number) => (
-                        <li key={idx} className='bg-[#F4F4F4] text-16 rounded-sm h-30'>
+                        <li key={idx} 
+                            onClick={() => fetchKeywordSearch(item.foodKeyword)}
+                            className='bg-[#F4F4F4] text-16 rounded-sm h-30'
+                        >
                             <span className='text-[#0E6C57] ml-10 font-bold'>{item.ranking}</span>
                             <span className='ml-20'>{item.foodKeyword}</span>
                         </li> 
