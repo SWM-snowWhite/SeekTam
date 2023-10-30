@@ -1,6 +1,7 @@
 package food.backend.oauth.common.controller;
 
 
+import food.backend.member.Member;
 import food.backend.oauth.kakao.KakaoLoginParams;
 import food.backend.oauth.common.service.OAuthLoginService;
 import lombok.RequiredArgsConstructor;
@@ -20,10 +21,9 @@ public class OAuthController {
     private final OAuthLoginService oAuthLoginService;
 
     @PostMapping("/kakao")
-    public ResponseEntity<Void> loginKakao(@RequestBody KakaoLoginParams kakaoLoginParams, HttpServletResponse response) {
-        oAuthLoginService.login(kakaoLoginParams, response);
-
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Member> loginKakao(@RequestBody KakaoLoginParams kakaoLoginParams, HttpServletResponse response) {
+        System.out.println("kakaoLoginParams = " + kakaoLoginParams);
+        return ResponseEntity.ok(oAuthLoginService.login(kakaoLoginParams, response));
     }
 }
 
