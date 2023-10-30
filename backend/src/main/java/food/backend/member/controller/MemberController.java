@@ -19,6 +19,4 @@ public class MemberController {
     public ResponseEntity<Member> signup(@RequestBody SignupRequestDto signupRequestDto) {
         return ResponseEntity.ok(memberService.signup(signupRequestDto));
     }
-
-
 }

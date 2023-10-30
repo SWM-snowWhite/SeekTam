@@ -12,7 +12,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class MemberServiceImpl {
+public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
     public Member signup(SignupRequestDto signupRequestDto) {
         Member savedMember = memberRepository.save(signupRequestDto.toEntity());
