@@ -33,26 +33,30 @@ export default function ViewsRanking({
 	}, [])
 	return (
 		<div className='justify-center p-0 m-auto rounded-md shadow-md align-center w-320 mt-30 border-1 border-info'>
-			<span className='flex font-bold text-20 text-grey900 ml-15'>
+			<span className='flex ml-20 font-bold text-20 text-grey900 my-15'>
 				유저들이 많이 찾는 식품 🥗
 			</span>
-			<ul className='flex flex-col w-[80%] m-auto rounded-md'>
+			<ul className='flex flex-col w-[100%] m-auto rounded-md'>
 				{rankingData ? (
 					rankingData.map((item: ViewsRankingProps, idx: number) => (
 						<div
 							key={idx}
 							onClick={() => fetchKeywordSearch(item.foodName)}
-							className='flex mt-10 rounded-sm bg-sub text-16 h-70'
+							className='flex w-[90%] ml-15 mt-10 rounded-md text-16 h-70 border-1 border-grey200 items-center'
 						>
 							<div className='flex flex-col'>
-								<span className='text-[#0E6C57] ml-10 font-bold'>
+								<span className='ml-10 font-bold text-grey900'>
 									{item.foodName}
 								</span>
-								<span className='ml-20'>
+								<span className='ml-20 text-grey500'>
 									{item.calories} kcal
 								</span>
 							</div>
-							{item.liked ? <AiFillHeart /> : <AiOutlineHeart />}
+							<div className='flex items-center justify-start m-0 '>
+								{item.liked 
+									? <AiFillHeart size={24} className='text-red' /> 
+									: <AiOutlineHeart size={24} />}
+							</div>
 						</div>
 					))
 				) : (

@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { BsFillPersonLinesFill } from 'react-icons/bs'
 import { AiFillHome, AiFillHeart } from 'react-icons/ai'
+
+type currentPageProps = "home" | "profile" | "wishlist"
+
 function Footer() {
 	const navigate = useNavigate()
-
+	const [currentPage, setCurrentPage] = useState<currentPageProps>("home");
+	
 	const onProfileClick = () => {
 		navigate('/profile')
 	}
@@ -18,18 +22,18 @@ function Footer() {
 	}
 
 	return (
-		<div className='absolute bottom-0 flex justify-around p-4 m-auto border-white rounded-lg w-500 items-around text-main border-1'>
+		<div className='absolute bottom-0 z-0 flex justify-around p-4 m-auto border-white rounded-lg w-500 items-around text-main border-1'>
 			<div className='flex-row items-center justify-center m-0'>
-				<BsFillPersonLinesFill size={30} onClick={onProfileClick} className="text-white"/>
-				<label className='text-lg text-white'>내 정보</label>
+				<BsFillPersonLinesFill size={30} onClick={onProfileClick} className={currentPage === "profile" ? "text-main" : "text-grey300"}/>
+				<label className={currentPage === "profile" ? "text-main" : "text-grey300"}>내 정보</label>
 			</div>
 			<div>
-				<AiFillHome size={30} onClick={onHomeClick} className="text-white"/>
-				<label className='text-lg text-white'>홈 화면</label>
+				<AiFillHome size={30} onClick={onHomeClick} className={currentPage === "home" ? "text-main" : "text-grey300"}/>
+				<label className={currentPage === "home" ? "text-main" : "text-grey300"}>홈 화면</label>
 			</div>
 			<div>
-				<AiFillHeart size={30} onClick={onWishlistClick} className="text-white"/>
-				<label className='text-lg text-white'>찜 목록</label>
+				<AiFillHeart size={30} onClick={onWishlistClick} className={currentPage === "wishlist" ? "text-main" : "text-grey300"}/>
+				<label className={currentPage === "wishlist" ? "text-main" : "text-grey300"}>찜 목록</label>
 			</div>
 		</div>
 	)
