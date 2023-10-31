@@ -1,6 +1,6 @@
 package food.backend.config;
 
-import food.backend.member.common.MemberDtoArgumentResolver;
+import food.backend.batch.member.common.MemberDtoArgumentResolver;
 import food.backend.oauth.common.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;

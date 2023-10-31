@@ -1,4 +1,4 @@
-package food.backend.member.request;
+package food.backend.batch.member.request;
 
 import lombok.Builder;
 import lombok.Getter;

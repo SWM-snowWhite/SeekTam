@@ -2,7 +2,7 @@ package food.backend.member.service;
 
 import food.backend.member.dao.LikeDao;
 import food.backend.member.request.LikeRequest;
-import food.backend.member.request.MemberDto;
+import food.backend.batch.member.request.MemberDto;
 import food.backend.member.response.LikeResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

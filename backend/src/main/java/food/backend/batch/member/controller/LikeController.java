@@ -1,8 +1,8 @@
-package food.backend.member.controller;
+package food.backend.batch.member.controller;
 
-import food.backend.member.common.Authenticated;
+import food.backend.batch.member.common.Authenticated;
 import food.backend.member.request.LikeRequest;
-import food.backend.member.request.MemberDto;
+import food.backend.batch.member.request.MemberDto;
 import food.backend.member.response.LikeResponse;
 import food.backend.member.service.LikeService;
 import lombok.RequiredArgsConstructor;

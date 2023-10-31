@@ -1,6 +1,6 @@
-package food.backend.member.common;
+package food.backend.batch.member.common;
 
-import food.backend.member.request.MemberDto;
+import food.backend.batch.member.request.MemberDto;
 import food.backend.oauth.common.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
@@ -29,7 +29,7 @@ public class MemberDtoArgumentResolver implements HandlerMethodArgumentResolver 
         HttpServletRequest httpServletRequest = (HttpServletRequest) webRequest.getNativeRequest();
 
         String jwt = getTokenFromCookie(httpServletRequest, "access_token");
-        String memberId = jwtProvider.getMemberIdFromJwt(jwt);
+        String memberId = jwtProvider.getEmailFromJwt(jwt);
 
         return MemberDto.builder()
                 .memberId(memberId)
