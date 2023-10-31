@@ -9,7 +9,7 @@ export default function CommonBtn({
 }) {
 	return (
 		<div
-			className='cursor-pointer flex justify-center items-center border-r-100 bg-main w-335 h-50 text-white'
+			className=' flex items-center justify-center m-auto text-white rounded-md cursor-pointer bottom-[20%] bg-main w-335 h-50'
 			onClick={onClickAction}
 		>
 			{title}

@@ -1,6 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-
+import { BsFillPersonLinesFill } from 'react-icons/bs'
+import { AiFillHome, AiFillHeart } from 'react-icons/ai'
 function Footer() {
 	const navigate = useNavigate()
 
@@ -17,16 +18,19 @@ function Footer() {
 	}
 
 	return (
-		<div className='bg-blue-500 p-4 text-white flex justify-between bottom-0 absolute'>
-			<button onClick={onProfileClick} className='text-lg'>
-				내 정보
-			</button>
-			<button onClick={onHomeClick} className='text-lg'>
-				홈 화면
-			</button>
-			<button onClick={onWishlistClick} className='text-lg'>
-				찜 목록
-			</button>
+		<div className='absolute bottom-0 flex justify-around p-4 m-auto border-white rounded-lg w-500 items-around text-main border-1'>
+			<div className='flex-row items-center justify-center m-0'>
+				<BsFillPersonLinesFill size={30} onClick={onProfileClick} className="text-white"/>
+				<label className='text-lg text-white'>내 정보</label>
+			</div>
+			<div>
+				<AiFillHome size={30} onClick={onHomeClick} className="text-white"/>
+				<label className='text-lg text-white'>홈 화면</label>
+			</div>
+			<div>
+				<AiFillHeart size={30} onClick={onWishlistClick} className="text-white"/>
+				<label className='text-lg text-white'>찜 목록</label>
+			</div>
 		</div>
 	)
 }

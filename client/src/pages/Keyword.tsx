@@ -11,7 +11,6 @@ import ComparisonModal from '../components/modal/ComparisonModal'
 import ComparisonViewModal from '../components/modal/ComparisonViewModal'
 import MallRanking from '../components/MallRanking'
 import ViewsRanking from '../components/ViewsRanking'
-import Footer from '../components/Footer'
 
 export type SearchTitleType = 'enerc' | 'chocdf' | 'prot' | 'fatce'
 export type SearchOptionObjectType = {
@@ -259,7 +258,7 @@ export default function Keyword() {
 	}
 
 	return (
-		<div className='flex-row align-center w-390 border-1 border-main'>
+		<div className='absolute flex-row h-full bg-white align-center w-500'>
 			{selectedFoodIdx !== -1 ? (
 				<InfoModal
 					selectedFoodIdx={selectedFoodIdx}
@@ -342,7 +341,6 @@ export default function Keyword() {
 			/>
 			<MallRanking fetchKeywordSearch={fetchKeywordSearch} />
 			<ViewsRanking fetchKeywordSearch={fetchKeywordSearch} />
-			<Footer />
 		</div>
 	)
 }

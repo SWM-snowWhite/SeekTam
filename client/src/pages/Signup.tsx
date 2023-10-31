@@ -81,7 +81,7 @@ export default function Signup() {
     }
 
     return (
-    <div className="container mx-auto mt-5">
+    <div className="flex-row align-center w-390 border-1">
         <h1 className="mb-4 text-2xl font-bold">회원가입</h1>
         <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700">닉네임:</label>

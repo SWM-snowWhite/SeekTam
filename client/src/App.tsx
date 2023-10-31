@@ -79,9 +79,9 @@ function App() {
 	}
 
 	return (
-		<div className='flex-row h-full border-solid border-1 w-500 bg-main'>
+		<div className='absolute flex-row h-full border-solid w-500 bg-main'>
 			<div className='flex justify-center m-auto mb-150'>
-				<div className='flex flex-col m-0 justify-center'>
+				<div className='flex flex-col justify-center m-0'>
 					<img src={logo} className='w-250' />
 					<img src={typo} className='w-250' />
 				</div>
@@ -94,7 +94,6 @@ function App() {
 					src='/images/kakao_login_large_wide.png'
 				/>
 			</button>
-			<SearchBtn type='keyword' title='키워드 검색' />
 		</div>
 	)
 }

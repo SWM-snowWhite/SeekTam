@@ -8,10 +8,15 @@ import Signup from './pages/Signup'
 import WishListPage from './pages/WishListPage'
 import Footer from './components/Footer'
 import Welcome from './pages/Welcome'
+import Background from './pages/BackgroundLeft'
+import BackgroundLeft from './pages/BackgroundLeft'
+import BackgroundRight from './pages/BackgroundRight'
 
 const rootElement = document.getElementById('root')
 ReactDOM.render(
 	<BrowserRouter>
+		<BackgroundLeft/>
+		<BackgroundRight/>
 		<Routes>
 			<Route path='/' element={<App />} />
 			<Route path='/keyword' element={<Keyword />} />
