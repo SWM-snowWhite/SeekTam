@@ -94,6 +94,7 @@ public class FoodDetailDao {
                     .foodName(rs.getString("food_name"))
                     .calories(rs.getInt("calories"))
                     .ranking(rs.getInt("ranking"))
+                    .liked(rs.getBoolean("liked"))
                     .build();
         }
         public List<FoodRankingResponseDto> getFoodRanking(String email) {
@@ -112,7 +113,7 @@ public class FoodDetailDao {
                                     "f.food_id = ll.food_id " +
                                     "AND ll.member_id = ?" +
                                 ") IS NOT NULL THEN TRUE ELSE FALSE " +
-                            "END AS is_liked " +
+                            "END AS liked " +
                         "FROM " +
                             "food_main f " +
                             "JOIN ( " +
