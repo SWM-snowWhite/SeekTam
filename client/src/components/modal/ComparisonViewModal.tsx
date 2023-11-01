@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { FoodListType } from '../../pages/Keyword';
+import { FoodListType } from '../../pages/Main';
 import axios from 'axios';
 import { FoodInfoType } from '../../pages/FoodsDetail';
 
 export default function ComparisonViewModal(
     {
-        comparison,
+        comparisonList,
         handleComparisonView
     }: {
-        comparison: FoodListType,
+        comparisonList: FoodListType,
         handleComparisonView: () => void
 
     }
@@ -23,7 +23,7 @@ export default function ComparisonViewModal(
     const fetchComparisonInfo = async () => {
         try {
             const newComparisonInfo = await Promise.all(
-                comparison.map(async (item) => {
+                comparisonList.map(async (item) => {
                     const response = 
                         await axios
                             .get(`${SERVER_API_URL}/foods/search/detail?foodId=${item.foodId}`, {
@@ -34,7 +34,7 @@ export default function ComparisonViewModal(
             )
             setComparisonInfo(newComparisonInfo)
         } catch (error) {
-            console.log("Error fetching comparison info:", error);
+            console.log("Error fetching comparisonList info:", error);
         }
     }
 
@@ -48,7 +48,7 @@ export default function ComparisonViewModal(
     const sugars = comparisonInfo.map((item) => item.sugar)
 
     return (
-        <div className='h-full fixed bg-[black] w-390 bg-opacity-50 flex justify-center items-center'>
+        <div className='h-full fixed bg-[black] w-390 bg-opacity-50 flex justify-center items-center overflow-scroll'>
             <div className='border-main rounded-[10px] bg-[white]'>
                 <h1 className='flex justify-center mt-10 font-bold text-20'>상품비교</h1>
                 <div className="p-10 flex-row m-auto bg-[white] w-350 text-14 text-main rounded-md">

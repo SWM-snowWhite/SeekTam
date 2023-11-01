@@ -11,7 +11,7 @@ export default function KeywordComponent({
     relatedFoodList, keyword, fetchOptionKeywordSearch, focusedFoodIdx
 }: KeywordComponentProps) {
     return (
-        <div className='h-auto m-auto rounded-xl w-320 border-1 border-main'>
+        <div className='h-auto m-auto rounded-xl w-450 border-1 border-main'>
             {
             relatedFoodList && relatedFoodList.map((foodName: string, index: number) => {
                 if (foodName.length > 22) {
@@ -26,12 +26,12 @@ export default function KeywordComponent({
                     return 
                 } else {
                     return (
-                            <div onClick={() => fetchOptionKeywordSearch(foodName)} key={index} className={`flex ${index === focusedFoodIdx ? 'bg-[#f9e3e3] ' : ''}h-30 rounded-xl cursor-pointer hover:bg-[#f9e3e3]`}>
+                            <div onClick={() => fetchOptionKeywordSearch(foodName)} key={index} className={`flex ${index === focusedFoodIdx ? 'bg-p1000 bg-opacity-20 ' : ''}h-30 rounded-md cursor-pointer hover:bg-p200`}>
                                 <button>
                                         {
                                             prefix !== "" ? <span className="ml-5 text-[black]">{prefix}</span> : <></>
                                         }
-                                            <span className='ml-5 text-main'>{keyword}</span>
+                                            <span className='ml-5 font-bold text-p1000'>{keyword}</span>
                                         {
                                             postfix !== "" ? <span className="text-[black]">{postfix}</span>: <></>
                                         }

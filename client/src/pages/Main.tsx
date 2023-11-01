@@ -1,12 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import KeywordSearchBar from '../components/KeywordSearchBar';
-import KeywordSearchPageBar from '../components/KeywordSearchPageBar';
-import axios from 'axios';
-import InfoModal from '../components/modal/InfoModal';
-import ComparisonViewModal from '../components/modal/ComparisonViewModal';
-import ComparisonModal from '../components/modal/ComparisonModal';
-import KeywordComponent from '../components/KeywordComponent';
-import FoodList from '../components/FoodList';
+import React, { useEffect, useState } from 'react'
+import KeywordSearchBar from '../components/KeywordSearchBar'
+import axios from 'axios'
+import KeywordComponent from '../components/KeywordComponent'
+import NavigatorExceptSearch from '../components/NavigatorExceptSearch'
+import SearchOptionBar from '../components/SearchOptionBar'
+import { LuArrowDownWideNarrow, LuArrowUpNarrowWide } from 'react-icons/lu'
+import FoodList from '../components/FoodList'
+import InfoModal from '../components/modal/InfoModal'
+import ComparisonModal from '../components/modal/ComparisonModal'
+import ComparisonViewModal from '../components/modal/ComparisonViewModal'
+import MallRanking from '../components/MallRanking'
+import ViewsRanking from '../components/ViewsRanking'
+import { useNavigate } from 'react-router-dom'
+import FooterMain from '../components/FooterMain'
 
 export type SearchTitleType = 'enerc' | 'chocdf' | 'prot' | 'fatce'
 export type SearchOptionObjectType = {
@@ -57,7 +63,7 @@ const searchOptionList: SearchOptionType = {
 	},
 }
 
-export default function Search() {
+export default function Main() {
 	const [relatedFoodList, setRelatedFoodList] = useState([])
 	const [searchOptions, setSearchOptions] = useState(searchOptionList)
 	const [keyword, setKeyword] = useState<string>('')
@@ -70,7 +76,7 @@ export default function Search() {
 	const [comparisonList, setComparisonList] = useState<FoodListType>([])
 	const [viewComparison, setViewComparison] = useState(false)
 	const SERVER_API_URL = process.env.REACT_APP_SERVER_API_URL
-	
+
 	// 키워드가 초기화 될 경우 관련 검색어 초기화
 	useEffect(() => {
 		if (keyword === '') {
@@ -81,7 +87,7 @@ export default function Search() {
 		}
 	}, [keyword])
 
-	// 식품 리스트가 변경 시 관련 검색어, 키워드 초기화
+	// 푸드 리스트가 변경 시 관련 검색어, 키워드 초기화
 	useEffect(() => {
 		setRelatedFoodList([])
 		setKeyword('')
@@ -112,7 +118,6 @@ export default function Search() {
 	}
 
 	const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
-		console.log(`handleKeyUp`)
 		if (e.key === 'Enter') {
 			if (relatedFoodList.length === 0) return
 			if (focusedFoodIdx === -1) {
@@ -205,6 +210,7 @@ export default function Search() {
 			const response = await axios.get(optionKeywordUrl, {
 				withCredentials: true,
 			})
+
 			let fetchedFoodList = response.data.slice(0, 10)
 			setFoodList(fetchedFoodList)
 			setIsSearched(true)
@@ -238,10 +244,10 @@ export default function Search() {
 
 	const addComparison = (foodItem: FoodType) => {
 		if (comparisonList.length > 4) {
-			alert('비교는 최대 5개까지만 가능합니다.')
+			alert('비교는 2개까지만 가능합니다.')
 			return
 		}
-		setComparisonList(prevComparison => [...prevComparison, { ...foodItem }]);
+		setComparisonList([...comparisonList, { ...foodItem }])
 	}
 
 	const clearComparison = () => {
@@ -255,53 +261,57 @@ export default function Search() {
 	const handleComparisonView = () => {
 		setViewComparison(!viewComparison)
 	}
-	
-    return (
-        <div className='absolute flex-row h-full overflow-scroll bg-white w-500'>
-            <KeywordSearchPageBar
-				fetchKeywordSearch={fetchKeywordSearch}
-				keyword={keyword}
-				handleChangeKeyword={handleChangeKeyword}
-				handleKeyUp={handleKeyUp}
-				clearKeyword={clearKeyword}
-				fetchOptionKeywordSearch={fetchOptionKeywordSearch}
-			/>
-			{selectedFoodIdx !== -1 && (
+
+	return (
+		<div className='absolute flex-row h-full bg-white align-center w-500'>
+			{selectedFoodIdx !== -1 ? (
 				<InfoModal
 					selectedFoodIdx={selectedFoodIdx}
 					handleSelectedFood={handleSelectedFood}
 				/>
+			) : (
+				<></>
 			)}
-			{viewComparison && (
+			{viewComparison ? (
 				<ComparisonViewModal
 					comparisonList={comparisonList}
 					handleComparisonView={handleComparisonView}
 				/>
+			) : (
+				<></>
 			)}
-			{comparisonList.length > 0 && (
+			{comparisonList.length > 0 ? (
 				<ComparisonModal
 					comparisonList={comparisonList}
 					clearComparison={clearComparison}
 					deleteSpecificComparison={deleteSpecificComparison}
 					handleComparisonView={handleComparisonView}
 				/>
+			) : (
+				<></>
 			)}
-			{relatedFoodList.length > 0 && (
+			<NavigatorExceptSearch />
+			<KeywordSearchBar
+				fetchOptionKeywordSearch={fetchOptionKeywordSearch}
+				fetchKeywordSearch={fetchKeywordSearch}
+				keyword={keyword}
+				handleChangeKeyword={handleChangeKeyword}
+				clearKeyword={clearKeyword}
+				handleKeyUp={handleKeyUp}
+			/>
+			{relatedFoodList.length > 0 ? (
 				<KeywordComponent
 					relatedFoodList={relatedFoodList}
 					keyword={keyword}
 					fetchOptionKeywordSearch={fetchOptionKeywordSearch}
 					focusedFoodIdx={focusedFoodIdx}
 				/>
+			) : (
+				<></>
 			)}
-			<FoodList 
-                foodList={foodList} 
-                selectedKeyword={selectedKeyword} 
-                isSearched={isSearched} 
-                handleSelectedFood={handleSelectedFood}
-                addComparison={addComparison}
-            />
-        </div>
-    );
+			<MallRanking fetchKeywordSearch={fetchKeywordSearch} />
+			<ViewsRanking fetchKeywordSearch={fetchKeywordSearch} />
+			{/* <FooterMain/> */}
+		</div>
+	)
 }
-

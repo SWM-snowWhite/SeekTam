@@ -67,8 +67,8 @@ function App() {
 				 */
 				console.log(`data: ${JSON.stringify(response.data)}`)
 				response.status === 200
-					? navigate('/keyword')
-					: navigate('/main')
+					? navigate('/main')
+					: navigate('/')
 			})
 			.catch(error => {
 				console.log(`Error: ${error}`)

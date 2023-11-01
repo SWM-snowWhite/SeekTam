@@ -67,7 +67,7 @@ export default function Signup() {
                 // 회원가입 성공 후 로그인 로직
                 setMemberInfo(retrievedMemberInfo);
                 login()
-                navigate('/keyword')
+                navigate('/main')
             })
             .catch(err => console)
         }

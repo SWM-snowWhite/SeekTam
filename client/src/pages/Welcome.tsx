@@ -17,7 +17,7 @@ export default function Welcome() {
 			<CommonBtn 
 				title='시작하기'
 				onClickAction={() => {
-					navigate('/keyword')
+					navigate('/main')
 				}}
 			/>
 		</div>
