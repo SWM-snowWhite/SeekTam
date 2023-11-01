@@ -4,14 +4,14 @@ import { AiOutlineHeart } from 'react-icons/ai'
 import { AiFillHeart } from 'react-icons/ai'
 
 export default function WishListItem({
-	food_id,
-	food_name,
-	image_url,
+	foodId,
+	foodName,
+	imageUrl,
 	like,
 }: {
-	food_id: number
-	food_name: string
-	image_url: string
+	foodId: number
+	foodName: string
+	imageUrl: string
 	like: boolean
 }) {
 	const [stateLike, setStateLike] = useState(like)
@@ -23,7 +23,7 @@ export default function WishListItem({
 		axios
 			.put(
 				`${REACT_APP_SERVER_API_URL}/member/${likeOrUnLike}`,
-				{ food_id },
+				{ foodId },
 				{ withCredentials: true },
 			)
 			.then(_ => {
@@ -37,31 +37,28 @@ export default function WishListItem({
 	}
 
 	return (
-		<div className='w-170 h-210 p-4 mb-20'>
-			<div className='bg-white rounded-lg shadow-md p-4'>
+		<div className='p-4 mb-20 w-170 h-210'>
+			<div className='p-4 bg-white rounded-lg shadow-md'>
 				<img
-					src={image_url}
-					alt={food_name}
-					className='w-170 h-160 object-cover rounded-lg'
+					src={imageUrl}
+					alt={foodName}
+					className='object-cover rounded-lg w-170 h-160'
 				/>
-				<div className='flex w-full'>
+				<h1 className='font-bold text-center text-grey900'>진라면{foodName}</h1>
+				<div className='flex w-[80%] justify-center items-center bg-grey100 rounded-lg m-auto my-5'>
 					{stateLike ? (
 						<AiFillHeart
 							onClick={handleLikeFood}
-							className='text-main mw-10 my-5 justify-self-center w-[50%] cursor-pointer'
+							className='text-red mw-10 my-5 justify-self-center w-[50%] cursor-pointer'
 							size={24}
 						></AiFillHeart>
 					) : (
 						<AiOutlineHeart
 							onClick={handleLikeFood}
-							className='text-main mw-10 my-5 justify-self-center w-[50%] cursor-pointer'
+							className='text-grey400 mw-10 my-5 justify-self-center w-[50%] cursor-pointer'
 							size={24}
 						></AiOutlineHeart>
 					)}
-
-					<span className='font-bold mw-10 mw-10 my-5'>
-						{food_name}
-					</span>
 				</div>
 			</div>
 		</div>

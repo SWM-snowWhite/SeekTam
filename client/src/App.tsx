@@ -7,11 +7,11 @@ import Footer from './components/Footer'
 
 function App() {
 	const navigate = useNavigate()
-	// SDK는 한 번만 초기화해야 한다.
+	
 	const KAKAO = (window as any).Kakao
 	const isInitialMount = useRef(true)
 	const logo = '/images/Logo_symbol_origin@4x.png'
-	const typo = '/images/Logo_typo_white@4x.png'
+	const typo = '/images/Logo/4x/Logo_typo_origin@4x.png'
 	const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URL
 	const SERVER_API_URL = process.env.REACT_APP_SERVER_API_URL
 
@@ -79,8 +79,8 @@ function App() {
 	}
 
 	return (
-		<div className='absolute flex-row h-full border-solid w-500 bg-main'>
-			<div className='flex justify-center m-auto mb-150'>
+		<div className='absolute flex-row h-full bg-white border-solid w-500'>
+			<div className='flex justify-center m-auto mb-50'>
 				<div className='flex flex-col justify-center m-0'>
 					<img src={logo} className='w-250' />
 					<img src={typo} className='w-250' />
@@ -88,7 +88,7 @@ function App() {
 			</div>
 			<button className='flex-row justify-center w-full m-auto align-center'>
 				<img
-					className='m-auto w-335 h-50'
+					className='m-auto w-400 h-60'
 					onClick={kakaoLogin}
 					alt='카카오 로그인 버튼'
 					src='/images/kakao_login_large_wide.png'

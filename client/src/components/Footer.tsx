@@ -14,7 +14,7 @@ function Footer() {
 	}
 
 	const onHomeClick = () => {
-		navigate('/')
+		navigate('/keyword')
 	}
 
 	const onWishlistClick = () => {
@@ -22,7 +22,7 @@ function Footer() {
 	}
 
 	return (
-		<div className='absolute bottom-0 z-0 flex justify-around p-4 m-auto border-white rounded-lg w-500 items-around text-main border-1'>
+		<div className='absolute bottom-0 z-0 flex justify-around p-4 m-auto bg-white rounded-lg shadow-main border-grey200 w-500 items-around text-main border-1'>
 			<div className='flex-row items-center justify-center m-0'>
 				<BsFillPersonLinesFill size={30} onClick={onProfileClick} className={currentPage === "profile" ? "text-main" : "text-grey300"}/>
 				<label className={currentPage === "profile" ? "text-main" : "text-grey300"}>내 정보</label>

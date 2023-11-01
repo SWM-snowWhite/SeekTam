@@ -11,6 +11,8 @@ import ComparisonModal from '../components/modal/ComparisonModal'
 import ComparisonViewModal from '../components/modal/ComparisonViewModal'
 import MallRanking from '../components/MallRanking'
 import ViewsRanking from '../components/ViewsRanking'
+import { useNavigate } from 'react-router-dom'
+import FooterMain from '../components/FooterMain'
 
 export type SearchTitleType = 'enerc' | 'chocdf' | 'prot' | 'fatce'
 export type SearchOptionObjectType = {
@@ -78,6 +80,8 @@ export default function Keyword() {
 		if (keyword === '') {
 			setRelatedFoodList([])
 			setFocusedFoodIdx(-1)
+		} else {
+			fetchKeywordSearch(keyword)
 		}
 	}, [keyword])
 
@@ -205,7 +209,6 @@ export default function Keyword() {
 				withCredentials: true,
 			})
 
-			//Todo 추후 서버 API에서 갯수 조절 or 페이징 처리
 			let fetchedFoodList = response.data.slice(0, 10)
 			setFoodList(fetchedFoodList)
 			setIsSearched(true)
@@ -304,43 +307,9 @@ export default function Keyword() {
 			) : (
 				<></>
 			)}
-			{!optionView ? (
-				<div
-					onClick={handleOptionViewClick}
-					className='flex items-center justify-center p-5 mt-10 rounded-lg h-30 ml-35 w-320 border-1 border-info text-12'
-				>
-					<LuArrowDownWideNarrow className='w-12 h-12 mx-5' />
-					<span className='text-14'>검색 옵션</span>
-				</div>
-			) : (
-				<div
-					onClick={handleOptionViewClick}
-					className='flex items-center justify-center p-5 mt-10 rounded-lg h-30 ml-35 w-320 border-1 border-info text-12'
-				>
-					<LuArrowUpNarrowWide className='w-12 h-12 mx-5' />
-					<span className='text-14'>닫기</span>
-				</div>
-			)}
-
-			{optionView ? (
-				<SearchOptionBar
-					searchOptions={searchOptions}
-					handleViewToggle={handleViewToggle}
-					handleChangeGram={handleChangeGram}
-					handleCondition={handleCondition}
-				/>
-			) : (
-				<></>
-			)}
-			<FoodList
-				foodList={foodList}
-				selectedKeyword={selectedKeyword}
-				isSearched={isSearched}
-				handleSelectedFood={handleSelectedFood}
-				addComparison={addComparison}
-			/>
 			<MallRanking fetchKeywordSearch={fetchKeywordSearch} />
 			<ViewsRanking fetchKeywordSearch={fetchKeywordSearch} />
+			{/* <FooterMain/> */}
 		</div>
 	)
 }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { PiMagnifyingGlass } from 'react-icons/pi'
 import { GiCancel } from 'react-icons/gi'
+import { useNavigate } from 'react-router-dom'
 
 export default function KeywordSearchBar({
 	fetchKeywordSearch,
@@ -17,14 +18,16 @@ export default function KeywordSearchBar({
 	handleKeyUp: (event: React.KeyboardEvent<HTMLInputElement>) => void
 	fetchOptionKeywordSearch: () => void
 }) {
-	useEffect(() => {
-		fetchKeywordSearch(keyword)
-	}, [keyword])
-
+	const navigator = useNavigate()
+	const openSearchPage = (): void => {
+		navigator('/search')
+	}
 	return (
-		<div className='flex m-auto mt-40 rounded-2xl border-1 border-main w-320 h-37'>
+		<div 
+			className='flex m-auto mt-40 border-2 rounded-md border-main w-450 h-50'
+			onClick={openSearchPage}>
 			<input
-				className='text-main w-[90%] rounded-2xl focus:outline-none ml-10 placeholder:text-14 placeholder:text-grey300 '
+				className='text-main w-[90%] rounded-2xl focus:outline-none ml-10 placeholder:text-16 placeholder:text-grey400 '
 				onChange={handleChangeKeyword}
 				onKeyUp={handleKeyUp}
 				placeholder='찾고자 하는 식품명을 입력해 주세요'
