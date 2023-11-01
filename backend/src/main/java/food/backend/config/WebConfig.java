@@ -1,6 +1,6 @@
 package food.backend.config;
 
-import food.backend.batch.member.common.MemberDtoArgumentResolver;
+import food.backend.member.common.MemberDtoArgumentResolver;
 import food.backend.oauth.common.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
@@ -32,6 +32,8 @@ public class WebConfig implements WebMvcConfigurer {
                         "https://www.seektam.link",
                         "https://www.seektam.com"
                 )
+                .allowedHeaders("*")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowCredentials(true)
                 .maxAge(3600);
     }

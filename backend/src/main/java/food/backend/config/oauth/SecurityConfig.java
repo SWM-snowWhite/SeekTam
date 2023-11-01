@@ -24,7 +24,7 @@ public class SecurityConfig {
                 .cors().and()
                 .headers().frameOptions().disable().and()
                 .authorizeRequests()
-                .antMatchers("/login", "/api/**", "/member/signup", "/**").permitAll() // login 및 Swagger 페이지 제외
+                .antMatchers("/login", "/api/**", "/member/signup", "/**", "/member/**").permitAll() // login 및 Swagger 페이지 제외
                 .anyRequest().authenticated()
                 .and().logout()
                 .logoutSuccessUrl("/login");
