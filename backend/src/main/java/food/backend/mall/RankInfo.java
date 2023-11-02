@@ -16,5 +16,5 @@ public class RankInfo {
     private Date createdDate;
     private Integer ranking;
     private String foodKeyword;
-    private Integer hits;
+    private Integer views;
 }

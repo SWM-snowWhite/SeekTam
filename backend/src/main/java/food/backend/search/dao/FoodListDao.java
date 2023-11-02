@@ -91,6 +91,8 @@ public class FoodListDao {
                 sql += " <= :fatce";
             }
         }
+
+        sql += " limit 10";
         return jdbcTemplate.query(sql, paramMap, foodRowMapper());
     }
 
