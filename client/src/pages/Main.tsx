@@ -141,63 +141,6 @@ export default function Main() {
 		}
 	}
 
-	const handleViewToggle = (title: SearchTitleType) => {
-		const isView = searchOptions[title].view === 0 ? 1 : 0
-		let newSearchOptions
-
-		// 뷰가 꺼지면 gram을 0으로 되돌림
-		if (isView === 0) {
-			newSearchOptions = {
-				...searchOptions,
-				[title]: { ...searchOptions[title], view: isView, gram: 0 },
-			}
-		} else {
-			newSearchOptions = {
-				...searchOptions,
-				[title]: { ...searchOptions[title], view: isView },
-			}
-		}
-
-		setSearchOptions(newSearchOptions)
-	}
-
-	const changeGram = (title: SearchTitleType, gram: number) => {
-		setSearchOptions({
-			...searchOptions,
-			[title]: { ...searchOptions[title], gram },
-		})
-	}
-
-	const handleChangeGram = (
-		title: SearchTitleType,
-		e: React.ChangeEvent<HTMLInputElement>,
-	) => {
-		if (e.target.value === '') {
-			changeGram(title, 0)
-			return
-		}
-
-		if (typeof Number(e.target.value) !== 'number') {
-			alert('숫자만 입력 가능합니다.')
-			return
-		}
-
-		if (e.target.value.length > 3) {
-			alert('숫자는 세 자리까지만 입력 가능합니다.')
-			return
-		}
-		changeGram(title, Number(e.target.value))
-	}
-
-	const handleCondition = (title: SearchTitleType) => {
-		const newCondition = searchOptions[title].condition === 0 ? 1 : 0
-		const newSearchOptions = {
-			...searchOptions,
-			[title]: { ...searchOptions[title], condition: newCondition },
-		}
-		setSearchOptions(newSearchOptions)
-	}
-
 	const fetchOptionKeywordSearch = async (clicked?: string) => {
 		if (!clicked && keyword === '') return
 
@@ -234,62 +177,8 @@ export default function Main() {
 		return url.slice(0, -1)
 	}
 
-	const handleOptionViewClick = () => {
-		setOptionView(!optionView)
-	}
-
-	const handleSelectedFood = (idx: number) => {
-		setSelectedFoodIdx(idx)
-	}
-
-	const addComparison = (foodItem: FoodType) => {
-		if (comparisonList.length > 4) {
-			alert('비교는 2개까지만 가능합니다.')
-			return
-		}
-		setComparisonList([...comparisonList, { ...foodItem }])
-	}
-
-	const clearComparison = () => {
-		setComparisonList([])
-	}
-
-	const deleteSpecificComparison = (idx: number) => {
-		setComparisonList(comparisonList.filter((item, index) => index !== idx))
-	}
-
-	const handleComparisonView = () => {
-		setViewComparison(!viewComparison)
-	}
-
 	return (
 		<div className='absolute flex-row h-full bg-white align-center w-500'>
-			{selectedFoodIdx !== -1 ? (
-				<InfoModal
-					selectedFoodIdx={selectedFoodIdx}
-					handleSelectedFood={handleSelectedFood}
-				/>
-			) : (
-				<></>
-			)}
-			{viewComparison ? (
-				<ComparisonViewModal
-					comparisonList={comparisonList}
-					handleComparisonView={handleComparisonView}
-				/>
-			) : (
-				<></>
-			)}
-			{comparisonList.length > 0 ? (
-				<ComparisonModal
-					comparisonList={comparisonList}
-					clearComparison={clearComparison}
-					deleteSpecificComparison={deleteSpecificComparison}
-					handleComparisonView={handleComparisonView}
-				/>
-			) : (
-				<></>
-			)}
 			<NavigatorExceptSearch />
 			<KeywordSearchBar
 				fetchOptionKeywordSearch={fetchOptionKeywordSearch}

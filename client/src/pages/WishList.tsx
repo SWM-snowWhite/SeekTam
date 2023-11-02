@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import WishListItem from '../components/WishListItem'
 import axios from 'axios'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '..'
+import { currentPageUpdate } from '../store/CurrentPageSlice'
 
 type WishListProps = {
 	foodId: number
@@ -11,10 +14,16 @@ type WishListProps = {
 
 export default function WishList() {
 	const [wishlistItems, setWishListItems] = useState<WishListProps[]>()
+	const dispatcher = useDispatch()
 	const REACT_APP_SERVER_API_URL = process.env.REACT_APP_SERVER_API_URL
-
+	
 	useEffect(() => {
 		getWishListItems()
+		try {
+			dispatcher(currentPageUpdate('wishlist'))
+		} catch(error) {
+			console.log(error)
+		}
 	}, [])
 
 	const getWishListItems = () => {

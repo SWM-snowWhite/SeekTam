@@ -2,23 +2,25 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { BsFillPersonLinesFill } from 'react-icons/bs'
 import { AiFillHome, AiFillHeart } from 'react-icons/ai'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '..'
 
 type currentPageProps = "home" | "profile" | "wishlist"
 
 function Footer() {
-	const navigate = useNavigate()
-	const [currentPage, setCurrentPage] = useState<currentPageProps>("home");
+	const navigator = useNavigate()
+	const currentPage = useSelector((state: RootState) => state.currentPage)
 	
 	const onProfileClick = () => {
-		navigate('/profile')
+		navigator('/profile')
 	}
 
 	const onHomeClick = () => {
-		navigate('/main')
+		navigator('/main')
 	}
 
 	const onWishlistClick = () => {
-		navigate('/wishlist')
+		navigator('/wishlist')
 	}
 
 	return (

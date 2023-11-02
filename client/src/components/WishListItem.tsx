@@ -17,17 +17,33 @@ export default function WishListItem({
 	const [stateLike, setStateLike] = useState(like)
 	const REACT_APP_SERVER_API_URL = process.env.REACT_APP_SERVER_API_URL
 
+	const handleUnLikeFood = () => {
+		axios
+			.delete(`${REACT_APP_SERVER_API_URL}/member/unlike`,{
+				data: {
+					"foodId": foodId 
+				},
+					withCredentials: true 
+			})
+			.then(_ => {
+				console.log('success')
+				setStateLike(!stateLike)
+			})
+			.catch(_ => {
+				console.log('fail')
+			})
+	}
+	
 	const handleLikeFood = () => {
-		let likeOrUnLike = stateLike ? 'like' : 'unlike'
-
 		axios
 			.put(
-				`${REACT_APP_SERVER_API_URL}/member/${likeOrUnLike}`,
+				`${REACT_APP_SERVER_API_URL}/member/like`,
 				{ foodId },
 				{ withCredentials: true },
 			)
 			.then(_ => {
 				console.log('success')
+				setStateLike(!stateLike)
 			})
 			.catch(_ => {
 				console.log('fail')
@@ -48,7 +64,7 @@ export default function WishListItem({
 				<div className='flex w-[80%] justify-center items-center bg-grey100 rounded-lg m-auto my-5'>
 					{stateLike ? (
 						<AiFillHeart
-							onClick={handleLikeFood}
+							onClick={handleUnLikeFood}
 							className='text-red mw-10 my-5 justify-self-center w-[50%] cursor-pointer'
 							size={24}
 						></AiFillHeart>

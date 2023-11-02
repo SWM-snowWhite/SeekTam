@@ -13,13 +13,26 @@ export default function Food({
 	const [stateLike, setStateLike] = useState(foodItem.like)
 	const DEFAULT_IMAGE = '/images/Graphic/2x/food@2x.png'
 	const REACT_APP_SERVER_API_URL = process.env.REACT_APP_SERVER_API_URL
-
+	console.log(JSON.stringify(foodItem))
+	const handleUnLikeFood = () => {
+		axios
+			.delete(`${REACT_APP_SERVER_API_URL}/member/unlike}`,{
+				data: {
+					"foodId": foodItem.foodId 
+				},
+					withCredentials: true 
+			})
+			.then(_ => {
+				console.log('success')
+			})
+			.catch(_ => {
+				console.log('fail')
+			})
+	}
 	const handleLikeFood = () => {
-		let likeOrUnLike = stateLike ? 'like' : 'unlike'
-//Todo Unlike는 Delete Method로 변경해야함
 		axios
 			.put(
-				`${REACT_APP_SERVER_API_URL}/member/${likeOrUnLike}`,{ 
+				`${REACT_APP_SERVER_API_URL}/member/like}`,{ 
                     "foodId": foodItem.foodId 
                 }, { 
                     withCredentials: true 
@@ -49,10 +62,9 @@ export default function Food({
 						<span className='mx-5 my-5 text-14 text-p800'>비교함</span>
 					</div>
 					<div className='flex items-center justify-center m-auto my-5 rounded-lg bg-grey100'>
-						
 						{stateLike ? (
 							<AiFillHeart
-								onClick={handleLikeFood}
+								onClick={handleUnLikeFood}
 								className='my-5 cursor-pointer w-50 text-red mw-10 justify-self-center'
 								size={22}
 							></AiFillHeart>
