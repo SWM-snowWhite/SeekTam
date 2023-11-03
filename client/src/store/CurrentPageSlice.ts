@@ -7,20 +7,14 @@ export type CurrentPageType =
 	| 'privacy'
 	| 'agreement'
 
-export interface CurrentPageObjectType {
-	key: CurrentPageType
-}
-
-const initialState: CurrentPageObjectType = {
-	key: 'home',
-}
+const initialState: CurrentPageType = 'home'
 
 export const currentPageSlice = createSlice({
 	name: 'currentPage',
-	initialState: initialState as CurrentPageObjectType,
+	initialState: initialState as CurrentPageType,
 	reducers: {
 		currentPageUpdate: (state, action: PayloadAction<CurrentPageType>) => {
-			state.key = action.payload
+			return action.payload
 		},
 		currentPageReset: () => initialState,
 	},

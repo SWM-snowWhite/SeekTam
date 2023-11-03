@@ -30,7 +30,10 @@ export default function Profile() {
 						<h1 className='m-15 font-bold text-18'>
 							{userInfo.nickname}
 						</h1>
-						<div className='flex justify-center items-center m-auto w-120 h-37 bg-grey100 rounded-full'>
+						<div
+							onClick={() => alert('서비스 준비 중입니다.')}
+							className='flex justify-center items-center m-auto w-120 h-37 bg-grey100 rounded-full cursor-pointer'
+						>
 							<PiNotePencil />
 							<span className='font-medium'>수정하기</span>
 						</div>
