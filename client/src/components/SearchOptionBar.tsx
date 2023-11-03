@@ -1,6 +1,6 @@
 import React from 'react';
 import SearchOption from './SearchOption';
-import { SearchOptionType, SearchTitleType } from '../pages/Keyword';
+import { SearchOptionType, SearchTitleType } from '../pages/Main';
 
 export default function SearchOptionBar(
     {

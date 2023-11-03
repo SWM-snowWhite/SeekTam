@@ -1,6 +1,7 @@
 package food.backend.mall;
 
 import food.backend.mall.dao.MallRepository;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,6 +11,7 @@ public class RedisRepositoryTest {
     @Autowired
     private MallRepository redisRepository;
 
+    @DisplayName("RedisRepository 테스트")
     @Test
     void test() {
         RankInfo rankInfo = new RankInfo();
@@ -29,4 +31,8 @@ public class RedisRepositoryTest {
         // 삭제
         redisRepository.delete(rankInfo);
     }
+//
+//    @DisplayName()
+//    @Test
+//    void queryDSL
 }

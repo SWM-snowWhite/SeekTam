@@ -17,16 +17,16 @@ public class MallRdsDao extends MallRepository{
 
     public List<RankInfo> getMallRanking() {
         String sql = "SELECT * FROM food_keyword_ranking ORDER BY ID DESC limit 10";
-        return jdbcTemplate.query(sql, MalLRankingMapper());
+        return jdbcTemplate.query(sql, MallRankingMapper());
     }
-    private RowMapper<RankInfo> MalLRankingMapper() {
+    private RowMapper<RankInfo> MallRankingMapper() {
             return (rs, rowNum) -> {
                 RankInfo rankInfo = new RankInfo();
                 rankInfo.setId(rs.getLong("id"));
                 rankInfo.setCreatedDate(rs.getTimestamp("created_date"));
                 rankInfo.setRanking(rs.getInt("ranking"));
                 rankInfo.setFoodKeyword(rs.getString("keyword"));
-                rankInfo.setHits(rs.getInt("hits"));
+                rankInfo.setViews(rs.getInt("views"));
                 return rankInfo;
         };
     }

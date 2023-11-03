@@ -84,11 +84,7 @@ public class OAuthKakaoClient implements OAuthClient {
         HttpEntity<?> request = new HttpEntity<>(new LinkedMultiValueMap<>(), httpHeaders);
 
         KakaoUserInfo kakaoUserInfo = restTemplate.postForObject(infoURI, request, KakaoUserInfo.class);
-        System.out.println(kakaoUserInfo.getId().toString());
-        System.out.println(kakaoUserInfo.getKakaoAccount().getProfile().getNickname());
-        System.out.println(kakaoUserInfo.getKakaoAccount().getProfile().getProfileImageUrl());
-        System.out.println(kakaoUserInfo.getKakaoAccount().getEmail());
-        return makeJwt(kakaoUserInfo.getId().toString(), accessExpirationTime);
+        return makeJwt(kakaoUserInfo.getKakaoAccount().getEmail().toString(), accessExpirationTime);
     }
 
     // 주석 + 예시 데이터 추가

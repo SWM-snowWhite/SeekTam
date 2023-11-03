@@ -2,11 +2,16 @@ package food.backend.member.service;
 
 import food.backend.member.Member;
 import food.backend.member.MemberRepository;
+import food.backend.member.dao.LikeDao;
 import food.backend.member.dto.SignupRequestDto;
+import food.backend.member.request.LikeRequest;
+import food.backend.member.request.MemberDto;
+import food.backend.member.response.LikeResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -14,6 +19,7 @@ import java.util.Optional;
 @Slf4j
 public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
+    private final LikeDao likeDao;
     public Member signup(SignupRequestDto signupRequestDto) {
         Member savedMember = memberRepository.save(signupRequestDto.toEntity());
         log.info("savedMember" + savedMember.toString());
@@ -31,5 +37,21 @@ public class MemberServiceImpl implements MemberService {
         Optional<Member> savedMember = memberRepository.findById(id);
         log.info("savedMember" + savedMember.toString());
         return savedMember;
+    }
+
+    public void pushLikeFood(LikeRequest likeRequest, MemberDto memberDto) {
+        likeDao.pushLikeFood(likeRequest, memberDto.getEmail());
+    }
+
+    public void unlikeFood(LikeRequest likeRequest, MemberDto memberDto) {
+        likeDao.unlikeFood(likeRequest, memberDto.getEmail());
+    }
+
+    public List<LikeResponse> getLikeList(MemberDto memberDto) {
+        return likeDao.getLikeList(memberDto.getEmail());
+    }
+
+    public boolean checkLike(LikeRequest likeRequest, MemberDto memberDto) {
+        return likeDao.checkLike(memberDto.getEmail(), likeRequest.getFoodId());
     }
 }

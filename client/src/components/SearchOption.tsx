@@ -1,5 +1,5 @@
 import React from 'react';
-import { SearchOptionObjectType, SearchTitleType } from '../pages/Keyword';
+import { SearchOptionObjectType, SearchTitleType } from '../pages/Main';
 
 export default function SearchOption(
     {

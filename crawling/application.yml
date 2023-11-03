@@ -12,7 +12,8 @@ spring:
     password:
 #    username: white
 #    password: tnsqor1!
-
+  elastic:
+    url: http://43.201.131.126:9200
   jpa:
     hibernate:
       ddl-auto: none
