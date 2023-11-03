@@ -1,4 +1,4 @@
-package food.backend.search.dao;
+package food.backend.search.dto;
 
 import lombok.Builder;
 import lombok.Data;
