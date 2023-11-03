@@ -54,11 +54,11 @@ public class ElasticSearchService implements ElasticSearch{
         }
     }
 
-    private static Map<String, Object> getReqeust(String baseUrl, String keywordList ) {
+    private static Map<String, Object> getReqeust(String baseUrl, String keyword) {
 
         Map<String, String> bodyData = new HashMap<>();
         bodyData.put("analyzer", "nori");
-        bodyData.put("text", keywordList);
+        bodyData.put("text", keyword);
 
         log.info("bodyData" + bodyData.toString());
         try {
