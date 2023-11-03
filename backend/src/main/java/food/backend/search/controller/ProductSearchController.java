@@ -32,7 +32,7 @@ public class ProductSearchController {
     }
 
     @GetMapping("/detail")
-    public ProductDetailDto getProductDetail(@RequestParam Integer foodId) {
+    public ProductDetailDto searchProductDetail(@RequestParam Integer foodId) {
         return productSearchService.getProductDetail(foodId);
     }
 }
