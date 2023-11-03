@@ -22,7 +22,7 @@ public class JwtProvider {
         return Jwts.builder()
                 .setSubject(subject)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(new Date().getTime() + expirationTime))
+                .setExpiration(new Date(new Date().getTime() + expirationTime * 60 * 24))
                 .signWith(getKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -31,7 +31,7 @@ public class JwtProvider {
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecretKey));
     }
 
-    public String getMemberIdFromJwt(String jwt) {
+    public String getEmailFromJwt(String jwt) {
         return Jwts.parserBuilder().setSigningKey(getKey()).build()
                 .parseClaimsJws(jwt).getBody().getSubject();
     }

@@ -1,10 +1,18 @@
 package food.backend.search.dao;
 
 import food.backend.search.dto.FoodDetailDto;
+import food.backend.search.dto.FoodRankingResponseDto;
+import food.backend.search.model.ViewsFood;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
+import java.sql.ResultSet;
+import java.util.List;
 
 /**
  * ID : ST-C-110-J
@@ -16,6 +24,8 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class FoodDetailDao {
 
+    @PersistenceContext
+    private final EntityManager em;
     /**
      * JdbcTemplate을 사용해 DB에 접근
      * @see JdbcTemplate
@@ -70,5 +80,45 @@ public class FoodDetailDao {
                     .foodSize(rs.getString("food_size"))
                     .companyName(rs.getString("company_name"))
                     .build();
+        }
+
+        @Transactional
+        public void increaseViewCount(Long foodId, Long memberId) {
+            em.persist(ViewsFood.builder()
+                    .foodId(foodId)
+                    .memberId(memberId)
+                    .build());
+        }
+
+        private RowMapper<FoodRankingResponseDto> foodRankingRowMapper(){
+            return (rs, rowNum) ->
+                FoodRankingResponseDto.builder()
+                    .foodId(rs.getLong("food_id"))
+                    .foodName(rs.getString("food_name"))
+                    .calories(rs.getInt("calories"))
+                    .ranking(rs.getInt("ranking"))
+                    .build();
+        }
+        public List<FoodRankingResponseDto> getFoodRanking(String email) {
+            String sql = "SELECT "
+                    + "f.food_id, "
+                    + "f.food_name, "
+                    + "f.enerc AS calories, "
+                    + "ROW_NUMBER() OVER (ORDER BY fc.count DESC, f.food_id) AS ranking, "
+                    + "CASE WHEN ( "
+                    + "    SELECT 1 "
+                    + "    FROM like_list ll "
+                    + "    WHERE f.food_id = ll.food_id "
+                    + "    AND ll.member_id = ? "
+                    + ") IS NOT NULL THEN TRUE ELSE FALSE END AS is_liked "
+                    + "FROM food_main f "
+                    + "JOIN ( "
+                    + "    SELECT food_id, COUNT(food_id) AS count "
+                    + "    FROM views_food "
+                    + "    GROUP BY food_id "
+                    + "    ORDER BY count DESC "
+                    + ") AS fc ON f.food_id = fc.food_id "
+                    + "ORDER BY ranking;";
+            return jdbcTemplate.query(sql, foodRankingRowMapper(), email);
         }
     }

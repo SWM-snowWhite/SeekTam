@@ -24,7 +24,7 @@ export default function KeywordSearchBar({
     return (
         <div className="flex m-auto mt-40 rounded-2xl border-1 border-main w-320 h-37">
             <input 
-                className="text-main w-[90%] rounded-2xl focus:outline-none ml-10 placeholder:text-14 placeholder:text-sub " onChange={handleChangeKeyword} 
+                className="text-main w-[90%] rounded-2xl focus:outline-none ml-10 placeholder:text-14 placeholder:text-main " onChange={handleChangeKeyword} 
                 onKeyUp={handleKeyUp} 
                 placeholder='식품명 또는 원재료명을 입력 해 주세요' 
                 value={keyword}

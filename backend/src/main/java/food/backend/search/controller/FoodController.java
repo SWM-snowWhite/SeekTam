@@ -1,13 +1,18 @@
 package food.backend.search.controller;
 
+import com.nimbusds.oauth2.sdk.util.JWTClaimsSetUtils;
+import food.backend.oauth.common.jwt.JwtProvider;
 import food.backend.search.dto.FoodDetailDto;
 import food.backend.search.dto.FoodListDto;
+import food.backend.search.dto.FoodRankingResponseDto;
 import food.backend.search.model.KeywordAndNutrient;
 import food.backend.search.service.FoodSearchService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -19,7 +24,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/foods/search")
 @RequiredArgsConstructor
+@Slf4j
 public class FoodController {
+    private final JwtProvider jwtProvider;
 
     /**
      * 각 API 요청에 맞게 비즈니스 로직을 수행하여 결과를 반환하는 서비스 클래스를 의존 주입
@@ -56,8 +63,21 @@ public class FoodController {
      * @return 음식의 상세정보를 담은 객체
      */
     @GetMapping("/detail")
-    public FoodDetailDto getFoodDetail(@RequestParam Long foodId) {
-        return foodSearchService.getFoodDetailById(foodId);
+    public FoodDetailDto getFoodDetail(@RequestParam Long foodId, HttpServletRequest request) {
+        String token = request.getCookies()[0].getValue();
+
+        log.info("token " + token);
+        String email = jwtProvider.getEmailFromJwt(token);
+        log.info("email " + email);
+        return foodSearchService.getFoodDetailById(foodId, email);
+    }
+
+    @GetMapping("/ranking")
+    public List<FoodRankingResponseDto> getFoodRanking(HttpServletRequest request) {
+        String token = request.getCookies()[0].getValue();
+        String email = jwtProvider.getEmailFromJwt(token);
+        log.info("email " + email);
+        return foodSearchService.getFoodRanking(email);
     }
 
 }

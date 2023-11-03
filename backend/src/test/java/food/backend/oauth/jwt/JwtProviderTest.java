@@ -23,7 +23,7 @@ public class JwtProviderTest {
         String memberId = "123412";
         String jwt = jwtProvider.createJwt(memberId, 11);
 
-        String memberIdFromJwt = jwtProvider.getMemberIdFromJwt(jwt);
+        String memberIdFromJwt = jwtProvider.getEmailFromJwt(jwt);
 
         Assertions.assertTrue(memberId.equals(memberIdFromJwt));
     }
