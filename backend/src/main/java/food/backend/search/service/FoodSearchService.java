@@ -15,7 +15,10 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 /**
- * 요청 API에 맞게 데이터를 가공하는 서비스 클래스
+ * ID : ST-C-110-J
+ * 작성자 : 임동훈(snowcrab382@naver.com), 박주혁()
+ * 버전 : 1.0.0
+ * 작성일 : 2023-10-20
  */
 @Service
 @RequiredArgsConstructor

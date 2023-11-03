@@ -5,11 +5,14 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
-
+/**
+ * ID : ST-C-100-J
+ * 작성자 : 임동훈(snowcrab382@naver.com)
+ * 버전 : 1.0.0
+ * 작성일 : 2023-10-20
+ */
 @Data
 public class FoodNutritionDto {
-
-    private LocalDateTime updateDate;
 
     @JsonProperty("foodCd")
     private String foodCd;

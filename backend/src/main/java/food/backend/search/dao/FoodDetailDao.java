@@ -15,7 +15,10 @@ import java.sql.ResultSet;
 import java.util.List;
 
 /**
- * 실제 DB에 접근해 음식의 상세정보를 요청하는 DAO 클래스
+ * ID : ST-C-110-J
+ * 작성자 : 임동훈(snowcrab382@naver.com)
+ * 버전 : 1.0.0
+ * 작성일 : 2023-10-20
  */
 @Repository
 @RequiredArgsConstructor

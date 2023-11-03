@@ -12,7 +12,10 @@ import org.springframework.util.StringUtils;
 import java.util.List;
 
 /**
- * 실제 DB에 접근해 키워드를 포함하며 영양소 조건을 만족하는 음식의 foodId,foodName,companyName를 요청하는 DAO 클래스
+ * ID : ST-C-110-J
+ * 작성자 : 임동훈(snowcrab382@naver.com)
+ * 버전 : 1.0.0
+ * 작성일 : 2023-10-20
  */
 @Repository
 @RequiredArgsConstructor
