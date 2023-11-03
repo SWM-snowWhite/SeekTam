@@ -3,16 +3,8 @@ import KeywordSearchBar from '../components/KeywordSearchBar'
 import axios from 'axios'
 import KeywordComponent from '../components/KeywordComponent'
 import NavigatorExceptSearch from '../components/NavigatorExceptSearch'
-import SearchOptionBar from '../components/SearchOptionBar'
-import { LuArrowDownWideNarrow, LuArrowUpNarrowWide } from 'react-icons/lu'
-import FoodList from '../components/FoodList'
-import InfoModal from '../components/modal/InfoModal'
-import ComparisonModal from '../components/modal/ComparisonModal'
-import ComparisonViewModal from '../components/modal/ComparisonViewModal'
 import MallRanking from '../components/MallRanking'
 import ViewsRanking from '../components/ViewsRanking'
-import { useNavigate } from 'react-router-dom'
-import FooterMain from '../components/FooterMain'
 
 export type SearchTitleType = 'enerc' | 'chocdf' | 'prot' | 'fatce'
 export type SearchOptionObjectType = {
@@ -31,7 +23,7 @@ export type FoodType = {
 	foodName: string
 	manufacture: string
 	imageUrl: string
-    like: boolean
+	like: boolean
 }
 
 export type FoodListType = Array<FoodType> | []

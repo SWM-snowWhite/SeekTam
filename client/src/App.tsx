@@ -4,10 +4,13 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import SearchBtn from './components/btn/SearchBtn'
 import Footer from './components/Footer'
+import { useDispatch } from 'react-redux'
+import { userInfoUpdate } from './store/UserInfoSlice'
 
 function App() {
 	const navigate = useNavigate()
-	
+	const dispatcher = useDispatch()
+
 	const KAKAO = (window as any).Kakao
 	const isInitialMount = useRef(true)
 	const logo = '/images/Logo_symbol_origin@4x.png'
@@ -29,7 +32,12 @@ function App() {
 				memberInfo,
 			})
 			.then(response => {
-				setMemberInfo(response.data)
+				console.log(
+					`JSON.stringify(response.data): ${JSON.stringify(
+						response.data,
+					)}`,
+				)
+				dispatcher(userInfoUpdate(response.data))
 				navigate('/main')
 			})
 			.catch(err => {
@@ -65,10 +73,13 @@ function App() {
 				 * 200 status code를 반환하면 메인 페이지로 이동
 				 * 3XX status code를 반환하면 회원가입 페이지로 이동
 				 */
-				console.log(`data: ${JSON.stringify(response.data)}`)
-				response.status === 200
-					? navigate('/main')
-					: navigate('/')
+				console.log(
+					`JSON.stringify(response.data): ${JSON.stringify(
+						response.data,
+					)}`,
+				)
+				dispatcher(userInfoUpdate(response.data))
+				response.status === 200 ? navigate('/main') : navigate('/')
 			})
 			.catch(error => {
 				console.log(`Error: ${error}`)

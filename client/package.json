@@ -51,6 +51,7 @@
     ]
   },
   "devDependencies": {
+    "@yarnpkg/sdks": "^3.0.0",
     "postcss-loader": "^7.3.3"
   }
 }

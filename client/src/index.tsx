@@ -22,6 +22,8 @@ import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import CurrentPageSlice from './store/CurrentPageSlice'
 import UserInfoSlice from './store/UserInfoSlice'
+import Profile from './pages/Profile'
+import CustomerSupport from './pages/CustomerSupport'
 /* persist 선언 */
 const persistConfig = {
 	key: 'root',
@@ -44,7 +46,7 @@ const store = configureStore({
 	reducer: persistedReducer,
 	middleware: getDefaultMiddleware =>
 		getDefaultMiddleware({
-		serializableCheck: false,
+			serializableCheck: false,
 		}),
 })
 
@@ -63,8 +65,8 @@ ReactDOM.render(
 		<React.StrictMode>
 			<BrowserRouter>
 				<PersistGate loading={null} persistor={persistor}></PersistGate>
-				<BackgroundLeft/>
-				<BackgroundRight/>
+				<BackgroundLeft />
+				<BackgroundRight />
 				<Routes>
 					<Route path='/' element={<App />} />
 					<Route path='/main' element={<Main />} />
@@ -72,6 +74,11 @@ ReactDOM.render(
 					<Route path='/wishlist' element={<WishListPage />} />
 					<Route path='/welcome' element={<Welcome />} />
 					<Route path='/search' element={<Search />} />
+					<Route path='/profile' element={<Profile />} />
+					<Route
+						path='/customer-support'
+						element={<CustomerSupport />}
+					/>
 				</Routes>
 				<Footer />
 			</BrowserRouter>

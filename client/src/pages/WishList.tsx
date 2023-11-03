@@ -16,12 +16,12 @@ export default function WishList() {
 	const [wishlistItems, setWishListItems] = useState<WishListProps[]>()
 	const dispatcher = useDispatch()
 	const REACT_APP_SERVER_API_URL = process.env.REACT_APP_SERVER_API_URL
-	
+
 	useEffect(() => {
 		getWishListItems()
 		try {
 			dispatcher(currentPageUpdate('wishlist'))
-		} catch(error) {
+		} catch (error) {
 			console.log(error)
 		}
 	}, [])
@@ -51,25 +51,25 @@ export default function WishList() {
 		<div className='absolute h-full p-4 bg-white w-500 m-0min-h-screen'>
 			<div>
 				<div className='flex flex-col justify-center w-auto mb-10 h-50'>
-					<h1 className='m-10 font-bold text-20'>
-						찜 목록
-					</h1>
+					<h1 className='m-10 font-bold text-20'>찜 목록</h1>
 					<hr className='text-grey200'></hr>
 				</div>
 				<div className='grid max-w-screen-md grid-cols-1 gap-4 mx-auto md:grid-cols-3'>
-				{wishlistItems ? (
-					wishlistItems.map((item: WishListProps, idx: number) => (
-						<WishListItem
-							key={idx}
-							foodId={item.foodId}
-							foodName={item.foodName}
-							imageUrl={item.imageUrl}
-							liked={item.liked}
-						/>
-					))
-				) : (
-					<></>
-				)}
+					{wishlistItems ? (
+						wishlistItems.map(
+							(item: WishListProps, idx: number) => (
+								<WishListItem
+									key={idx}
+									foodId={item.foodId}
+									foodName={item.foodName}
+									imageUrl={item.imageUrl}
+									liked={item.liked}
+								/>
+							),
+						)
+					) : (
+						<></>
+					)}
 				</div>
 			</div>
 		</div>

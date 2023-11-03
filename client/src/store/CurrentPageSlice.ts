@@ -1,25 +1,30 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
-export type CurrentPageType = "home" | "wishlist" | "profile"
+export type CurrentPageType =
+	| 'home'
+	| 'wishlist'
+	| 'profile'
+	| 'privacy'
+	| 'agreement'
 
 export interface CurrentPageObjectType {
-    key: CurrentPageType;
+	key: CurrentPageType
 }
 
 const initialState: CurrentPageObjectType = {
-    key : "home"
+	key: 'home',
 }
 
 export const currentPageSlice = createSlice({
-    name: 'currentPage',
-    initialState: initialState as CurrentPageObjectType,
-    reducers: {
-        currentPageUpdate: (state, action: PayloadAction<CurrentPageType>) => {
-            state.key = action.payload; 
-        },
-        currentPageReset: () => initialState
-    }
+	name: 'currentPage',
+	initialState: initialState as CurrentPageObjectType,
+	reducers: {
+		currentPageUpdate: (state, action: PayloadAction<CurrentPageType>) => {
+			state.key = action.payload
+		},
+		currentPageReset: () => initialState,
+	},
 })
 
-export const { currentPageUpdate, currentPageReset }  = currentPageSlice.actions
+export const { currentPageUpdate, currentPageReset } = currentPageSlice.actions
 export default currentPageSlice.reducer
