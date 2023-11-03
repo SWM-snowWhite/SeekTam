@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { AiOutlineHeart } from 'react-icons/ai'
 import { AiFillHeart } from 'react-icons/ai'
 
@@ -7,16 +7,17 @@ export default function WishListItem({
 	foodId,
 	foodName,
 	imageUrl,
-	like,
+	liked,
 }: {
 	foodId: number
 	foodName: string
 	imageUrl: string
-	like: boolean
+	liked: boolean
 }) {
-	const [stateLike, setStateLike] = useState(like)
+	const [stateLike, setStateLike] = useState(liked)
 	const REACT_APP_SERVER_API_URL = process.env.REACT_APP_SERVER_API_URL
-
+	const DEFAULT_IMAGE = '/images/Graphic/2x/food@2x.png'
+	
 	const handleUnLikeFood = () => {
 		axios
 			.delete(`${REACT_APP_SERVER_API_URL}/member/unlike`,{
@@ -26,8 +27,7 @@ export default function WishListItem({
 					withCredentials: true 
 			})
 			.then(_ => {
-				console.log('success')
-				setStateLike(!stateLike)
+				setStateLike(prevStateLike => !prevStateLike)
 			})
 			.catch(_ => {
 				console.log('fail')
@@ -42,8 +42,7 @@ export default function WishListItem({
 				{ withCredentials: true },
 			)
 			.then(_ => {
-				console.log('success')
-				setStateLike(!stateLike)
+				setStateLike(prevStateLike => !prevStateLike)
 			})
 			.catch(_ => {
 				console.log('fail')
@@ -56,11 +55,11 @@ export default function WishListItem({
 		<div className='p-4 mb-20 w-170 h-210'>
 			<div className='p-4 bg-white rounded-lg shadow-md'>
 				<img
-					src={imageUrl}
+					src={imageUrl ? imageUrl : DEFAULT_IMAGE}
 					alt={foodName}
 					className='object-cover rounded-lg w-170 h-160'
 				/>
-				<h1 className='font-bold text-center text-grey900'>진라면{foodName}</h1>
+				<h1 className='font-bold text-center text-grey900'>{foodName}</h1>
 				<div className='flex w-[80%] justify-center items-center bg-grey100 rounded-lg m-auto my-5'>
 					{stateLike ? (
 						<AiFillHeart

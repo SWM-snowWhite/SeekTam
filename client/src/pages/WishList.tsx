@@ -9,7 +9,7 @@ type WishListProps = {
 	foodId: number
 	foodName: string
 	imageUrl: string
-	like: boolean
+	liked: boolean
 }
 
 export default function WishList() {
@@ -36,10 +36,7 @@ export default function WishList() {
 					(item: WishListProps, idx: number) => {
 						return {
 							...item,
-							like: true,
-							imageUrl: `https://placekitten.com/${
-								idx + 300
-							}/200`,
+							liked: true,
 						}
 					},
 				)
@@ -67,7 +64,7 @@ export default function WishList() {
 							foodId={item.foodId}
 							foodName={item.foodName}
 							imageUrl={item.imageUrl}
-							like={item.like}
+							liked={item.liked}
 						/>
 					))
 				) : (

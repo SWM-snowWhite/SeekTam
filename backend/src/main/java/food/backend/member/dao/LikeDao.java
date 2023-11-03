@@ -22,8 +22,6 @@ public class LikeDao {
     public void pushLikeFood(LikeRequest likeRequest, String memberId) {
         Long foodId = likeRequest.getFoodId();
         String foodName = foodDetailDao.getFoodDataById(foodId).getFoodNm();
-
-        log.info(foodId + " " + foodName + " " + memberId);
         String sql = "INSERT INTO like_list (food_id, member_id, food_name) values (:food_id, :member_id, :food_name)";
 
         SqlParameterSource params = new MapSqlParameterSource()
