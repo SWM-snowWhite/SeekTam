@@ -6,6 +6,5 @@ import lombok.Getter;
 @Getter
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class LikeRequest {
-
     private Long foodId;
 }
