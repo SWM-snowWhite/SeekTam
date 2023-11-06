@@ -10,7 +10,7 @@ export default function Profile() {
 	const navigator = useNavigate()
 
 	return (
-		<div className='absolute h-full p-4 bg-white w-500 m-0min-h-screen'>
+		<div className='absolute h-full p-4 bg-white w-500 m-0'>
 			<div>
 				<div className='flex flex-col justify-center w-auto mb-10 h-50'>
 					<h1 className='m-15 font-bold text-20'>내 정보</h1>

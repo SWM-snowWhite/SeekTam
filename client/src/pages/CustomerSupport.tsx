@@ -7,7 +7,6 @@ import { CurrentPageType, currentPageUpdate } from '../store/CurrentPageSlice'
 
 export default function CustomerSupport() {
 	const dispatcher = useDispatch()
-	// const userInfo = useSelector((state: RootState) => state.userInfo)
 	const currentPage: CurrentPageType = useSelector(
 		(state: RootState) => state.currentPage,
 	)
@@ -16,7 +15,7 @@ export default function CustomerSupport() {
 		console.log(`currentPage: ${currentPage}`)
 	}, [currentPage])
 	return (
-		<div className='absolute h-full bg-white w-500 m-0min-h-screen'>
+		<div className='absolute bg-white w-500 m-0 overflow-y-scroll h-[100vh]'>
 			<div>
 				<div className='flex flex-col justify-center w-auto mb-10 h-50'>
 					<h1 className='m-15 font-bold text-20'>고객지원</h1>

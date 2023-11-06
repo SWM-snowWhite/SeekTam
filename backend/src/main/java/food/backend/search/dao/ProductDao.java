@@ -123,6 +123,7 @@ public class ProductDao {
         searchSourceBuilder.query(boolQueryBuilder);
         searchSourceBuilder.fetchSource(new String[]{FOOD_ID_FIELD, ProductDao.FOOD_NAME_FIELD, COMPANY_NAME_FIELD},
                 null);
+        searchSourceBuilder.size(100);
         searchRequest.source(searchSourceBuilder);
         return searchRequest;
     }

@@ -13,27 +13,29 @@ function Footer() {
 	const dispatcher = useDispatch()
 	const currentPage = useSelector((state: RootState) => state.currentPage)
 
-	const onProfileClick = () => {
+	const handleProfileClick = () => {
+		dispatcher(currentPageUpdate('profile'))
 		navigator('/profile')
 	}
 
-	const onHomeClick = () => {
+	const handleHomeClick = () => {
+		dispatcher(currentPageUpdate('home'))
 		navigator('/main')
 	}
 
-	const onWishlistClick = () => {
+	const handleWishlistClick = () => {
+		dispatcher(currentPageUpdate('wishlist'))
 		navigator('/wishlist')
 	}
 
 	return (
 		<div className='absolute bottom-0 z-0 flex justify-around p-4 m-auto bg-white rounded-lg shadow-main border-grey200 w-500 items-around text-main border-1'>
 			<div
-				onClick={() => dispatcher(currentPageUpdate('profile'))}
+				onClick={handleProfileClick}
 				className='flex-row items-center justify-center m-0 cursor-pointer'
 			>
 				<BsFillPersonLinesFill
 					size={30}
-					onClick={onProfileClick}
 					className={
 						currentPage === 'profile' ? 'text-main' : 'text-grey300'
 					}
@@ -46,13 +48,9 @@ function Footer() {
 					내 정보
 				</span>
 			</div>
-			<div
-				onClick={() => dispatcher(currentPageUpdate('home'))}
-				className='cursor-pointer'
-			>
+			<div onClick={handleHomeClick} className='cursor-pointer'>
 				<AiFillHome
 					size={30}
-					onClick={onHomeClick}
 					className={
 						currentPage === 'home' ? 'text-main' : 'text-grey300'
 					}
@@ -65,13 +63,9 @@ function Footer() {
 					홈 화면
 				</span>
 			</div>
-			<div
-				onClick={() => dispatcher(currentPageUpdate('wishlist'))}
-				className='cursor-pointer'
-			>
+			<div onClick={handleWishlistClick} className='cursor-pointer'>
 				<AiFillHeart
 					size={30}
-					onClick={onWishlistClick}
 					className={
 						currentPage === 'wishlist'
 							? 'text-main'

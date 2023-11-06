@@ -88,6 +88,7 @@ public class ProductKeywordDao {
         try {
             // ES 요청 후 결과를 저장
             searchResponse = elasticsearchConfig.client().search(searchRequest, RequestOptions.DEFAULT);
+            System.out.println("searchResponse = " + searchResponse);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -111,7 +112,6 @@ public class ProductKeywordDao {
           GET /products/_search { "query": { "match": { "food_name": "keyword" } }, "_source": ["food_name"] }
          */
         searchSourceBuilder.query(QueryBuilders.matchQuery(FOOD_NAME_FIELD, keyword));
-        searchSourceBuilder.size(10);
         searchSourceBuilder.fetchSource(new String[]{FOOD_NAME_FIELD}, null);
         searchRequest.source(searchSourceBuilder);
 

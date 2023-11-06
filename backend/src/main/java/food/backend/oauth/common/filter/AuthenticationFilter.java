@@ -33,12 +33,12 @@ public class AuthenticationFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
 
-        log.info(">>>>>>>>> filter test ㅇㅅㅇ");
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
+        log.info(">>>>>>>>> filter test ㅇㅅㅇ");
         log.info(">>>>>>>> url {}", httpRequest.getRequestURI());
-        log.info(">>>>>>>> is equal? : {}", !isLoginCheckPath(httpRequest.getRequestURI()));
+
         try {
             if (!isLoginCheckPath(httpRequest.getRequestURI())) {
                 chain.doFilter(request, response);
@@ -50,25 +50,25 @@ public class AuthenticationFilter implements Filter {
 
             log.info(accessToken);
             log.info("is valid? {}", jwtProvider.validateJwt(accessToken));
+
             if (jwtProvider.validateJwt(accessToken)) {
                 chain.doFilter(request, response);
                 return;
             }
 
+            log.info("access_token 유효하지 않음");
             if (jwtProvider.validateJwt(refreshToken)) {
                 String email = jwtProvider.getEmailFromJwt(refreshToken);
                 accessToken = jwtProvider.createJwt(email, 1000 * 60 * 60 * 24);
 
                 oAuthLoginService.setupCookies(accessToken, refreshToken, httpResponse);
-
+                log.info(email + " access token 재발급");
                 chain.doFilter(request, response);
-                return;
             } else {
                 httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             }
-        } catch (Exception e) {
-            // Handle exceptions appropriately (e.g., log or respond with an error)
-            log.error("An error occurred in the filter: " + e.getMessage());
+        } catch (IOException ioException) {
+            log.error("An error occurred in the filter: " + ioException.getMessage());
             httpResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
