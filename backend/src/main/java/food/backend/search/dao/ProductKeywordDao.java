@@ -22,7 +22,7 @@ public class ProductKeywordDao {
     private static final String INDEX_NAME = "products";
     public static final String FOOD_NAME_FIELD = "food_name";
 
-    private static ElasticsearchConfig elasticsearchConfig;
+    private final ElasticsearchConfig elasticsearchConfig;
 
     public List<String> getProductByKeyword(String keyword) {
         SearchRequest searchRequest = createRequest(keyword);
@@ -51,7 +51,7 @@ public class ProductKeywordDao {
      * @param searchRequest
      * @return SearchResponse
      */
-    private static SearchResponse getResponse(SearchRequest searchRequest) {
+    private SearchResponse getResponse(SearchRequest searchRequest) {
         SearchResponse searchResponse = null;
         try {
             searchResponse = elasticsearchConfig.client().search(searchRequest, RequestOptions.DEFAULT);
