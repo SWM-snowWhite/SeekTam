@@ -2,18 +2,21 @@ package food.backend.oauth.common.filter;
 
 import food.backend.oauth.common.jwt.JwtProvider;
 import food.backend.oauth.common.service.OAuthLoginService;
+import java.io.IOException;
+import java.util.Arrays;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.util.PatternMatchUtils;
-
-import javax.servlet.*;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.Arrays;
 
 
 @Component
@@ -22,12 +25,13 @@ import java.util.Arrays;
 @Slf4j
 public class AuthenticationFilter implements Filter {
 
-    private static final String[] WHITE_LIST = {"/login", "/api/oauth/*", "/mall/*"};
+    private static final String[] WHITE_LIST = {"/login", "/api/oauth/*", "/mall/*", "/foods/**"};
     private final JwtProvider jwtProvider;
     private final OAuthLoginService oAuthLoginService;
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
 
         log.info(">>>>>>>>> filter test ㅇㅅㅇ");
         HttpServletRequest httpRequest = (HttpServletRequest) request;
@@ -44,8 +48,8 @@ public class AuthenticationFilter implements Filter {
             String accessToken = getTokenFromCookie(httpRequest, "access_token");
             String refreshToken = getTokenFromCookie(httpRequest, "refresh_token");
 
-        log.info(accessToken);
-        log.info("is valid? {}", jwtProvider.validateJwt(accessToken));
+            log.info(accessToken);
+            log.info("is valid? {}", jwtProvider.validateJwt(accessToken));
             if (jwtProvider.validateJwt(accessToken)) {
                 chain.doFilter(request, response);
                 return;
@@ -53,7 +57,7 @@ public class AuthenticationFilter implements Filter {
 
             if (jwtProvider.validateJwt(refreshToken)) {
                 String email = jwtProvider.getEmailFromJwt(refreshToken);
-                accessToken = jwtProvider.createJwt(email, 1000*60*60*24);
+                accessToken = jwtProvider.createJwt(email, 1000 * 60 * 60 * 24);
 
                 oAuthLoginService.setupCookies(accessToken, refreshToken, httpResponse);
 
