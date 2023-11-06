@@ -13,7 +13,7 @@ import java.util.Date;
 
 @Component
 @Slf4j
-public class JwtProvider {
+public class JwtProviderImpl {
 
     @Value("${jwt.secret}")
     private String jwtSecretKey;
@@ -45,5 +45,4 @@ public class JwtProvider {
             return false;
         }
     }
-
 }

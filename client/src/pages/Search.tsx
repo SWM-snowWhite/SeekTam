@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import KeywordSearchBar from '../components/KeywordSearchBar';
-import KeywordSearchPageBar from '../components/KeywordSearchPageBar';
-import axios from 'axios';
-import InfoModal from '../components/modal/InfoModal';
-import ComparisonViewModal from '../components/modal/ComparisonViewModal';
-import ComparisonModal from '../components/modal/ComparisonModal';
-import KeywordComponent from '../components/KeywordComponent';
-import FoodList from '../components/FoodList';
+import React, { useEffect, useState } from 'react'
+import KeywordSearchBar from '../components/KeywordSearchBar'
+import KeywordSearchPageBar from '../components/KeywordSearchPageBar'
+import axios from 'axios'
+import InfoModal from '../components/modal/InfoModal'
+import ComparisonViewModal from '../components/modal/ComparisonViewModal'
+import ComparisonModal from '../components/modal/ComparisonModal'
+import KeywordComponent from '../components/KeywordComponent'
+import FoodList from '../components/FoodList'
 
 export type SearchTitleType = 'enerc' | 'chocdf' | 'prot' | 'fatce'
 export type SearchOptionObjectType = {
@@ -25,7 +25,7 @@ export type FoodType = {
 	foodName: string
 	manufacture: string
 	imageUrl: string
-    like: boolean
+	like: boolean
 }
 
 export type FoodListType = Array<FoodType> | []
@@ -69,8 +69,9 @@ export default function Search() {
 	const [selectedFoodIdx, setSelectedFoodIdx] = useState<number>(-1)
 	const [comparisonList, setComparisonList] = useState<FoodListType>([])
 	const [viewComparison, setViewComparison] = useState(false)
+	const [searchOnOff, setSearchOnOff] = useState(false)
 	const SERVER_API_URL = process.env.REACT_APP_SERVER_API_URL
-	
+
 	// 키워드가 초기화 될 경우 관련 검색어 초기화
 	useEffect(() => {
 		if (keyword === '') {
@@ -96,7 +97,6 @@ export default function Search() {
 	}
 
 	const fetchKeywordSearch = (keyword: string) => {
-		console.log(`keyword: ${keyword}`)
 		if (keyword === '') return
 
 		axios
@@ -112,9 +112,9 @@ export default function Search() {
 	}
 
 	const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
-		console.log(`handleKeyUp`)
-		if (e.key === 'Enter') {
-			if (relatedFoodList.length === 0) return
+		if (e.key.trim() === 'Enter') {
+			modifySearchOn()
+			// if (relatedFoodList.length === 0) return
 			if (focusedFoodIdx === -1) {
 				fetchOptionKeywordSearch()
 				return
@@ -184,6 +184,10 @@ export default function Search() {
 		changeGram(title, Number(e.target.value))
 	}
 
+	const modifySearchOn = () => {
+		setSearchOnOff(true)
+	}
+
 	const handleCondition = (title: SearchTitleType) => {
 		const newCondition = searchOptions[title].condition === 0 ? 1 : 0
 		const newSearchOptions = {
@@ -206,6 +210,7 @@ export default function Search() {
 				withCredentials: true,
 			})
 			let fetchedFoodList = response.data.slice(0, 10)
+			modifySearchOn()
 			setFoodList(fetchedFoodList)
 			setIsSearched(true)
 		} catch (e) {
@@ -241,7 +246,10 @@ export default function Search() {
 			alert('비교는 최대 5개까지만 가능합니다.')
 			return
 		}
-		setComparisonList(prevComparison => [...prevComparison, { ...foodItem }]);
+		setComparisonList(prevComparison => [
+			...prevComparison,
+			{ ...foodItem },
+		])
 	}
 
 	const clearComparison = () => {
@@ -255,10 +263,10 @@ export default function Search() {
 	const handleComparisonView = () => {
 		setViewComparison(!viewComparison)
 	}
-	
-    return (
-        <div className='absolute flex-row h-full overflow-scroll bg-white w-500'>
-            <KeywordSearchPageBar
+
+	return (
+		<div className='absolute flex-row h-full overflow-scroll bg-white w-500'>
+			<KeywordSearchPageBar
 				fetchKeywordSearch={fetchKeywordSearch}
 				keyword={keyword}
 				handleChangeKeyword={handleChangeKeyword}
@@ -294,14 +302,14 @@ export default function Search() {
 					focusedFoodIdx={focusedFoodIdx}
 				/>
 			)}
-			<FoodList 
-                foodList={foodList} 
-                selectedKeyword={selectedKeyword} 
-                isSearched={isSearched} 
-                handleSelectedFood={handleSelectedFood}
-                addComparison={addComparison}
-            />
-        </div>
-    );
+			<FoodList
+				foodList={foodList}
+				selectedKeyword={selectedKeyword}
+				isSearched={isSearched}
+				searchOnOff={searchOnOff}
+				handleSelectedFood={handleSelectedFood}
+				addComparison={addComparison}
+			/>
+		</div>
+	)
 }
-

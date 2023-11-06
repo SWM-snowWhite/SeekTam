@@ -20,7 +20,7 @@ export default function ComparisonFood({
 					alt={comparisonItem.foodName}
 					className='object-cover rounded-md w-80 h-80'
 				/>
-				<h1 className='font-bold text-center text-grey900 text-16'>진라면{comparisonItem.foodName}</h1>
+				<h1 className='font-bold text-center text-grey900 text-16'>{comparisonItem.foodName}</h1>
 				<div className='flex w-180'>
                 <GiCancel onClick={() => deleteSpecificComparison(comparisonItem.foodId)} size={20} className='m-auto cursor-pointer text-end text-info_s'/>
 				</div>
