@@ -72,7 +72,6 @@ public class ProductKeywordDao {
         SearchRequest searchRequest = new SearchRequest(INDEX_NAME);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(QueryBuilders.matchQuery(FOOD_NAME_FIELD, keyword));
-        searchSourceBuilder.size(10);
         searchSourceBuilder.fetchSource(new String[]{FOOD_NAME_FIELD}, null);
         searchRequest.source(searchSourceBuilder);
 

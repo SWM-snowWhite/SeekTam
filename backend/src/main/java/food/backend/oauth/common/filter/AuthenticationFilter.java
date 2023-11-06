@@ -25,7 +25,7 @@ import org.springframework.util.PatternMatchUtils;
 @Slf4j
 public class AuthenticationFilter implements Filter {
 
-    private static final String[] WHITE_LIST = {"/login", "/api/oauth/*", "/mall/*", "/foods/**"};
+    private static final String[] WHITE_LIST = {"/login", "/api/oauth/*", "/mall/*"};
     private final JwtProvider jwtProvider;
     private final OAuthLoginService oAuthLoginService;
 
@@ -48,13 +48,9 @@ public class AuthenticationFilter implements Filter {
             String accessToken = getTokenFromCookie(httpRequest, "access_token");
             String refreshToken = getTokenFromCookie(httpRequest, "refresh_token");
 
-<<<<<<< HEAD
             log.info(accessToken);
             log.info("is valid? {}", jwtProvider.validateJwt(accessToken));
-=======
-            log.info("access token : " + accessToken);
-            log.info("refresh token : " + refreshToken);
->>>>>>> 3f536a5 (fix: food search 패키지 및 모듈명 변경 적용)
+
             if (jwtProvider.validateJwt(accessToken)) {
                 chain.doFilter(request, response);
                 return;
