@@ -4,11 +4,11 @@ import lombok.Builder;
 import lombok.Data;
 
 /**
- * ID : ST-C-110-J
- * 작성자 : 임동훈(snowcrab382@naver.com)
- * 버전 : 1.0.0
- * 작성일 : 2023-10-20
+ * ID : ST-C-110-J 작성자 : 임동훈(snowcrab382@naver.com) 버전 : 1.0.0 작성일 : 2023-10-20
+ *
+ * @deprecated
  */
+@Deprecated // 2023-11-06
 @Builder
 @Data
 public class FoodDetailDto {
@@ -16,7 +16,7 @@ public class FoodDetailDto {
     private String foodCd;
     private String foodNm;
     private double enerc;
-//    private String nutConSrtrQua;
+    //    private String nutConSrtrQua;
     private double water;
     private double prot;
     private double fatce;
@@ -40,8 +40,8 @@ public class FoodDetailDto {
     private double chole;
     private double fasat;
     private double fatrn;
-//    private double refuse;
+    //    private double refuse;
     private String foodSize;
-//    private String cooName;
+    //    private String cooName;
     private String companyName;
 }
