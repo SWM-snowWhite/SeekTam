@@ -19,36 +19,62 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class ProductKeywordDao {
 
-    private final ElasticsearchConfig elasticsearchConfig;
+    private static final String INDEX_NAME = "products";
+    public static final String FOOD_NAME_FIELD = "food_name";
+
+    private static ElasticsearchConfig elasticsearchConfig;
 
     public List<String> getProductByKeyword(String keyword) {
+        SearchRequest searchRequest = createRequest(keyword);
 
-        //ES 요청 쿼리를 담은 객체 생성
-        SearchRequest searchRequest = new SearchRequest("products");
-        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-        searchSourceBuilder.query(QueryBuilders.matchQuery("food_name", keyword));
-        searchSourceBuilder.size(10);
-        searchSourceBuilder.fetchSource(new String[]{"food_name"}, null);
-        searchRequest.source(searchSourceBuilder);
+        SearchResponse searchResponse = getResponse(searchRequest);
 
-        //ES 요청 후 결과를 담은 객체 생성
+        return getSearchResult(searchResponse);
+    }
+
+    private static List<String> getSearchResult(SearchResponse searchResponse) {
+        SearchHits hits = searchResponse.getHits();
+        SearchHit[] searchHits = hits.getHits();
+
+        List<String> productByKeywords = new ArrayList<>();
+        for (SearchHit hit : searchHits) {
+            Map<String, Object> sourceAsMap = hit.getSourceAsMap();
+            productByKeywords.add((String) sourceAsMap.get(FOOD_NAME_FIELD));
+        }
+
+        return productByKeywords;
+    }
+
+    /**
+     * ES 요청 후 결과를 담은 객체 생성
+     *
+     * @param searchRequest
+     * @return SearchResponse
+     */
+    private static SearchResponse getResponse(SearchRequest searchRequest) {
         SearchResponse searchResponse = null;
         try {
             searchResponse = elasticsearchConfig.client().search(searchRequest, RequestOptions.DEFAULT);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        return searchResponse;
+    }
 
-        //ES 요청 결과 중 hit된 검색 결과만 추출
-        SearchHits hits = searchResponse.getHits();
-        SearchHit[] searchHits = hits.getHits();
+    /**
+     * ES 요청 쿼리를 담은 객체 생성
+     *
+     * @param keyword
+     * @return SearchRequest
+     */
+    private static SearchRequest createRequest(String keyword) {
+        SearchRequest searchRequest = new SearchRequest(INDEX_NAME);
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder.query(QueryBuilders.matchQuery(FOOD_NAME_FIELD, keyword));
+        searchSourceBuilder.size(10);
+        searchSourceBuilder.fetchSource(new String[]{FOOD_NAME_FIELD}, null);
+        searchRequest.source(searchSourceBuilder);
 
-        List<String> result = new ArrayList<>();
-        for (SearchHit hit : searchHits) {
-            Map<String, Object> sourceAsMap = hit.getSourceAsMap();
-            result.add((String) sourceAsMap.get("food_name"));
-        }
-
-        return result;
+        return searchRequest;
     }
 }

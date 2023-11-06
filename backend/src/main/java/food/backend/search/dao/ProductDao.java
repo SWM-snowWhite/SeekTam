@@ -25,70 +25,76 @@ import org.springframework.util.StringUtils;
 @RequiredArgsConstructor
 public class ProductDao {
 
+    public static final String INDEX_NAME = "products";
+
+    public static final String FOOD_ID_FIELD = "food_id";
+    public static final String FOOD_NAME_FIELD = "food_name";
+    public static final String COMPANY_NAME_FIELD = "company_name";
+
+    public static final String CALORIE_FIELD = "calorie";
+    public static final String CARBOHYDRATE_FIELD = "carbohydrate";
+    public static final String PROTEIN_FIELD = "protein";
+    public static final String FAT_FIELD = "fat";
+
+    public static final String CONDITION_BELOW = "0";
+    public static final String CONDITION_ABOVE = "1";
+
+
     private final ElasticsearchConfig elasticsearchConfig;
 
     public List<ProductDto> getProductByKeywordAndNutrient(KeywordAndNutrientEs params) {
-        SearchRequest searchRequest = new SearchRequest("products");
+        SearchRequest searchRequest = createRequest(params);
+
+        SearchResponse searchResponse = getResponse(searchRequest);
+
+        return getSearchResult(searchResponse);
+    }
+
+    private static SearchRequest createRequest(KeywordAndNutrientEs params) {
+        SearchRequest searchRequest = new SearchRequest(INDEX_NAME);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
         BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery()
-                .must(QueryBuilders.matchQuery("food_name", params.getKeyword()));
+                .must(QueryBuilders.matchQuery(FOOD_NAME_FIELD, params.getKeyword()));
 
-        if (StringUtils.hasText(params.getCalorie())) {
-            RangeQueryBuilder calorieRange = QueryBuilders.rangeQuery("calorie");
-            if (params.getCalorieCon().equals("0")) {
-                calorieRange.lte(params.getCalorie());
-            }
-            if (params.getCalorieCon().equals("1")) {
-                calorieRange.gte(params.getCalorie());
-            }
-            boolQueryBuilder.must(calorieRange);
-        }
-
-        if (StringUtils.hasText(params.getCarbohydrate())) {
-            RangeQueryBuilder carbohydrateRange = QueryBuilders.rangeQuery("carbohydrate");
-            if (params.getCarbohydrateCon().equals("0")) {
-                carbohydrateRange.lte(params.getCarbohydrate());
-            }
-            if (params.getCarbohydrateCon().equals("1")) {
-                carbohydrateRange.gte(params.getCarbohydrate());
-            }
-            boolQueryBuilder.must(carbohydrateRange);
-        }
-
-        if (StringUtils.hasText(params.getProtein())) {
-            RangeQueryBuilder proteinRange = QueryBuilders.rangeQuery("protein");
-            if (params.getProteinCon().equals("0")) {
-                proteinRange.lte(params.getProtein());
-            }
-            if (params.getProteinCon().equals("1")) {
-                proteinRange.gte(params.getProtein());
-            }
-            boolQueryBuilder.must(proteinRange);
-        }
-
-        if (StringUtils.hasText(params.getFat())) {
-            RangeQueryBuilder fatRange = QueryBuilders.rangeQuery("fat");
-            if (params.getFatCon().equals("0")) {
-                fatRange.lte(params.getFat());
-            }
-            if (params.getFatCon().equals("1")) {
-                fatRange.gte(params.getFat());
-            }
-            boolQueryBuilder.must(fatRange);
-        }
+        putNutrientCondition(FAT_FIELD, params.getFat(), params.getFatCon(), boolQueryBuilder);
+        putNutrientCondition(PROTEIN_FIELD, params.getProtein(), params.getProteinCon(), boolQueryBuilder);
+        putNutrientCondition(CARBOHYDRATE_FIELD, params.getCarbohydrate(), params.getCarbohydrateCon(),
+                boolQueryBuilder);
+        putNutrientCondition(CALORIE_FIELD, params.getCalorie(), params.getCalorieCon(), boolQueryBuilder);
 
         searchSourceBuilder.query(boolQueryBuilder);
-        searchSourceBuilder.fetchSource(new String[]{"food_id", "food_name", "company_name"}, null);
+        searchSourceBuilder.fetchSource(new String[]{FOOD_ID_FIELD, ProductDao.FOOD_NAME_FIELD, COMPANY_NAME_FIELD},
+                null);
         searchRequest.source(searchSourceBuilder);
+        return searchRequest;
+    }
 
+    private static void putNutrientCondition(String fieldName, String nutrient, String nutrientCondition,
+                                             BoolQueryBuilder boolQueryBuilder) {
+        if (StringUtils.hasText(nutrient)) {
+            RangeQueryBuilder nutrientRange = QueryBuilders.rangeQuery(fieldName);
+            if (nutrientCondition.equals(CONDITION_BELOW)) {
+                nutrientRange.lte(nutrient);
+            }
+            if (nutrientCondition.equals(CONDITION_ABOVE)) {
+                nutrientRange.gte(nutrient);
+            }
+            boolQueryBuilder.must(nutrientRange);
+        }
+    }
+
+    private SearchResponse getResponse(SearchRequest searchRequest) {
         SearchResponse searchResponse = null;
         try {
             searchResponse = elasticsearchConfig.client().search(searchRequest, RequestOptions.DEFAULT);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        return searchResponse;
+    }
 
+    private static List<ProductDto> getSearchResult(SearchResponse searchResponse) {
         SearchHits hits = searchResponse.getHits();
         SearchHit[] searchHits = hits.getHits();
 
@@ -96,12 +102,11 @@ public class ProductDao {
         for (SearchHit hit : searchHits) {
             Map<String, Object> sourceAsMap = hit.getSourceAsMap();
             result.add(ProductDto.builder()
-                    .foodId((Integer) sourceAsMap.get("food_id"))
-                    .foodName((String) sourceAsMap.get("food_name"))
-                    .companyName((String) sourceAsMap.get("company_name"))
+                    .foodId((Integer) sourceAsMap.get(FOOD_ID_FIELD))
+                    .foodName((String) sourceAsMap.get(FOOD_NAME_FIELD))
+                    .companyName((String) sourceAsMap.get(COMPANY_NAME_FIELD))
                     .build());
         }
-
         return result;
     }
 }
