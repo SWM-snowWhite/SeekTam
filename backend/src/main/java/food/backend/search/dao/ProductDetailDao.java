@@ -12,7 +12,7 @@ public class ProductDetailDao {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public ProductDetailDto getProductDetail(Integer foodId) {
+    public ProductDetailDto getProductDetail(Long foodId) {
         String sql = "SELECT * FROM products WHERE food_id = ?";
         return jdbcTemplate.queryForObject(sql, productRowMapper(), foodId);
     }

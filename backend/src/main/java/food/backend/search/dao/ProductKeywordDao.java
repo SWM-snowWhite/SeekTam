@@ -55,6 +55,7 @@ public class ProductKeywordDao {
         SearchResponse searchResponse = null;
         try {
             searchResponse = elasticsearchConfig.client().search(searchRequest, RequestOptions.DEFAULT);
+            System.out.println("searchResponse = " + searchResponse);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

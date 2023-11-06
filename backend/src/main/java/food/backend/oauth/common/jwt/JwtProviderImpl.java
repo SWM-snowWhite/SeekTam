@@ -13,7 +13,7 @@ import java.util.Date;
 
 @Component
 @Slf4j
-public class JwtProviderImpl {
+public class JwtProviderImpl implements JwtProvider{
 
     @Value("${jwt.secret}")
     private String jwtSecretKey;
@@ -41,7 +41,7 @@ public class JwtProviderImpl {
             Jwts.parserBuilder().setSigningKey(getKey()).build().parse(jwt);
             return true;
         } catch (Exception e) {
-            log.error("{}", e);
+            log.error("jwt가 유효하지 않습니다." + e);
             return false;
         }
     }

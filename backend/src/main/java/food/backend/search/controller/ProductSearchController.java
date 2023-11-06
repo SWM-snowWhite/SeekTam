@@ -1,6 +1,9 @@
 package food.backend.search.controller;
 
 
+import food.backend.member.common.Authenticated;
+import food.backend.member.request.MemberDto;
+import food.backend.search.dto.FoodRankingResponseDto;
 import food.backend.search.dto.ProductDetailDto;
 import food.backend.search.dto.ProductDto;
 import food.backend.search.model.KeywordAndNutrientEs;
@@ -32,7 +35,12 @@ public class ProductSearchController {
     }
 
     @GetMapping("/detail")
-    public ProductDetailDto searchProductDetail(@RequestParam Integer foodId) {
-        return productSearchService.getProductDetail(foodId);
+    public ProductDetailDto searchProductDetail(@RequestParam Long foodId, @Authenticated MemberDto memberDto) {
+        return productSearchService.getProductDetail(foodId, memberDto.getEmail());
+    }
+
+    @GetMapping("/ranking")
+    public List<FoodRankingResponseDto> getFoodRanking(@Authenticated MemberDto memberDto) {
+        return productSearchService.getFoodRanking(memberDto.getEmail());
     }
 }
