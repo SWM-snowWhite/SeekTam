@@ -98,6 +98,7 @@ export default function Signup() {
 					type='text'
 					className='w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300'
 					value={nickname}
+					spellCheck={false}
 					onChange={handleNicknameChange}
 				/>
 			</div>
@@ -136,6 +137,7 @@ export default function Signup() {
 					type='text'
 					className='w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300'
 					value={birthYear}
+					spellCheck={false}
 					onChange={handleBirthYearChange}
 				/>
 			</div>
@@ -147,6 +149,7 @@ export default function Signup() {
 					type='text'
 					className='w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300'
 					value={height}
+					spellCheck={false}
 					onChange={handleHeightChange}
 				/>
 			</div>
@@ -158,6 +161,7 @@ export default function Signup() {
 					type='text'
 					className='w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300'
 					value={weight}
+					spellCheck={false}
 					onChange={handleWeightChange}
 				/>
 			</div>

@@ -94,7 +94,6 @@ export default function Main() {
 	}
 
 	const fetchKeywordSearch = (keyword: string) => {
-		console.log(`keyword: ${keyword}`)
 		if (keyword === '') return
 
 		axios
@@ -154,6 +153,19 @@ export default function Main() {
 		}
 	}
 
+	const fetchNonOptionKeywordSearch = async (keyword: string) => {
+		const response = await axios.get(
+			`${SERVER_API_URL}/foods/search?keyword=${keyword}`,
+			{
+				withCredentials: true,
+			},
+		)
+
+		let fetchedFoodList = response.data.slice(0, 10)
+		setFoodList(fetchedFoodList)
+		setIsSearched(true)
+	}
+
 	const makeOptionKeywordUrl = async (clicked?: string) => {
 		let url = `${SERVER_API_URL}/foods/search?keyword=${
 			clicked ? clicked : keyword
@@ -170,7 +182,7 @@ export default function Main() {
 	}
 
 	return (
-		<div className='absolute flex-row h-full bg-white align-center w-500'>
+		<div className='absolute flex-row bg-white align-center w-500 overflow-y-scroll h-[100vh]'>
 			<NavigatorExceptSearch />
 			<KeywordSearchBar
 				fetchOptionKeywordSearch={fetchOptionKeywordSearch}
@@ -190,7 +202,9 @@ export default function Main() {
 			) : (
 				<></>
 			)}
-			<MallRanking fetchKeywordSearch={fetchKeywordSearch} />
+			<MallRanking
+				fetchNonOptionKeywordSearch={fetchNonOptionKeywordSearch}
+			/>
 			<ViewsRanking fetchKeywordSearch={fetchKeywordSearch} />
 			{/* <FooterMain/> */}
 		</div>

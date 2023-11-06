@@ -48,7 +48,7 @@ export default function WishList() {
 			})
 	}
 	return (
-		<div className='absolute h-full p-4 bg-white w-500 m-0min-h-screen'>
+		<div className='absolute p-4 bg-white w-500 m-0 overflow-y-scroll h-[100vh]'>
 			<div>
 				<div className='flex flex-col justify-center w-auto mb-10 h-50'>
 					<h1 className='m-10 font-bold text-20'>찜 목록</h1>

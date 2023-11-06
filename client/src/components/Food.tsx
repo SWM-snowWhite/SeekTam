@@ -16,7 +16,7 @@ export default function Food({
 
 	const handleUnLikeFood = () => {
 		axios
-			.delete(`${SERVER_API_URL}/member/unlike}`, {
+			.delete(`${SERVER_API_URL}/member/unlike`, {
 				data: {
 					foodId: foodItem.foodId,
 				},
@@ -24,6 +24,7 @@ export default function Food({
 			})
 			.then(_ => {
 				console.log('success')
+				setStateLike(!stateLike)
 			})
 			.catch(_ => {
 				console.log('fail')
@@ -33,7 +34,7 @@ export default function Food({
 	const handleLikeFood = () => {
 		axios
 			.put(
-				`${SERVER_API_URL}/member/like}`,
+				`${SERVER_API_URL}/member/like`,
 				{
 					foodId: foodItem.foodId,
 				},
@@ -43,11 +44,11 @@ export default function Food({
 			)
 			.then(_ => {
 				console.log('success')
+				setStateLike(!stateLike)
 			})
 			.catch(_ => {
 				console.log('fail')
 			})
-		setStateLike(!stateLike)
 	}
 
 	const handleFoodDetail = () => {

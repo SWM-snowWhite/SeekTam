@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import KeywordSearchBar from '../components/KeywordSearchBar'
+import React, { useEffect, useRef, useState } from 'react'
 import KeywordSearchPageBar from '../components/KeywordSearchPageBar'
 import axios from 'axios'
 import InfoModal from '../components/modal/InfoModal'
@@ -66,11 +65,27 @@ export default function Search() {
 	const [selectedKeyword, setSelectedKeyword] = useState('')
 	const [focusedFoodIdx, setFocusedFoodIdx] = useState<number>(-1)
 	const [isSearched, setIsSearched] = useState(false)
-	const [selectedFoodIdx, setSelectedFoodIdx] = useState<number>(-1)
+	const [selectedFoodId, setSelectedFoodId] = useState<number>(-1)
 	const [comparisonList, setComparisonList] = useState<FoodListType>([])
 	const [viewComparison, setViewComparison] = useState(false)
 	const [searchOnOff, setSearchOnOff] = useState(false)
+
 	const SERVER_API_URL = process.env.REACT_APP_SERVER_API_URL
+	const isInitialMount = useRef(true)
+
+	// 최초 렌더링 시 url에 있는 code값 전달
+	useEffect(() => {
+		if (isInitialMount.current) {
+			const url = new URL(window.location.href)
+
+			// authorization server로부터 클라이언트로 리디렉션된 경우, authorization code가 함께 전달
+			const keyword = url.searchParams.get('keyword')
+			if (keyword) {
+				fetchNonOptionKeywordSearch(keyword)
+			}
+			isInitialMount.current = false
+		}
+	})
 
 	// 키워드가 초기화 될 경우 관련 검색어 초기화
 	useEffect(() => {
@@ -94,6 +109,20 @@ export default function Search() {
 
 	const clearKeyword = () => {
 		setKeyword('')
+	}
+
+	const fetchNonOptionKeywordSearch = async (keyword: string) => {
+		const response = await axios.get(
+			`${SERVER_API_URL}/foods/search?keyword=${keyword}`,
+			{
+				withCredentials: true,
+			},
+		)
+
+		let fetchedFoodList = response.data.slice(0, 10)
+		setSelectedKeyword(keyword)
+		setFoodList(fetchedFoodList)
+		setIsSearched(true)
 	}
 
 	const fetchKeywordSearch = (keyword: string) => {
@@ -209,7 +238,8 @@ export default function Search() {
 			const response = await axios.get(optionKeywordUrl, {
 				withCredentials: true,
 			})
-			let fetchedFoodList = response.data.slice(0, 10)
+
+			let fetchedFoodList = response.data
 			modifySearchOn()
 			setFoodList(fetchedFoodList)
 			setIsSearched(true)
@@ -238,7 +268,7 @@ export default function Search() {
 	}
 
 	const handleSelectedFood = (idx: number) => {
-		setSelectedFoodIdx(idx)
+		setSelectedFoodId(idx)
 	}
 
 	const addComparison = (foodItem: FoodType) => {
@@ -274,9 +304,9 @@ export default function Search() {
 				clearKeyword={clearKeyword}
 				fetchOptionKeywordSearch={fetchOptionKeywordSearch}
 			/>
-			{selectedFoodIdx !== -1 && (
+			{selectedFoodId !== -1 && (
 				<InfoModal
-					selectedFoodIdx={selectedFoodIdx}
+					selectedFoodId={selectedFoodId}
 					handleSelectedFood={handleSelectedFood}
 				/>
 			)}
