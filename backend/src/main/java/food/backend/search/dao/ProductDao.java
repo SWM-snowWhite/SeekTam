@@ -21,6 +21,9 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
+/**
+ * ID : ST-C-120-J 작성자 : 임동훈(snowcrab382@naver.com) 버전 : 1.0.0 작성일 : 2023-11-06
+ */
 @Repository
 @RequiredArgsConstructor
 public class ProductDao {
@@ -40,23 +43,77 @@ public class ProductDao {
     public static final String CONDITION_ABOVE = "1";
 
 
+    /**
+     * ElasticsearchConfig 객체 주입(클라이언트 연결)
+     */
     private final ElasticsearchConfig elasticsearchConfig;
 
+    /**
+     * 키워드가 포함되거나 키워드 포함 및 영양소 조건에 맞는 상품ID,상품명,제조사명 반환
+     *
+     * @param params : 검색 키워드, 칼로리, 칼로리 조건(0 or 1), 탄수화물, 탄수화물 조건, 단백질, 단백질 조건, 지방, 지방 조건
+     * @return List
+     * @see ProductDto
+     * @see KeywordAndNutrientEs
+     */
     public List<ProductDto> getProductByKeywordAndNutrient(KeywordAndNutrientEs params) {
+        // ES 요청 객체 생성
         SearchRequest searchRequest = createRequest(params);
 
+        // ES 요청 후 결과를 담은 객체 생성
         SearchResponse searchResponse = getResponse(searchRequest);
 
+        // ES 요청 결과에서 상품ID,상품명,제조사명 추출 후 반환
         return getSearchResult(searchResponse);
     }
 
+    /**
+     * ES 요청 쿼리를 담은 객체 생성
+     *
+     * @param params : 검색 키워드, 칼로리, 칼로리 조건(0 or 1), 탄수화물, 탄수화물 조건, 단백질, 단백질 조건, 지방, 지방 조건
+     * @return SearchRequest
+     */
     private static SearchRequest createRequest(KeywordAndNutrientEs params) {
+        // ES 요청 객체 생성
         SearchRequest searchRequest = new SearchRequest(INDEX_NAME);
+
+        // ES 요청 쿼리를 담을 객체 생성
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
+        /*
+          POST /products/_search
+          {
+            "query": {
+              "bool": {
+                "must": [
+                  {
+                    "match": {
+                      "food_name": "keyword"
+                    }
+                  },
+                  {
+                    "range": {
+                      "nutrientFieldName1": {
+                        "gte(nutrientCondition = 1)" or "lte(nutrientCondition = 0)" : nutrient
+                      }
+                    }
+                  },
+                  {
+                    "range": {
+                      "nutrientFieldName2": {
+                        "gte(nutrientCondition = 1)" or "lte(nutrientCondition = 0)" : nutrient
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+         */
         BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery()
                 .must(QueryBuilders.matchQuery(FOOD_NAME_FIELD, params.getKeyword()));
 
+        // 영양소 조건이 있는 경우 쿼리에 추가
         putNutrientCondition(FAT_FIELD, params.getFat(), params.getFatCon(), boolQueryBuilder);
         putNutrientCondition(PROTEIN_FIELD, params.getProtein(), params.getProteinCon(), boolQueryBuilder);
         putNutrientCondition(CARBOHYDRATE_FIELD, params.getCarbohydrate(), params.getCarbohydrateCon(),
@@ -70,6 +127,14 @@ public class ProductDao {
         return searchRequest;
     }
 
+    /**
+     * 영양소 조건이 있는 경우 쿼리에 추가
+     *
+     * @param fieldName         : 영양소 필드명
+     * @param nutrient          : 영양소 값
+     * @param nutrientCondition : 영양소 조건(0 : 이하, 1 : 이상)
+     * @param boolQueryBuilder  : 쿼리를 담을 객체
+     */
     private static void putNutrientCondition(String fieldName, String nutrient, String nutrientCondition,
                                              BoolQueryBuilder boolQueryBuilder) {
         if (StringUtils.hasText(nutrient)) {
@@ -84,6 +149,12 @@ public class ProductDao {
         }
     }
 
+    /**
+     * ES 요청 후 결과를 담은 객체 생성
+     *
+     * @param searchRequest : ES 요청 객체
+     * @return SearchResponse
+     */
     private SearchResponse getResponse(SearchRequest searchRequest) {
         SearchResponse searchResponse = null;
         try {
@@ -94,10 +165,18 @@ public class ProductDao {
         return searchResponse;
     }
 
+    /**
+     * ES 요청 결과에서 상품ID,상품명,제조사명 추출 후 반환
+     *
+     * @param searchResponse : ES 요청 후 결과를 담은 객체
+     * @return List<ProductDto>
+     */
     private static List<ProductDto> getSearchResult(SearchResponse searchResponse) {
+        // ES 요청 결과 중 hits 객체 추출
         SearchHits hits = searchResponse.getHits();
         SearchHit[] searchHits = hits.getHits();
 
+        // 상품ID,상품명,제조사명을 담을 리스트 생성
         List<ProductDto> result = new ArrayList<>();
         for (SearchHit hit : searchHits) {
             Map<String, Object> sourceAsMap = hit.getSourceAsMap();

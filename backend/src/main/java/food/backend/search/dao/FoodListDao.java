@@ -2,6 +2,7 @@ package food.backend.search.dao;
 
 import food.backend.search.dto.FoodListDto;
 import food.backend.search.model.KeywordAndNutrient;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -9,27 +10,27 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
-import java.util.List;
-
 /**
- * ID : ST-C-110-J
- * 작성자 : 임동훈(snowcrab382@naver.com)
- * 버전 : 1.0.0
- * 작성일 : 2023-10-20
+ * ID : ST-C-110-J 작성자 : 임동훈(snowcrab382@naver.com) 버전 : 1.0.0 작성일 : 2023-10-20
+ *
+ * @deprecated
  */
+@Deprecated
 @Repository
 @RequiredArgsConstructor
 public class FoodListDao {
 
     /**
-     * JdbcTemplate에서 제공하는 NamedParameterJdbcTemplate을 사용해 DB 접근<br>
-     * NamedParameterJdbcTemplate는 쿼리문에 파라미터를 바인딩할 때 파라미터의 이름을 사용할 수 있도록 해줌
+     * JdbcTemplate에서 제공하는 NamedParameterJdbcTemplate을 사용해 DB 접근<br> NamedParameterJdbcTemplate는 쿼리문에 파라미터를 바인딩할 때 파라미터의
+     * 이름을 사용할 수 있도록 해줌
+     *
      * @see NamedParameterJdbcTemplate
      */
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
     /**
      * 키워드를 포함하는 음식 리스트에서 영양소 조건에 맞는 음식 리스트를 반환하는 메소드
+     *
      * @param params 컨트롤러에서 쿼리파라미터로 전달받은 키워드와 영양소 조건을 담은 객체
      * @return 키워드를 포함하는 음식 리스트에서 영양소 조건에 맞는 음식의 foodId,foodName,companyName 리스트
      */
@@ -101,6 +102,7 @@ public class FoodListDao {
 
     /**
      * 키워드를 포함하는 음식 리스트에서 영양소 조건에 맞는 음식 리스트를 반환하는 메소드
+     *
      * @return 키워드를 포함하는 음식 리스트에서 영양소 조건에 맞는 음식의 foodId,foodName,companyName 리스트
      */
     private RowMapper<FoodListDto> foodRowMapper() {

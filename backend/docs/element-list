@@ -1,5 +1,4 @@
-config
-food.backend
+food.backend.search.config
 food.backend.search.controller
 food.backend.search.dao
 food.backend.search.dto
