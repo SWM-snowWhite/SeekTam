@@ -1,15 +1,29 @@
 import React from 'react'
+import { AiOutlineArrowLeft } from 'react-icons/ai'
+import { useNavigate } from 'react-router-dom'
 
 export default function Navigator({ title }: { title: string }) {
-	const onBackClick = () => {}
+	const navigate = useNavigate()
+	const onBackClick = () => {
+		navigate(-1)
+	}
 	const onSearchClick = () => {}
 
 	return (
-		<div className='flex items-center justify-between p-4 text-white bg-main-500'>
-			<button onClick={onBackClick} className='text-lg cursor-pointer'>
-				뒤로가기
-			</button>
-			<h1 className='text-xl'>{title}</h1>
+		<div className='absolute flex-col bg-white w-500'>
+			<div className='flex items-center w-full'>
+				<AiOutlineArrowLeft
+					onClick={onBackClick}
+					className='ml-20'
+					size={24}
+				/>
+				<div className='flex flex-col justify-center w-full h-50'>
+					<h1 className='mr-40 font-bold text-center text-20'>
+						{title}
+					</h1>
+				</div>
+			</div>
+			<hr className='text-grey200'></hr>
 		</div>
 	)
 }
