@@ -1,8 +1,7 @@
 import React from 'react'
 
-function Navigation() {
+export default function Navigator({ title }: { title: string }) {
 	const onBackClick = () => {}
-	const currentPage = '검색'
 	const onSearchClick = () => {}
 
 	return (
@@ -10,12 +9,7 @@ function Navigation() {
 			<button onClick={onBackClick} className='text-lg cursor-pointer'>
 				뒤로가기
 			</button>
-			<h1 className='text-xl'>{currentPage}</h1>
-			<button onClick={onSearchClick} className='text-lg'>
-				검색
-			</button>
+			<h1 className='text-xl'>{title}</h1>
 		</div>
 	)
 }
-
-export default Navigation
