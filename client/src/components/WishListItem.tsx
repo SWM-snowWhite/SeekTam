@@ -17,14 +17,14 @@ export default function WishListItem({
 	const [stateLike, setStateLike] = useState(liked)
 	const REACT_APP_SERVER_API_URL = process.env.REACT_APP_SERVER_API_URL
 	const DEFAULT_IMAGE = '/images/Graphic/2x/food@2x.png'
-	
+
 	const handleUnLikeFood = () => {
 		axios
-			.delete(`${REACT_APP_SERVER_API_URL}/member/unlike`,{
+			.delete(`${REACT_APP_SERVER_API_URL}/member/unlike`, {
 				data: {
-					"foodId": foodId 
+					foodId: foodId,
 				},
-					withCredentials: true 
+				withCredentials: true,
 			})
 			.then(_ => {
 				setStateLike(prevStateLike => !prevStateLike)
@@ -33,7 +33,7 @@ export default function WishListItem({
 				console.log('fail')
 			})
 	}
-	
+
 	const handleLikeFood = () => {
 		axios
 			.put(
@@ -52,14 +52,16 @@ export default function WishListItem({
 	}
 
 	return (
-		<div className='p-4 mb-20 w-170 h-210'>
+		<div className='p-4 mb-20 w-150 h-210'>
 			<div className='p-4 bg-white rounded-lg shadow-md'>
 				<img
 					src={imageUrl ? imageUrl : DEFAULT_IMAGE}
 					alt={foodName}
-					className='object-cover rounded-lg w-170 h-160'
+					className='object-cover rounded-lg w-150 h-150'
 				/>
-				<h1 className='font-bold text-center text-grey900'>{foodName}</h1>
+				<div className='flex items-center justify-center font-medium text-center text-grey900 text-14 h-30'>
+					{foodName}
+				</div>
 				<div className='flex w-[80%] justify-center items-center bg-grey100 rounded-lg m-auto my-5'>
 					{stateLike ? (
 						<AiFillHeart

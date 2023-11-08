@@ -1,6 +1,10 @@
 import React from 'react'
 export default function Range({ value, max }: { value: number; max: number }) {
-	const width = `${(value / max) * 100}%`
+	const width = `${
+		(value / max) * 100 < 5 && (value / max) * 100 > 0
+			? 5
+			: (value / max) * 100
+	}%`
 	return (
 		<div className='flex justify-start rounded-full w-300 bg-grey200 border-1 border-grey200 h-30'>
 			<div

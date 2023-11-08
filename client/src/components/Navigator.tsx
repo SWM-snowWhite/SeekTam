@@ -14,7 +14,7 @@ export default function Navigator({ title }: { title: string }) {
 			<div className='flex items-center w-full'>
 				<AiOutlineArrowLeft
 					onClick={onBackClick}
-					className='ml-20'
+					className='ml-20 cursor-pointer '
 					size={24}
 				/>
 				<div className='flex flex-col justify-center w-full h-50'>

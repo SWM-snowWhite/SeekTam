@@ -44,8 +44,6 @@ export default function FoodDetail() {
 	const DEFAULT_IMAGE = '/images/Graphic/2x/food@2x.png'
 	const [selectedFoodId, setSelectedFoodId] = useState<number>(-1)
 	const [stateLike, setStateLike] = useState(false)
-	const navigator = useNavigate()
-	const dispatcher = useDispatch()
 	const REACT_APP_SERVER_API_URL = process.env.REACT_APP_SERVER_API_URL
 
 	useEffect(() => {
@@ -110,7 +108,6 @@ export default function FoodDetail() {
 	}
 
 	const handlePurchaseClick = () => {
-		console.log(`food: ${foodInfo.foodId}`)
 		window.location.href = `https://www.coupang.com/np/search?component=&q=${foodInfo.foodName}&channel=user`
 	}
 	return (
@@ -132,7 +129,7 @@ export default function FoodDetail() {
 			<hr className='mt-10 text-grey200'></hr>
 			<div className='flex justify-around mt-20 mr-20 w-500'>
 				<div className='flex items-center justify-center rounded-md bg-grey100 w-120 h-30'>
-					<span className='text-grey600'>
+					<span className='text-grey600 text-14'>
 						기준량 | {foodInfo.servingSize}
 						{foodInfo.servingUnit}
 					</span>
@@ -243,12 +240,9 @@ export default function FoodDetail() {
 				<hr className='text-grey200'></hr>
 			</div>
 
-			<hr className='text-grey200'></hr>
-			<hr className='text-grey200'></hr>
-			<hr className='text-grey200'></hr>
 			<div className='flex items-center justify-center '>
 				<button
-					className='text-white rounded-lg h-50 w-400 bg-p800'
+					className='ml-10 text-white rounded-lg h-50 w-400 bg-p900 text-20'
 					onClick={() => handlePurchaseClick()}
 				>
 					구매하러 가기

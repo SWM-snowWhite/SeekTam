@@ -24,11 +24,11 @@ export default function KeywordSearchBar({
 	}
 	return (
 		<div
-			className='flex m-auto mt-40 border-2 rounded-md border-main w-450 h-50 cursor-pointer'
+			className='relative flex m-auto bg-white border-2 rounded-full cursor-pointer mt-90 border-main w-450 h-50'
 			onClick={openSearchPage}
 		>
 			<input
-				className='text-main w-[90%] rounded-2xl ml-10 placeholder:text-16 placeholder:text-grey400 '
+				className='text-main w-[90%] focus:outline-none rounded-2xl ml-10 placeholder:text-16 placeholder:text-grey400 '
 				onChange={handleChangeKeyword}
 				onKeyUp={handleKeyUp}
 				placeholder='찾고자 하는 식품명을 입력해 주세요'

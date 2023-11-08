@@ -182,7 +182,7 @@ export default function Main() {
 	}
 
 	return (
-		<div className='absolute flex-row bg-white align-center w-500 overflow-y-scroll h-[100vh]'>
+		<div className='absolute flex-row bg-white align-center w-500 h-[100vh]'>
 			<NavigatorExceptSearch />
 			<KeywordSearchBar
 				fetchOptionKeywordSearch={fetchOptionKeywordSearch}
