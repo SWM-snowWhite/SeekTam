@@ -7,7 +7,7 @@ type ViewsRankingProps = {
 	ranking: number
 	foodId: number
 	foodName: string
-	calories: number
+	calorie: number
 	liked: boolean
 }
 
@@ -105,7 +105,7 @@ export default function ViewsRanking({
 											{item.foodName}
 										</span>
 										<span className='ml-20 text-grey500'>
-											{item.calories} kcal
+											{item.calorie} kcal
 										</span>
 									</div>
 									<div className='flex items-center justify-end h-full m-10 w-30'>

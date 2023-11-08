@@ -112,17 +112,19 @@ export default function Search() {
 	}
 
 	const fetchNonOptionKeywordSearch = async (keyword: string) => {
-		const response = await axios.get(
-			`${SERVER_API_URL}/foods/search?keyword=${keyword}`,
-			{
+		await axios
+			.get(`${SERVER_API_URL}/foods/search?keyword=${keyword}`, {
 				withCredentials: true,
-			},
-		)
-
-		let fetchedFoodList = response.data.slice(0, 10)
-		setSelectedKeyword(keyword)
-		setFoodList(fetchedFoodList)
-		setIsSearched(true)
+			})
+			.then(response => {
+				let fetchedFoodList = response.data.slice(0, 10)
+				setSelectedKeyword(keyword)
+				setFoodList(fetchedFoodList)
+				setIsSearched(true)
+			})
+			.catch(err => {
+				console.log(err)
+			})
 	}
 
 	const fetchKeywordSearch = (keyword: string) => {

@@ -25,6 +25,7 @@ import UserInfoSlice from './store/UserInfoSlice'
 import Profile from './pages/Profile'
 import CustomerSupport from './pages/CustomerSupport'
 import FoodDetail from './pages/FoodDetail'
+import Range from './components/Range'
 /* persist 선언 */
 const persistConfig = {
 	key: 'root',
