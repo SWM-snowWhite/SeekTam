@@ -1,13 +1,14 @@
 package food.backend.search.service;
 
 import food.backend.member.Member;
-import food.backend.search.dao.FoodDetailDao;
-import food.backend.search.dao.FoodKeywordDao;
-import food.backend.search.dao.FoodListDao;
 import food.backend.member.MemberRepository;
+import food.backend.search.dao.ProductDao;
+import food.backend.search.dao.ProductDetailDao;
+import food.backend.search.dao.ProductKeywordDao;
 import food.backend.search.dto.FoodDetailDto;
 import food.backend.search.dto.FoodListDto;
 import food.backend.search.dto.FoodRankingResponseDto;
+import food.backend.search.dto.ProductDetailDto;
 import food.backend.search.model.KeywordAndNutrient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,19 +31,19 @@ class FoodSearchServiceTest {
     @Mock
     private JdbcTemplate jdbcTemplate;
     @Mock
-    private FoodKeywordDao foodKeywordDAO;
+    private ProductKeywordDao productKeywordDao;
 
     @Mock
-    private FoodListDao foodListDAO;
+    private ProductDao productDao;
 
     @Mock
-    private FoodDetailDao foodDetailDao;
+    private ProductDetailDao productDetailDao;
 
     @Mock
     private MemberRepository memberRepository;
 
     @InjectMocks
-    private FoodSearchService foodSearchService;
+    private ProductSearchService productSearchService;
 
     @BeforeEach
     void setUp() {
@@ -54,14 +55,14 @@ class FoodSearchServiceTest {
         // Given
         String keyword = "치킨";
         List<String> expectedFoods = Arrays.asList("후라이드 치킨", "치킨 버거", "치킨 피자");
-        when(foodKeywordDAO.getFoodByNameContaining(keyword)).thenReturn(expectedFoods);
+        when(productKeywordDao.getFoodByNameContaining(keyword)).thenReturn(expectedFoods);
 
         // When
-        List<String> result = foodSearchService.getFoodByNameContaining(keyword);
+        List<String> result = productSearchService.getFoodByNameContaining(keyword);
 
         // Then
         assertEquals(expectedFoods, result);
-        verify(foodKeywordDAO, times(1)).getFoodByNameContaining(keyword);
+        verify(productKeywordDao, times(1)).getFoodByNameContaining(keyword);
     }
 
     @Test
@@ -81,14 +82,14 @@ class FoodSearchServiceTest {
                 FoodListDto.builder().foodId(1L).foodName("치킨 샐러드").companyName("BBQ").build(),
                 FoodListDto.builder().foodId(1L).foodName("치킨 버킷").companyName("KFC").build()
         );
-        when(foodListDAO.getFoodListByNameContaining(params)).thenReturn(expectedFoodList);
+        when(productDao.getFoodListByNameContaining(params)).thenReturn(expectedFoodList);
 
         // When
         List<FoodListDto> result = foodSearchService.getFoodListByNameContaining(params);
 
         // Then
         assertEquals(expectedFoodList, result);
-        verify(foodListDAO, times(1)).getFoodListByNameContaining(params);
+        verify(productDao, times(1)).getFoodListByNameContaining(params);
     }
 
     @Test
@@ -96,16 +97,16 @@ class FoodSearchServiceTest {
         // Given
         Long foodId = 1L;
         String email = "test@email.com";
-        FoodDetailDto expectedFoodDetail = FoodDetailDto.builder().foodCd("A0001").foodNm("치킨").build();
+        ProductDetailDto expectedFoodDetail = ProductDetailDto.builder().foodId(13).foodName("치킨").build();
         expectedFoodDetail.setFoodId(foodId); // Add more setters if required
 
         Member member = Member.builder().id(1L).build();
 
         when(memberRepository.findByEmail(anyString())).thenReturn(Optional.of(member));
-        when(foodDetailDao.getFoodDataById(anyLong())).thenReturn(expectedFoodDetail);
+        when(productDetailDao.getProductDetail(anyLong())).thenReturn(expectedFoodDetail);
 
         // When
-        FoodDetailDto actualFoodDetail = foodSearchService.getFoodDetailById(foodId, email);
+        FoodDetailDto actualFoodDetail = productSearchService.getFoodDetailById(foodId, email);
 
         // Then
         assertEquals(expectedFoodDetail, actualFoodDetail);
@@ -122,7 +123,7 @@ class FoodSearchServiceTest {
                 .ranking(1)
                 .build();
 
-        when(foodDetailDao.getFoodRanking(anyString())).thenReturn(Collections.singletonList(mockedResponse));
+        when(productDetailDao.getFoodRanking(anyString())).thenReturn(Collections.singletonList(mockedResponse));
 
         // When
         List<FoodRankingResponseDto> result = foodSearchService.getFoodRanking(email);

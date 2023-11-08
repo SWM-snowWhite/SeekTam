@@ -11,15 +11,15 @@ public class FoodRankingResponseDto {
     private Long foodId;
     private String foodName;
     private int ranking;
-    private int calories;
+    private int calorie;
     private boolean liked;
 
     @Builder
-    public FoodRankingResponseDto(Long foodId, String foodName, int ranking, int calories, boolean liked) {
+    public FoodRankingResponseDto(Long foodId, String foodName, int ranking, int calorie, boolean liked) {
         this.foodId = foodId;
         this.foodName = foodName;
         this.ranking = ranking;
-        this.calories = calories;
+        this.calorie = calorie;
         this.liked = liked;
     }
 }

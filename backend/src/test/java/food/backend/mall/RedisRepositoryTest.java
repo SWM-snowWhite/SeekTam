@@ -16,7 +16,7 @@ public class RedisRepositoryTest {
     void test() {
         RankInfo rankInfo = new RankInfo();
         rankInfo.setRanking(1);
-        rankInfo.setHits(1);
+        rankInfo.setViews(1);
         rankInfo.setFoodKeyword("test");
 
         // 저장

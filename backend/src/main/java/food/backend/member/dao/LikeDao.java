@@ -2,7 +2,7 @@ package food.backend.member.dao;
 
 import food.backend.member.request.LikeRequest;
 import food.backend.member.response.LikeResponse;
-import food.backend.search.dao.FoodDetailDao;
+import food.backend.search.dao.ProductDetailDao;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.RowMapper;
@@ -18,10 +18,10 @@ import java.util.List;
 @Slf4j
 public class LikeDao {
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-    private final FoodDetailDao foodDetailDao;
+    private final ProductDetailDao productDetailDao;
     public void pushLikeFood(LikeRequest likeRequest, String memberId) {
         Long foodId = likeRequest.getFoodId();
-        String foodName = foodDetailDao.getFoodDataById(foodId).getFoodNm();
+        String foodName = productDetailDao.getProductDetail(foodId).getFoodName();
         String sql = "INSERT INTO like_list (food_id, member_id, food_name) values (:food_id, :member_id, :food_name)";
 
         SqlParameterSource params = new MapSqlParameterSource()

@@ -1,7 +1,6 @@
 package food.backend.mall;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import food.backend.mall.dao.MallRdsDao;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,7 +34,7 @@ public class FoodKeywordRankingDaoTest {
             rankInfo.setCreatedDate(new Date()); // Assuming you want the current date for all
             rankInfo.setRanking(11 - i); // Assuming rankings in reverse order for the example
             rankInfo.setFoodKeyword("Keyword " + i);
-            rankInfo.setHits(i * 10); // Assuming hits are 10, 20, ... for the example
+            rankInfo.setViews(i * 10); // Assuming hits are 10, 20, ... for the example
             rankInfos.add(rankInfo);
         }
 
@@ -67,7 +66,7 @@ public class FoodKeywordRankingDaoTest {
             rankInfo.setCreatedDate(rs.getTimestamp("created_date"));
             rankInfo.setRanking(rs.getInt("ranking"));
             rankInfo.setFoodKeyword(rs.getString("keyword"));
-            rankInfo.setHits(rs.getInt("hits"));
+            rankInfo.setViews(rs.getInt("hits"));
             return rankInfo;
         };
     }
