@@ -11,6 +11,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,5 +56,23 @@ public class MemberServiceImpl implements MemberService {
 
     public boolean checkLike(LikeRequest likeRequest, MemberDto memberDto) {
         return likeDao.checkLike(memberDto.getEmail(), likeRequest.getFoodId());
+    }
+
+    public boolean logout(MemberDto memberDto, HttpServletRequest request, HttpServletResponse response) {
+        Optional<Member> member = memberRepository.findByEmail(memberDto.getEmail());
+
+        if (member.isPresent()) {
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    cookie.setMaxAge(0);
+                    cookie.setPath("/");
+                    response.addCookie(cookie);
+                }
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 }

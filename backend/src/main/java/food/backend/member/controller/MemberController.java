@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,5 +47,17 @@ public class MemberController {
     @PostMapping("/signup")
     public ResponseEntity<Member> signup(@RequestBody SignupRequestDto signupRequestDto) {
         return ResponseEntity.ok(memberService.signup(signupRequestDto));
+    }
+
+    @GetMapping("/logout")
+    public ResponseEntity<String> logout(@Authenticated MemberDto memberDto, HttpServletRequest request, HttpServletResponse response) {
+
+        boolean result = memberService.logout(memberDto, request, response);
+
+        if (result) {
+            return ResponseEntity.ok("로그아웃 성공");
+        } else {
+            return ResponseEntity.ok("로그아웃 실패");
+        }
     }
 }
