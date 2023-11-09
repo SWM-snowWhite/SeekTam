@@ -1,8 +1,14 @@
 //package food.backend.mall;
 //
 //import static org.assertj.core.api.Assertions.assertThat;
-//import com.querydsl.jpa.impl.JPAQueryFactory;
+//import static org.mockito.ArgumentMatchers.any;
+//import static org.mockito.ArgumentMatchers.anyString;
+//import static org.mockito.Mockito.when;
+//
 //import food.backend.mall.dao.MallRdsDao;
+//import java.util.ArrayList;
+//import java.util.Date;
+//import java.util.List;
 //import org.junit.jupiter.api.DisplayName;
 //import org.junit.jupiter.api.Test;
 //import org.mockito.InjectMocks;
@@ -10,12 +16,6 @@
 //import org.springframework.jdbc.core.JdbcTemplate;
 //import org.springframework.jdbc.core.RowMapper;
 //import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
-//import java.util.ArrayList;
-//import java.util.Date;
-//import java.util.List;
-//
-//import static org.mockito.ArgumentMatchers.*;
-//import static org.mockito.Mockito.when;
 //
 //@SpringJUnitConfig
 //public class FoodKeywordRankingDaoTest {
