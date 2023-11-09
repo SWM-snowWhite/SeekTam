@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { RxReload } from 'react-icons/rx'
 import { IoIosArrowUp, IoIosArrowDown } from 'react-icons/io'
 import ComparisonFood from '../ComparisonFood'
@@ -25,6 +25,9 @@ export default function ComparisonModal({
 		handleComparisonView()
 	}
 
+	useEffect(() => {
+		console.log('여기여기여기')
+	})
 	return (
 		<div className='fixed flex-row items-center justify-center bg-white rounded-md shadow-2xl cursor-pointer w-500 bottom-64 border-g300'>
 			{isOpenModal ? (

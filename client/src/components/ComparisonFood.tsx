@@ -18,7 +18,7 @@ export default function ComparisonFood({ food }: { food: FoodType }) {
 		)
 	}
 	return (
-		<div className='rounded-md shadow-md border-1 bg-white border-grey100 flex-col h-180 m-10'>
+		<div className='rounded-md shadow-md border-1 bg-white border-g100 flex-col h-180 m-10'>
 			<img
 				src={food.imageUrl ? food.imageUrl : DEFAULT_IMAGE}
 				alt={`${food.foodName} 이미지`}

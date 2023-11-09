@@ -111,7 +111,7 @@ export default function FoodDetail() {
 		window.location.href = `https://www.coupang.com/np/search?component=&q=${foodInfo.foodName}&channel=user`
 	}
 	return (
-		<div className='absolute flex-col h-full bg-white w-500'>
+		<div className='absolute  flex-col h-[100vh] bg-white w-500 overflow-scroll'>
 			<Navigator title={'식품 상세정보'} />
 			<div className='flex-col items-center justify-center mt-70 w-500 h-270'>
 				<img
@@ -125,10 +125,10 @@ export default function FoodDetail() {
 				<h1 className='m-auto mt-10 font-bold text-center'>
 					{foodInfo.foodName ? foodInfo.foodName : '진라면'}
 				</h1>
+				<hr className='mt-10 text-g200'></hr>
 			</div>
-			<hr className='mt-10 text-g200'></hr>
-			<div className='flex justify-around mt-20 mr-20 w-500'>
-				<div className='flex items-center justify-center rounded-md bg-g100 w-120 h-30'>
+			<div className='flex items-center justify-between m-auto mt-20 w-420'>
+				<div className='flex items-center justify-center rounded-md bg-g100 w-100 h-30'>
 					<span className='text-g600 text-14'>
 						기준량 | {foodInfo.servingSize}
 						{foodInfo.servingUnit}
@@ -141,113 +141,57 @@ export default function FoodDetail() {
 				</div>
 			</div>
 			<div className='my-20'>
-				<div className='flex items-center justify-center m-auto w-500'>
-					<div className='flex w-180'>열량</div>
+				<div className='flex items-center m-auto w-420 '>
+					<div className='flex w-100 ml-20'>열량</div>
 					<Range value={foodInfo.calorie} max={100} />
 				</div>
-				<div className='flex justify-around'>
+				<div className='flex justify-between ml-160 w-300 text-14 my-5'>
 					<span>{foodInfo.calorie} g</span>
 					<span>{100} g</span>
 				</div>
 				<hr className='text-g200'></hr>
 			</div>
 			<div className='my-20'>
-				<div className='flex items-center justify-center m-auto w-500'>
-					<div className='flex w-180'>탄수화물</div>
+				<div className='flex items-center m-auto w-420'>
+					<div className='flex w-100 ml-20'>탄수화물</div>
 					<Range value={foodInfo.calorie} max={100} />
 				</div>
-				<div className='flex justify-around'>
+				<div className='flex justify-between ml-160 w-300 text-14 my-5'>
 					<span>{foodInfo.carbohydrate} g</span>
 					<span>{100} g</span>
 				</div>
 				<hr className='text-g200'></hr>
 			</div>
 			<div className='my-20'>
-				<div className='flex items-center justify-center m-auto w-500'>
-					<div className='flex w-180'>단백질</div>
+				<div className='flex items-center m-auto w-420'>
+					<div className='flex w-100 ml-20'>단백질</div>
 					<Range value={foodInfo.protein} max={100} />
 				</div>
-				<div className='flex justify-around '>
+				<div className='flex justify-between ml-160 w-300 text-14 my-5'>
 					<span>{foodInfo.protein} g</span>
 					<span>{100} g</span>
 				</div>
 				<hr className='text-g200'></hr>
 			</div>
 			<div className='my-20'>
-				<div className='flex items-center justify-center m-auto w-500'>
-					<div className='flex text-center w-180'>지방</div>
+				<div className='flex items-center m-auto w-420'>
+					<div className='flex ml-20 w-100'>지방</div>
 					<Range value={foodInfo.fat} max={100} />
 				</div>
-				<div className='flex justify-around'>
+				<div className='flex justify-between ml-160 w-300 text-14 my-5'>
 					<span>{foodInfo.fat} g</span>
 					<span>{100} g</span>
 				</div>
 				<hr className='text-g200'></hr>
 			</div>
-			<div className='my-20'>
-				<div className='flex items-center justify-center m-auto w-500'>
-					<div className='flex text-center w-180'>지방</div>
-					<Range value={foodInfo.fat} max={100} />
-				</div>
-				<div className='flex justify-around'>
-					<span>{foodInfo.fat} g</span>
-					<span>{100} g</span>
-				</div>
-				<hr className='text-g200'></hr>
-			</div>
-			<div className='my-20'>
-				<div className='flex items-center justify-center m-auto w-500'>
-					<div className='flex text-center w-180'>지방</div>
-					<Range value={foodInfo.fat} max={100} />
-				</div>
-				<div className='flex justify-around'>
-					<span>{foodInfo.fat} g</span>
-					<span>{100} g</span>
-				</div>
-				<hr className='text-g200'></hr>
-			</div>
-			<div className='my-20'>
-				<div className='flex items-center justify-center m-auto w-500'>
-					<div className='flex text-center w-180'>지방</div>
-					<Range value={foodInfo.fat} max={100} />
-				</div>
-				<div className='flex justify-around'>
-					<span>{foodInfo.fat} g</span>
-					<span>{100} g</span>
-				</div>
-				<hr className='text-g200'></hr>
-			</div>
-			<div className='my-20'>
-				<div className='flex items-center justify-center m-auto w-500'>
-					<div className='flex text-center w-180'>지방</div>
-					<Range value={foodInfo.fat} max={100} />
-				</div>
-				<div className='flex justify-around'>
-					<span>{foodInfo.fat} g</span>
-					<span>{100} g</span>
-				</div>
-				<hr className='text-g200'></hr>
-			</div>
-			<div className='my-20'>
-				<div className='flex items-center justify-center m-auto w-500'>
-					<div className='flex text-center w-180'>지방</div>
-					<Range value={foodInfo.fat} max={100} />
-				</div>
-				<div className='flex justify-around'>
-					<span>{foodInfo.fat} g</span>
-					<span>{100} g</span>
-				</div>
-				<hr className='text-g200'></hr>
-			</div>
-
-			<div className='flex items-center justify-center '>
+			<div className='flex items-center justify-center w-full h-150 m-0'>
 				<button
-					className='ml-10 text-white rounded-lg h-50 w-400 bg-p900 text-20'
+					className='ml-10 text-white rounded-lg h-50 w-400 bg-p900 text-20 mb-100'
 					onClick={() => handlePurchaseClick()}
 				>
 					구매하러 가기
 				</button>
-				<div className='h-50 flex w-[15%] justify-center items-center bg-g800 rounded-lg m-auto my-5'>
+				<div className='h-50 flex w-[15%] justify-center items-center bg-g800 rounded-lg m-auto mb-100'>
 					{stateLike ? (
 						<AiFillHeart
 							onClick={handleUnLikeFood}

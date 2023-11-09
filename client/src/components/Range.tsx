@@ -6,9 +6,9 @@ export default function Range({ value, max }: { value: number; max: number }) {
 			: (value / max) * 100
 	}%`
 	return (
-		<div className='flex justify-start rounded-full w-300 bg-g200 border-1 border-g200 h-30'>
+		<div className='flex justify-start rounded-full w-300 bg-g200 border-1  border-g200 h-30'>
 			<div
-				className='w-full mb-4 rounded-full h-30 w-300 bg-p900 '
+				className='mb-4 rounded-full h-30 bg-p800 '
 				style={{ width }}
 			></div>
 			<div className='h-4 rounded-full bg-p100'></div>

@@ -16,11 +16,11 @@ export default function FoodList({
 	selectedKeyword: string
 	handleSelectedFood: (foodId: number) => void
 }) {
-	const { isSearchFirst, isOptionOpened, isSearchOn } = useSelector(
+	const { isSearchFirst, isSearchOn } = useSelector(
 		(state: RootState) => state.searchInfo,
 	)
 	return (
-		<div className='flex flex-col justify-between w-full m-auto f-full '>
+		<div className='flex flex-col justify-between w-full m-auto mb-100 overflow-scroll'>
 			{selectedKeyword !== '' && (
 				<div className='m-20 text-22'>
 					<span className='font-bold'>'{selectedKeyword}'</span>

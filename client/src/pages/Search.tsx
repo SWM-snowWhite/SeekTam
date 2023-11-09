@@ -18,6 +18,7 @@ export type SearchTitleTypeEng =
 	| 'protein'
 	| 'fat'
 	| 'default'
+
 export type SearchTitleTypeKor =
 	| '열량'
 	| '탄수화물'
@@ -86,10 +87,12 @@ export default function Search() {
 	const [selectedKeyword, setSelectedKeyword] = useState('')
 	const [focusedFoodIdx, setFocusedFoodIdx] = useState<number>(-1)
 	const [selectedFoodId, setSelectedFoodId] = useState<number>(-1)
-	const [comparisonList, setComparisonList] = useState<FoodListType>([])
 	const [viewComparison, setViewComparison] = useState(false)
 	const { searchConditions } = useSelector(
 		(state: RootState) => state.searchInfo,
+	)
+	const comparisonFood = useSelector(
+		(state: RootState) => state.comparisonFood,
 	)
 	// 무한스크롤 관련 상태값
 	const [end, setEnd] = useState(false) // 추가로 받아올 데이터 없을 시 더 이상 무한 스크롤 작동안하게 하는 상태값
@@ -170,7 +173,6 @@ export default function Search() {
 			})
 			.then(response => {
 				let fetchedFoodList = response.data.slice(0, 10)
-				console.log(JSON.stringify(fetchedFoodList))
 				setSelectedKeyword(keyword)
 				setFoodList(fetchedFoodList)
 				dispatcher(updateSearchFirst(true))
@@ -268,7 +270,7 @@ export default function Search() {
 	}
 
 	return (
-		<div className='absolute flex-row h-[100vh] bg-white w-500'>
+		<div className='absolute flex-row h-[100vh] overflow-scroll bg-white w-500'>
 			<KeywordSearchPageBar
 				fetchKeywordSearch={fetchKeywordSearch}
 				keyword={keyword}
@@ -289,7 +291,7 @@ export default function Search() {
 					handleComparisonView={handleComparisonView}
 				/>
 			)}
-			{comparisonList.length > 0 && (
+			{comparisonFood.length > 0 && (
 				<ComparisonModal handleComparisonView={handleComparisonView} />
 			)}
 			{relatedFoodList.length > 0 && (
