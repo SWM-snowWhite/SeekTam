@@ -38,7 +38,7 @@ export type SearchOptionType = {
 export type FoodType = {
 	foodId: number
 	foodName: string
-	manufacture: string
+	companyName: string
 	imageUrl: string
 	like: boolean
 }
@@ -170,6 +170,7 @@ export default function Search() {
 			})
 			.then(response => {
 				let fetchedFoodList = response.data.slice(0, 10)
+				console.log(JSON.stringify(fetchedFoodList))
 				setSelectedKeyword(keyword)
 				setFoodList(fetchedFoodList)
 				dispatcher(updateSearchFirst(true))
@@ -262,25 +263,6 @@ export default function Search() {
 		setSelectedFoodId(idx)
 	}
 
-	const addComparison = (foodItem: FoodType) => {
-		if (comparisonList.length > 4) {
-			alert('비교는 최대 5개까지만 가능합니다.')
-			return
-		}
-		setComparisonList(prevComparison => [
-			...prevComparison,
-			{ ...foodItem },
-		])
-	}
-
-	const clearComparison = () => {
-		setComparisonList([])
-	}
-
-	const deleteSpecificComparison = (idx: number) => {
-		setComparisonList(comparisonList.filter((item, index) => index !== idx))
-	}
-
 	const handleComparisonView = () => {
 		setViewComparison(!viewComparison)
 	}
@@ -304,17 +286,11 @@ export default function Search() {
 			)}
 			{viewComparison && (
 				<ComparisonViewModal
-					comparisonList={comparisonList}
 					handleComparisonView={handleComparisonView}
 				/>
 			)}
 			{comparisonList.length > 0 && (
-				<ComparisonModal
-					comparisonList={comparisonList}
-					clearComparison={clearComparison}
-					deleteSpecificComparison={deleteSpecificComparison}
-					handleComparisonView={handleComparisonView}
-				/>
+				<ComparisonModal handleComparisonView={handleComparisonView} />
 			)}
 			{relatedFoodList.length > 0 && (
 				<KeywordComponent
@@ -328,7 +304,6 @@ export default function Search() {
 				foodList={foodList}
 				selectedKeyword={selectedKeyword}
 				handleSelectedFood={handleSelectedFood}
-				addComparison={addComparison}
 			/>
 		</div>
 	)

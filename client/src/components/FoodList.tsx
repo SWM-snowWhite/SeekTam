@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { FoodListType, FoodType } from '../pages/Main'
+import { FoodListType, FoodType } from '../pages/Search'
 import { BiMessageSquareAdd } from 'react-icons/bi'
 import Food from './Food'
 import NotFound from './NotFound'
@@ -11,12 +11,10 @@ export default function FoodList({
 	foodList,
 	selectedKeyword,
 	handleSelectedFood,
-	addComparison,
 }: {
 	foodList: FoodListType
 	selectedKeyword: string
 	handleSelectedFood: (foodId: number) => void
-	addComparison: (foodItem: FoodType) => void
 }) {
 	const { isSearchFirst, isOptionOpened, isSearchOn } = useSelector(
 		(state: RootState) => state.searchInfo,
@@ -37,11 +35,7 @@ export default function FoodList({
 				<div className='grid items-start grid-cols-2 p-0 m-auto mt-0 align-top gap-y-40 gap-x-50'>
 					{foodList.length > 0 &&
 						foodList.map((foodItem: FoodType) => (
-							<Food
-								key={foodItem.foodId}
-								foodItem={foodItem}
-								addComparison={addComparison}
-							/>
+							<Food key={foodItem.foodId} foodItem={foodItem} />
 						))}
 				</div>
 			)}

@@ -5,54 +5,8 @@ import KeywordComponent from '../components/KeywordComponent'
 import NavigatorExceptSearch from '../components/NavigatorExceptSearch'
 import MallRanking from '../components/MallRanking'
 import ViewsRanking from '../components/ViewsRanking'
-export type SearchTitleType = 'enerc' | 'chocdf' | 'prot' | 'fatce'
-export type SearchOptionObjectType = {
-	title: string
-	gram: number
-	condition: number
-	view: number
-}
 
-export type SearchOptionType = {
-	[key in SearchTitleType]: SearchOptionObjectType
-}
-
-export type FoodType = {
-	foodId: number
-	foodName: string
-	manufacture: string
-	imageUrl: string
-	like: boolean
-}
-
-export type FoodListType = Array<FoodType> | []
-
-const searchOptionList: SearchOptionType = {
-	enerc: {
-		title: '칼로리',
-		gram: 0,
-		condition: 1,
-		view: 0,
-	},
-	chocdf: {
-		title: '탄수화물',
-		gram: 0,
-		condition: 1,
-		view: 0,
-	},
-	prot: {
-		title: '단백질',
-		gram: 0,
-		condition: 1,
-		view: 0,
-	},
-	fatce: {
-		title: '지방',
-		gram: 0,
-		condition: 1,
-		view: 0,
-	},
-}
+import { FoodListType, SearchOptionType, SearchTitleType } from './Search'
 
 export default function Main() {
 	const [relatedFoodList, setRelatedFoodList] = useState([])

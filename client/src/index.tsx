@@ -27,6 +27,7 @@ import CustomerSupport from './pages/CustomerSupport'
 import FoodDetail from './pages/FoodDetail'
 import Range from './components/Range'
 import SearchInfoSlice, { SearchInfo } from './store/SearchInfoSlice'
+import ComparisonSlice, { IComparisonFood } from './store/ComparisonSlice'
 /* persist 선언 */
 const persistConfig = {
 	key: 'root',
@@ -40,6 +41,7 @@ const reducers = combineReducers({
 	currentPage: CurrentPageSlice,
 	userInfo: UserInfoSlice,
 	searchInfo: SearchInfoSlice,
+	comparisonFood: ComparisonSlice,
 })
 
 /* persist reducer 세팅 (persistConfig가 추가된 reducer) */
@@ -59,6 +61,7 @@ export interface RootState {
 	userInfo: UserInfo
 	currentPage: CurrentPageType
 	searchInfo: SearchInfo
+	comparisonFood: IComparisonFood[]
 }
 
 /* persist store 세팅 (새로고침, 종료해도 지속될 store) */

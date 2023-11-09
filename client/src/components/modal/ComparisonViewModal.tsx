@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import { FoodListType } from '../../pages/Main'
 import axios from 'axios'
 import { FoodInfoType } from '../../pages/FoodDetail'
+import { useSelector } from 'react-redux'
+import { RootState } from '../..'
 
 export default function ComparisonViewModal({
-	comparisonList,
 	handleComparisonView,
 }: {
-	comparisonList: FoodListType
 	handleComparisonView: () => void
 }) {
 	const [comparisonInfo, setComparisonInfo] = useState<FoodInfoType[]>([])
 	const SERVER_API_URL = process.env.REACT_APP_SERVER_API_URL
-
+	const comparisonList = useSelector(
+		(state: RootState) => state.comparisonFood,
+	)
 	useEffect(() => {
 		fetchComparisonInfo()
 	}, [])

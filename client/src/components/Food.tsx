@@ -2,17 +2,18 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { AiFillHeart, AiOutlineHeart, AiOutlinePlus } from 'react-icons/ai'
 import { FoodType } from '../pages/Search'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '..'
+import { updateComparisonFood } from '../store/ComparisonSlice'
 
-export default function Food({
-	foodItem,
-	addComparison,
-}: {
-	foodItem: FoodType
-	addComparison: (foodItem: FoodType) => void
-}) {
+export default function Food({ foodItem }: { foodItem: FoodType }) {
 	const [stateLike, setStateLike] = useState(foodItem.like)
 	const DEFAULT_IMAGE = '/images/Graphic/2x/food@2x.png'
 	const SERVER_API_URL = process.env.REACT_APP_SERVER_API_URL
+	const dispatcher = useDispatch()
+	const comparisonList = useSelector(
+		(state: RootState) => state.comparisonFood,
+	)
 
 	const handleUnLikeFood = () => {
 		axios
@@ -83,8 +84,16 @@ export default function Food({
 				</h1>
 				<div className='flex w-180'>
 					<div
-						onClick={() => addComparison(foodItem)}
-						className='flex items-center justify-center m-auto rounded-md cursor-pointer w-90 bg-g100 hover:bg-info '
+						onClick={() => {
+							console.log('dispatchers', foodItem)
+							dispatcher(
+								updateComparisonFood([
+									...comparisonList,
+									foodItem,
+								]),
+							)
+						}}
+						className='flex items-center justify-center m-auto rounded-md cursor-pointer w-90 bg-grey100 hover:bg-info '
 					>
 						<AiOutlinePlus size={22} className='mx-5 text-p800' />
 						<span className='mx-5 my-5 text-14 text-p800'>
