@@ -11,8 +11,8 @@ on:
   push:
     branches:
       - develop
-    # paths:
-    #   - 'backend/**'
+    paths:
+      - 'backend/**'
 
 env:
   S3_BUCKET_NAME: seektam-backend-deploy
