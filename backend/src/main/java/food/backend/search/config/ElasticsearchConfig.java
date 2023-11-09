@@ -15,13 +15,13 @@ public class ElasticsearchConfig {
     /**
      * Elasticsearch 호스트
      */
-    @Value("${spring.elasticsearch.host}")
+    @Value("${elasticsearch.host}")
     private String host;
 
     /**
      * Elasticsearch 포트
      */
-    @Value("${spring.elasticsearch.port}")
+    @Value("${elasticsearch.port}")
     private int port;
 
     /**

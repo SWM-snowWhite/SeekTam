@@ -5,14 +5,12 @@ import food.backend.member.request.MemberDto;
 import food.backend.oauth.common.jwt.JwtProvider;
 import food.backend.search.dto.FoodDetailDto;
 import food.backend.search.dto.FoodListDto;
-import food.backend.search.dto.FoodRankingResponseDto;
 import food.backend.search.model.KeywordAndNutrient;
 import food.backend.search.service.FoodSearchService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -73,9 +71,9 @@ public class FoodController {
         return foodSearchService.getFoodDetailById(foodId, memberDto.getEmail());
     }
 
-    @GetMapping("/ranking")
-    public List<FoodRankingResponseDto> getFoodRanking(@Authenticated MemberDto memberDto) {
-        return foodSearchService.getFoodRanking(memberDto.getEmail());
-    }
+//    @GetMapping("/ranking")
+//    public List<FoodRankingResponseDto> getFoodRanking(@Authenticated MemberDto memberDto) {
+//        return foodSearchService.getFoodRanking(memberDto.getEmail());
+//    }
 
 }
