@@ -28,7 +28,7 @@ export default function KeywordSearchBar({
 			onClick={openSearchPage}
 		>
 			<input
-				className='text-main w-[90%] focus:outline-none rounded-2xl ml-10 placeholder:text-16 placeholder:text-grey400 '
+				className='text-main w-[90%] focus:outline-none rounded-2xl ml-20 placeholder:text-16 placeholder:text-g400 '
 				onChange={handleChangeKeyword}
 				onKeyUp={handleKeyUp}
 				placeholder='찾고자 하는 식품명을 입력해 주세요'

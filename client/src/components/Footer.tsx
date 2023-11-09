@@ -29,7 +29,7 @@ function Footer() {
 	}
 
 	return (
-		<div className='absolute bottom-0 z-0 flex justify-around p-4 m-auto bg-white rounded-lg shadow-main border-grey200 w-500 items-around text-main border-1'>
+		<div className='absolute bottom-0 z-0 flex justify-around p-4 m-auto bg-white rounded-lg shadow-main border-g200 w-500 items-around text-main border-1'>
 			<div
 				onClick={handleProfileClick}
 				className='flex-row items-center justify-center m-0 cursor-pointer'
@@ -37,12 +37,12 @@ function Footer() {
 				<BsFillPersonLinesFill
 					size={30}
 					className={
-						currentPage === 'profile' ? 'text-main' : 'text-grey300'
+						currentPage === 'profile' ? 'text-main' : 'text-g300'
 					}
 				/>
 				<span
 					className={
-						currentPage === 'profile' ? 'text-main' : 'text-grey300'
+						currentPage === 'profile' ? 'text-main' : 'text-g300'
 					}
 				>
 					내 정보
@@ -52,12 +52,12 @@ function Footer() {
 				<AiFillHome
 					size={30}
 					className={
-						currentPage === 'home' ? 'text-main' : 'text-grey300'
+						currentPage === 'home' ? 'text-main' : 'text-g300'
 					}
 				/>
 				<span
 					className={
-						currentPage === 'home' ? 'text-main' : 'text-grey300'
+						currentPage === 'home' ? 'text-main' : 'text-g300'
 					}
 				>
 					홈 화면
@@ -67,16 +67,12 @@ function Footer() {
 				<AiFillHeart
 					size={30}
 					className={
-						currentPage === 'wishlist'
-							? 'text-main'
-							: 'text-grey300'
+						currentPage === 'wishlist' ? 'text-main' : 'text-g300'
 					}
 				/>
 				<span
 					className={
-						currentPage === 'wishlist'
-							? 'text-main'
-							: 'text-grey300'
+						currentPage === 'wishlist' ? 'text-main' : 'text-g300'
 					}
 				>
 					찜 목록

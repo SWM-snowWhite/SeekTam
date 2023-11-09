@@ -23,7 +23,7 @@ export default function Navigator({ title }: { title: string }) {
 					</h1>
 				</div>
 			</div>
-			<hr className='text-grey200'></hr>
+			<hr className='text-g200'></hr>
 		</div>
 	)
 }

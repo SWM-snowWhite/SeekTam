@@ -119,23 +119,23 @@ export default function FoodDetail() {
 					alt='식품 이미지'
 					className='m-auto rounded-2xl w-200 h-200'
 				/>
-				<h1 className='m-auto mt-10 text-center text-14 text-grey400'>
+				<h1 className='m-auto mt-10 text-center text-14 text-g400'>
 					{foodInfo.companyName ? foodInfo.companyName : '없음'}
 				</h1>
 				<h1 className='m-auto mt-10 font-bold text-center'>
 					{foodInfo.foodName ? foodInfo.foodName : '진라면'}
 				</h1>
 			</div>
-			<hr className='mt-10 text-grey200'></hr>
+			<hr className='mt-10 text-g200'></hr>
 			<div className='flex justify-around mt-20 mr-20 w-500'>
-				<div className='flex items-center justify-center rounded-md bg-grey100 w-120 h-30'>
-					<span className='text-grey600 text-14'>
+				<div className='flex items-center justify-center rounded-md bg-g100 w-120 h-30'>
+					<span className='text-g600 text-14'>
 						기준량 | {foodInfo.servingSize}
 						{foodInfo.servingUnit}
 					</span>
 				</div>
 				<div className='flex items-center justify-center h-30'>
-					<span className='text-grey500 text-14'>
+					<span className='text-g500 text-14'>
 						성인 하루 섭취량 기준
 					</span>
 				</div>
@@ -149,7 +149,7 @@ export default function FoodDetail() {
 					<span>{foodInfo.calorie} g</span>
 					<span>{100} g</span>
 				</div>
-				<hr className='text-grey200'></hr>
+				<hr className='text-g200'></hr>
 			</div>
 			<div className='my-20'>
 				<div className='flex items-center justify-center m-auto w-500'>
@@ -160,7 +160,7 @@ export default function FoodDetail() {
 					<span>{foodInfo.carbohydrate} g</span>
 					<span>{100} g</span>
 				</div>
-				<hr className='text-grey200'></hr>
+				<hr className='text-g200'></hr>
 			</div>
 			<div className='my-20'>
 				<div className='flex items-center justify-center m-auto w-500'>
@@ -171,7 +171,7 @@ export default function FoodDetail() {
 					<span>{foodInfo.protein} g</span>
 					<span>{100} g</span>
 				</div>
-				<hr className='text-grey200'></hr>
+				<hr className='text-g200'></hr>
 			</div>
 			<div className='my-20'>
 				<div className='flex items-center justify-center m-auto w-500'>
@@ -182,7 +182,7 @@ export default function FoodDetail() {
 					<span>{foodInfo.fat} g</span>
 					<span>{100} g</span>
 				</div>
-				<hr className='text-grey200'></hr>
+				<hr className='text-g200'></hr>
 			</div>
 			<div className='my-20'>
 				<div className='flex items-center justify-center m-auto w-500'>
@@ -193,7 +193,7 @@ export default function FoodDetail() {
 					<span>{foodInfo.fat} g</span>
 					<span>{100} g</span>
 				</div>
-				<hr className='text-grey200'></hr>
+				<hr className='text-g200'></hr>
 			</div>
 			<div className='my-20'>
 				<div className='flex items-center justify-center m-auto w-500'>
@@ -204,7 +204,7 @@ export default function FoodDetail() {
 					<span>{foodInfo.fat} g</span>
 					<span>{100} g</span>
 				</div>
-				<hr className='text-grey200'></hr>
+				<hr className='text-g200'></hr>
 			</div>
 			<div className='my-20'>
 				<div className='flex items-center justify-center m-auto w-500'>
@@ -215,7 +215,7 @@ export default function FoodDetail() {
 					<span>{foodInfo.fat} g</span>
 					<span>{100} g</span>
 				</div>
-				<hr className='text-grey200'></hr>
+				<hr className='text-g200'></hr>
 			</div>
 			<div className='my-20'>
 				<div className='flex items-center justify-center m-auto w-500'>
@@ -226,7 +226,7 @@ export default function FoodDetail() {
 					<span>{foodInfo.fat} g</span>
 					<span>{100} g</span>
 				</div>
-				<hr className='text-grey200'></hr>
+				<hr className='text-g200'></hr>
 			</div>
 			<div className='my-20'>
 				<div className='flex items-center justify-center m-auto w-500'>
@@ -237,7 +237,7 @@ export default function FoodDetail() {
 					<span>{foodInfo.fat} g</span>
 					<span>{100} g</span>
 				</div>
-				<hr className='text-grey200'></hr>
+				<hr className='text-g200'></hr>
 			</div>
 
 			<div className='flex items-center justify-center '>
@@ -247,7 +247,7 @@ export default function FoodDetail() {
 				>
 					구매하러 가기
 				</button>
-				<div className='h-50 flex w-[15%] justify-center items-center bg-grey800 rounded-lg m-auto my-5'>
+				<div className='h-50 flex w-[15%] justify-center items-center bg-g800 rounded-lg m-auto my-5'>
 					{stateLike ? (
 						<AiFillHeart
 							onClick={handleUnLikeFood}
@@ -257,7 +257,7 @@ export default function FoodDetail() {
 					) : (
 						<AiOutlineHeart
 							onClick={handleLikeFood}
-							className='text-grey100 mw-10 my-5 justify-self-center w-[50%] cursor-pointer'
+							className='text-g100 mw-10 my-5 justify-self-center w-[50%] cursor-pointer'
 							size={24}
 						></AiOutlineHeart>
 					)}

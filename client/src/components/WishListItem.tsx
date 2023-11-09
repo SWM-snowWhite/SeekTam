@@ -59,10 +59,10 @@ export default function WishListItem({
 					alt={foodName}
 					className='object-cover rounded-lg w-150 h-150'
 				/>
-				<div className='flex items-center justify-center font-medium text-center text-grey900 text-14 h-30'>
+				<div className='flex items-center justify-center font-medium text-center text-g900 text-14 h-30'>
 					{foodName}
 				</div>
-				<div className='flex w-[80%] justify-center items-center bg-grey100 rounded-lg m-auto my-5'>
+				<div className='flex w-[80%] justify-center items-center bg-g100 rounded-lg m-auto my-5'>
 					{stateLike ? (
 						<AiFillHeart
 							onClick={handleUnLikeFood}
@@ -72,7 +72,7 @@ export default function WishListItem({
 					) : (
 						<AiOutlineHeart
 							onClick={handleLikeFood}
-							className='text-grey400 mw-10 my-5 justify-self-center w-[50%] cursor-pointer'
+							className='text-g400 mw-10 my-5 justify-self-center w-[50%] cursor-pointer'
 							size={24}
 						></AiOutlineHeart>
 					)}

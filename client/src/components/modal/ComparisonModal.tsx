@@ -28,14 +28,14 @@ export default function ComparisonModal({
 	}
 
 	return (
-		<div className='fixed w-500 bottom-64 flex-row items-center justify-center overflow-scroll bg-white rounded-md shadow-2xl cursor-pointer border-grey300'>
+		<div className='fixed flex-row items-center justify-center bg-white rounded-md shadow-2xl cursor-pointer w-500 bottom-64 border-g300'>
 			{isOpenModal ? (
 				<div>
 					<div
 						onClick={handleOpenModal}
-						className='w-500 flex items-center justify-center h-40 m-auto rounded-md border-1 border-grey300'
+						className='flex items-center justify-center h-40 m-auto rounded-md w-500 border-1 border-g300'
 					>
-						<span className='mx-10 font-bold text-grey600'>
+						<span className='mx-10 font-bold text-g600'>
 							식품 비교 닫기
 						</span>
 						<IoIosArrowDown
@@ -75,10 +75,10 @@ export default function ComparisonModal({
 				</div>
 			) : (
 				<div
-					className='border-1 border-grey200 bottom-64 bg-white flex items-center justify-center m-auto transform shadow-lg w-500 h-30'
+					className='flex items-center justify-center m-auto transform bg-white shadow-lg border-1 border-g200 bottom-64 w-500 h-30'
 					onClick={handleOpenModal}
 				>
-					<span className='mx-10 font-bold text-grey600 '>
+					<span className='mx-10 font-bold text-g600 '>
 						식품 비교하기
 					</span>
 					<IoIosArrowUp

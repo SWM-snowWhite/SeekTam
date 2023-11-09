@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import KeywordSearchPageBar from '../components/KeywordSearchPageBar'
 import axios from 'axios'
 import InfoModal from '../components/modal/InfoModal'
@@ -6,8 +6,24 @@ import ComparisonViewModal from '../components/modal/ComparisonViewModal'
 import ComparisonModal from '../components/modal/ComparisonModal'
 import KeywordComponent from '../components/KeywordComponent'
 import FoodList from '../components/FoodList'
+import SearchOption from '../components/SearchOption'
+import SearchOptionBar from '../components/SearchOptionBar'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateSearchFirst, updateSearchOnOff } from '../store/SearchInfoSlice'
+import { RootState } from '..'
 
-export type SearchTitleType = 'enerc' | 'chocdf' | 'prot' | 'fatce'
+export type SearchTitleTypeEng =
+	| 'calorie'
+	| 'carbohydrate'
+	| 'protein'
+	| 'fat'
+	| 'default'
+export type SearchTitleTypeKor =
+	| '열량'
+	| '탄수화물'
+	| '단백질'
+	| '지방'
+	| '기본'
 export type SearchOptionObjectType = {
 	title: string
 	gram: number
@@ -16,7 +32,7 @@ export type SearchOptionObjectType = {
 }
 
 export type SearchOptionType = {
-	[key in SearchTitleType]: SearchOptionObjectType
+	[key in SearchTitleTypeEng]: SearchOptionObjectType
 }
 
 export type FoodType = {
@@ -30,25 +46,31 @@ export type FoodType = {
 export type FoodListType = Array<FoodType> | []
 
 const searchOptionList: SearchOptionType = {
-	enerc: {
+	calorie: {
 		title: '칼로리',
 		gram: 0,
 		condition: 1,
 		view: 0,
 	},
-	chocdf: {
+	carbohydrate: {
 		title: '탄수화물',
 		gram: 0,
 		condition: 1,
 		view: 0,
 	},
-	prot: {
+	protein: {
 		title: '단백질',
 		gram: 0,
 		condition: 1,
 		view: 0,
 	},
-	fatce: {
+	fat: {
+		title: '지방',
+		gram: 0,
+		condition: 1,
+		view: 0,
+	},
+	default: {
 		title: '지방',
 		gram: 0,
 		condition: 1,
@@ -60,19 +82,23 @@ export default function Search() {
 	const [relatedFoodList, setRelatedFoodList] = useState([])
 	const [searchOptions, setSearchOptions] = useState(searchOptionList)
 	const [keyword, setKeyword] = useState<string>('')
-	const [optionView, setOptionView] = useState<Boolean>(false)
 	const [foodList, setFoodList] = useState<FoodListType>([])
 	const [selectedKeyword, setSelectedKeyword] = useState('')
 	const [focusedFoodIdx, setFocusedFoodIdx] = useState<number>(-1)
-	const [isSearched, setIsSearched] = useState(false)
 	const [selectedFoodId, setSelectedFoodId] = useState<number>(-1)
 	const [comparisonList, setComparisonList] = useState<FoodListType>([])
 	const [viewComparison, setViewComparison] = useState(false)
-	const [searchOnOff, setSearchOnOff] = useState(false)
+	const { searchConditions } = useSelector(
+		(state: RootState) => state.searchInfo,
+	)
+	// 무한스크롤 관련 상태값
+	const [end, setEnd] = useState(false) // 추가로 받아올 데이터 없을 시 더 이상 무한 스크롤 작동안하게 하는 상태값
+	const [page, setPage] = useState(2) // 현재 페이지
 
 	const SERVER_API_URL = process.env.REACT_APP_SERVER_API_URL
 	const isInitialMount = useRef(true)
-
+	const dispatcher = useDispatch()
+	//** useEffect 시작
 	// 최초 렌더링 시 url에 있는 code값 전달
 	useEffect(() => {
 		if (isInitialMount.current) {
@@ -103,6 +129,32 @@ export default function Search() {
 		setKeyword('')
 	}, [foodList])
 
+	const handleScroll = useCallback((): void => {
+		const { innerHeight } = window
+		const { scrollHeight, scrollTop } = document.documentElement
+
+		if (Math.round(scrollTop + innerHeight) >= scrollHeight) {
+			//Todo : 무한 스크롤
+			fetchOptionKeywordSearch()
+			setPage(page + 1)
+		}
+	}, [page])
+
+	useEffect(() => {
+		if (!end) {
+			window.addEventListener('scroll', handleScroll, true)
+		}
+		return () => {
+			window.removeEventListener('scroll', handleScroll, true)
+		}
+	}, [handleScroll])
+
+	useEffect(() => {
+		dispatcher(updateSearchFirst(true))
+	}, [])
+
+	//** useEffect 종료
+
 	const handleChangeKeyword = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setKeyword(e.target.value)
 	}
@@ -120,7 +172,7 @@ export default function Search() {
 				let fetchedFoodList = response.data.slice(0, 10)
 				setSelectedKeyword(keyword)
 				setFoodList(fetchedFoodList)
-				setIsSearched(true)
+				dispatcher(updateSearchFirst(true))
 			})
 			.catch(err => {
 				console.log(err)
@@ -167,65 +219,8 @@ export default function Search() {
 		}
 	}
 
-	const handleViewToggle = (title: SearchTitleType) => {
-		const isView = searchOptions[title].view === 0 ? 1 : 0
-		let newSearchOptions
-
-		// 뷰가 꺼지면 gram을 0으로 되돌림
-		if (isView === 0) {
-			newSearchOptions = {
-				...searchOptions,
-				[title]: { ...searchOptions[title], view: isView, gram: 0 },
-			}
-		} else {
-			newSearchOptions = {
-				...searchOptions,
-				[title]: { ...searchOptions[title], view: isView },
-			}
-		}
-
-		setSearchOptions(newSearchOptions)
-	}
-
-	const changeGram = (title: SearchTitleType, gram: number) => {
-		setSearchOptions({
-			...searchOptions,
-			[title]: { ...searchOptions[title], gram },
-		})
-	}
-
-	const handleChangeGram = (
-		title: SearchTitleType,
-		e: React.ChangeEvent<HTMLInputElement>,
-	) => {
-		if (e.target.value === '') {
-			changeGram(title, 0)
-			return
-		}
-
-		if (typeof Number(e.target.value) !== 'number') {
-			alert('숫자만 입력 가능합니다.')
-			return
-		}
-
-		if (e.target.value.length > 3) {
-			alert('숫자는 세 자리까지만 입력 가능합니다.')
-			return
-		}
-		changeGram(title, Number(e.target.value))
-	}
-
 	const modifySearchOn = () => {
-		setSearchOnOff(true)
-	}
-
-	const handleCondition = (title: SearchTitleType) => {
-		const newCondition = searchOptions[title].condition === 0 ? 1 : 0
-		const newSearchOptions = {
-			...searchOptions,
-			[title]: { ...searchOptions[title], condition: newCondition },
-		}
-		setSearchOptions(newSearchOptions)
+		dispatcher(updateSearchOnOff(true))
 	}
 
 	const fetchOptionKeywordSearch = async (clicked?: string) => {
@@ -244,7 +239,7 @@ export default function Search() {
 			let fetchedFoodList = response.data
 			modifySearchOn()
 			setFoodList(fetchedFoodList)
-			setIsSearched(true)
+			dispatcher(updateSearchFirst(true))
 		} catch (e) {
 			console.log('검색 결과가 없습니다.', e)
 		}
@@ -255,18 +250,12 @@ export default function Search() {
 			clicked ? clicked : keyword
 		}&`
 
-		await Object.keys(searchOptions).forEach((key: string) => {
-			const option = searchOptions[key as SearchTitleType]
-			if (option.view === 1) {
-				url += `${key}=${option.gram}&`
-				url += `${key}_con=${option.condition}&`
-			}
+		await Object.keys(searchConditions).forEach((key: string) => {
+			const option = searchOptions[key as SearchTitleTypeEng]
+			// url += `${key}=${option.gram}&`
+			// url += `${key}_con=${option.condition}&`
 		})
 		return url.slice(0, -1)
-	}
-
-	const handleOptionViewClick = () => {
-		setOptionView(!optionView)
 	}
 
 	const handleSelectedFood = (idx: number) => {
@@ -297,7 +286,7 @@ export default function Search() {
 	}
 
 	return (
-		<div className='absolute flex-row h-full overflow-scroll bg-white w-500'>
+		<div className='absolute flex-row h-[100vh] bg-white w-500'>
 			<KeywordSearchPageBar
 				fetchKeywordSearch={fetchKeywordSearch}
 				keyword={keyword}
@@ -306,6 +295,7 @@ export default function Search() {
 				clearKeyword={clearKeyword}
 				fetchOptionKeywordSearch={fetchOptionKeywordSearch}
 			/>
+			<SearchOptionBar searchOptionList={searchOptionList} />
 			{selectedFoodId !== -1 && (
 				<InfoModal
 					selectedFoodId={selectedFoodId}
@@ -337,8 +327,6 @@ export default function Search() {
 			<FoodList
 				foodList={foodList}
 				selectedKeyword={selectedKeyword}
-				isSearched={isSearched}
-				searchOnOff={searchOnOff}
 				handleSelectedFood={handleSelectedFood}
 				addComparison={addComparison}
 			/>

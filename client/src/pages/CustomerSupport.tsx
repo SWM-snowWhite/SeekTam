@@ -19,7 +19,7 @@ export default function CustomerSupport() {
 			<div>
 				<div className='flex flex-col justify-center w-auto mb-10 h-50'>
 					<h1 className='m-15 font-bold text-20'>고객지원</h1>
-					<hr className='text-grey200'></hr>
+					<hr className='text-g200'></hr>
 				</div>
 			</div>
 			<div className='flex justify-around m-0 w-full h-40 items-center'>
@@ -28,7 +28,7 @@ export default function CustomerSupport() {
 					className={
 						currentPage === 'agreement'
 							? 'text-p800 cursor-pointer'
-							: 'text-grey400 cursor-pointer'
+							: 'text-g400 cursor-pointer'
 					}
 				>
 					서비스 이용약관
@@ -38,7 +38,7 @@ export default function CustomerSupport() {
 					className={
 						currentPage === 'privacy'
 							? 'text-p800 cursor-pointer'
-							: 'text-grey400 cursor-pointer'
+							: 'text-g400 cursor-pointer'
 					}
 				>
 					개인정보 처리방침
@@ -49,18 +49,18 @@ export default function CustomerSupport() {
 					className={
 						currentPage === 'agreement'
 							? 'text-p800 mt-5 w-[50%] border-1 border-p800'
-							: 'text-grey200 mt-5 w-[50%]'
+							: 'text-g200 mt-5 w-[50%]'
 					}
 				></hr>
 				<hr
 					className={
 						currentPage === 'privacy'
 							? 'text-p800 mt-5 w-[50%] border-1 border-p800'
-							: 'text-grey200 mt-5 w-[50%]'
+							: 'text-g200 mt-5 w-[50%]'
 					}
 				></hr>
 			</div>
-			<div className='bg-grey100 w-full h-full m-auto overflow-hidden'>
+			<div className='bg-g100 w-full h-full m-auto overflow-hidden'>
 				{currentPage === 'privacy' ? (
 					<PrivacyPolicy />
 				) : (

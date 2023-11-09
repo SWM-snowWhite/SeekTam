@@ -91,7 +91,7 @@ function App() {
 	}
 
 	return (
-		<div className='absolute flex-row h-full overflow-y-scroll bg-white border-solid w-500'>
+		<div className='absolute flex-row h-full bg-white border-solid w-500'>
 			<div className='flex justify-center m-auto mb-50'>
 				<div className='flex flex-col justify-center m-0'>
 					<img src={logo} className='w-250' />

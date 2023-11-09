@@ -3,7 +3,7 @@ import React from 'react'
 export default function AgreementUtilization() {
 	return (
 		<div>
-			<h1 className='w-full h-96 text-grey900'>
+			<h1 className='w-full h-96 text-g900'>
 				<h1>이용약관</h1>
 				<p>
 					본 이용약관은 개인정보보호위원회(이하‘운영기관’이라

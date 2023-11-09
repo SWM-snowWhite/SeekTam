@@ -67,7 +67,7 @@ export default function Food({
 			})
 	}
 	return (
-		<div className='rounded-md shadow-md w-190 h-270 border-1 border-grey100'>
+		<div className='rounded-md shadow-md w-190 h-270 border-1 border-g100'>
 			<div className='flex flex-col items-center justify-center p-4 bg-white rounded-lg shadow-md'>
 				<img
 					src={foodItem.imageUrl ? foodItem.imageUrl : DEFAULT_IMAGE}
@@ -77,21 +77,21 @@ export default function Food({
 				/>
 				<h1
 					onClick={handleFoodDetail}
-					className='mt-5 font-bold text-grey900 text-14'
+					className='mt-5 font-bold text-g900 text-14'
 				>
 					{foodItem.foodName}
 				</h1>
 				<div className='flex w-180'>
 					<div
 						onClick={() => addComparison(foodItem)}
-						className='flex items-center justify-center m-auto rounded-md cursor-pointer w-90 bg-grey100 hover:bg-info '
+						className='flex items-center justify-center m-auto rounded-md cursor-pointer w-90 bg-g100 hover:bg-info '
 					>
 						<AiOutlinePlus size={22} className='mx-5 text-p800' />
 						<span className='mx-5 my-5 text-14 text-p800'>
 							비교함
 						</span>
 					</div>
-					<div className='flex items-center justify-center m-auto my-5 rounded-lg bg-grey100'>
+					<div className='flex items-center justify-center m-auto my-5 rounded-lg bg-g100'>
 						{stateLike ? (
 							<AiFillHeart
 								onClick={handleUnLikeFood}

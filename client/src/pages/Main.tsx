@@ -5,7 +5,6 @@ import KeywordComponent from '../components/KeywordComponent'
 import NavigatorExceptSearch from '../components/NavigatorExceptSearch'
 import MallRanking from '../components/MallRanking'
 import ViewsRanking from '../components/ViewsRanking'
-
 export type SearchTitleType = 'enerc' | 'chocdf' | 'prot' | 'fatce'
 export type SearchOptionObjectType = {
 	title: string
@@ -182,7 +181,7 @@ export default function Main() {
 	}
 
 	return (
-		<div className='absolute flex-row bg-white align-center w-500 h-[100vh]'>
+		<div className='absolute flex-row bg-white align-center w-500 h-[100vh] overflow-scroll'>
 			<NavigatorExceptSearch />
 			<KeywordSearchBar
 				fetchOptionKeywordSearch={fetchOptionKeywordSearch}
