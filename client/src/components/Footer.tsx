@@ -29,7 +29,7 @@ function Footer() {
 	}
 
 	return (
-		<div className='absolute bottom-0 z-0 flex justify-around p-4 m-auto bg-white rounded-lg shadow-main border-g200 w-500 items-around text-main border-1'>
+		<div className='absolute bottom-0 flex justify-around p-4 m-auto bg-white rounded-lgshadow-main border-g200 w-500 items-around text-main border-1'>
 			<div
 				onClick={handleProfileClick}
 				className='flex-row items-center justify-center m-0 cursor-pointer'

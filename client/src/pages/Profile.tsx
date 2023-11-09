@@ -5,11 +5,28 @@ import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '..'
 import { useNavigate } from 'react-router-dom'
 import Navigator from '../components/Navigator'
+import axios from 'axios'
+import { currentPageUpdate } from '../store/CurrentPageSlice'
 
 export default function Profile() {
 	const { currentPage, userInfo } = useSelector((state: RootState) => state)
 	const navigator = useNavigate()
-
+	const dispatcher = useDispatch()
+	const SERVER_API_URL = process.env.REACT_APP_SERVER_API_URL
+	const handleLogout = () => {
+		axios
+			.get(`${SERVER_API_URL}/member/logout`, { withCredentials: true })
+			.then(response => {
+				console.log('로그아웃 성공')
+				localStorage.clear()
+				navigator('/')
+			})
+			.catch(err => {
+				console.log(err)
+				alert('로그아웃에 실패하였습니다.')
+				navigator('/')
+			})
+	}
 	return (
 		<div className='absolute h-full m-0 bg-white w-500'>
 			<Navigator title='내 정보' />
@@ -42,7 +59,10 @@ export default function Profile() {
 				<div className='text-16 text-g900 flex w-[90%] bg-blue justify-between mb-24'>
 					<span className='font-medium'>서비스 이용약관</span>
 					<BsArrowRightCircle
-						onClick={() => navigator('/customer-support')}
+						onClick={() => {
+							dispatcher(currentPageUpdate('agreement'))
+							navigator('/customer-support')
+						}}
 						className='cursor-pointer text-g400'
 						size={24}
 					/>
@@ -50,6 +70,10 @@ export default function Profile() {
 				<div className='text-16 text-g900 flex w-[90%] bg-blue justify-between mb-24'>
 					<span className='font-medium'>개인정보 처리방침</span>
 					<BsArrowRightCircle
+						onClick={() => {
+							dispatcher(currentPageUpdate('privacy'))
+							navigator('/customer-support')
+						}}
 						className='cursor-pointer text-g400'
 						size={24}
 					/>
@@ -61,6 +85,7 @@ export default function Profile() {
 				<div className='text-16 text-g900 flex w-[90%] bg-blue justify-between mb-24'>
 					<span className='font-medium'>로그아웃</span>
 					<BsArrowRightCircle
+						onClick={handleLogout}
 						className='cursor-pointer text-g400'
 						size={24}
 					/>
