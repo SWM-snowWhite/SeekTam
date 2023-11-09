@@ -17,6 +17,8 @@ on:
 env:
   S3_BUCKET_NAME: seektam-backend-deploy
   AWS_REGION: ap-northeast-2
+  CODEDEPLOY_NAME: seektam-backend-codedeploy
+  CODEDEPLOY_GROUP: seektam-backend-codedeploy-group
     
 permissions:
   contents: read
@@ -56,3 +58,6 @@ jobs:
       
     - name: Upload to S3
       run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://$S3_BUCKET_NAME/$GITHUB_SHA.zip
+
+    - name: Code Deploy
+      run: aws deploy create-deployment --application-name $CODEDEPLOY_NAME --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name $CODEDEPLOY_GROUP --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=$GITHUB_SHA.zip
