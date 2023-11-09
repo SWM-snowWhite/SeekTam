@@ -2,7 +2,6 @@ package food.backend.search.service;
 
 import food.backend.member.Member;
 import food.backend.member.MemberRepository;
-import food.backend.search.dao.FoodDetailDao;
 import food.backend.search.dao.ProductDao;
 import food.backend.search.dao.ProductDetailDao;
 import food.backend.search.dao.ProductKeywordDao;
@@ -14,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -26,7 +26,6 @@ public class ProductSearchService {
     private final ProductKeywordDao productKeywordDao;
     private final ProductDao productDao;
     private final ProductDetailDao productDetailDao;
-    private final FoodDetailDao foodDetailDao;
     private final MemberRepository memberRepository;
     /**
      * 키워드가 포함된 상품명 요청
@@ -52,7 +51,13 @@ public class ProductSearchService {
 
     public ProductDetailDto getProductDetail(Long foodId, String email) {
         increaseViewCount(foodId, email);
-        return productDetailDao.getProductDetail(foodId);
+        try {
+            ProductDetailDto result = productDetailDao.getProductDetail(foodId);
+            System.out.println("result = " + result);
+            return result;
+        } catch (DataAccessException dataAccessException) {
+            return null;
+        }
     }
     /**
      * 상품ID에 해당하는 상품 상세 정보 요청
@@ -64,11 +69,11 @@ public class ProductSearchService {
     private void increaseViewCount(Long foodId, String email) {
         Optional<Member> memberId = memberRepository.findByEmail(email);
         if (memberId != null) {
-            foodDetailDao.increaseViewCount(foodId, memberId.get().getId());
+            productDetailDao.increaseViewCount(foodId, memberId.get().getId());
         }
     }
 
     public List<FoodRankingResponseDto> getFoodRanking(String email) {
-        return foodDetailDao.getFoodRanking(email);
+        return productDetailDao.getFoodRanking(email);
     }
 }

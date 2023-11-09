@@ -4,6 +4,7 @@ import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '..'
 import { currentPageUpdate } from '../store/CurrentPageSlice'
+import Navigator from '../components/Navigator'
 
 type WishListProps = {
 	foodId: number
@@ -48,13 +49,10 @@ export default function WishList() {
 			})
 	}
 	return (
-		<div className='absolute p-4 bg-white w-500 m-0 overflow-y-scroll h-[100vh]'>
-			<div>
-				<div className='flex flex-col justify-center w-auto mb-10 h-50'>
-					<h1 className='m-10 font-bold text-20'>찜 목록</h1>
-					<hr className='text-grey200'></hr>
-				</div>
-				<div className='grid max-w-screen-md grid-cols-1 gap-4 mx-auto md:grid-cols-3'>
+		<div className='absolute bg-white w-500 m-0 h-[100vh]'>
+			<Navigator title='찜 목록' />
+			<div className='mt-70'>
+				<div className='grid grid-cols-1 gap-20 mx-auto md:grid-cols-3'>
 					{wishlistItems ? (
 						wishlistItems.map(
 							(item: WishListProps, idx: number) => (

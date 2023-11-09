@@ -4,7 +4,7 @@ export default function NotFound() {
 	const notFoundImage = '/images/Graphic/2x/empty-food@2x.png'
 
 	return (
-		<div className='flex-col items-center justify-center m-auto rounded-xl bg-grey100 w-450 h-200'>
+		<div className='flex-col justify-end h-full m-auto rounded-md bg-g100 w-450 h-250'>
 			<img
 				src={notFoundImage}
 				className='justify-center m-auto w-150'

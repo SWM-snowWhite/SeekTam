@@ -64,7 +64,7 @@ export default function MallRanking({
 	}, [])
 
 	return (
-		<div className='justify-center p-0 m-auto mt-20 rounded-md shadow-md align-center w-450 border-1 border-info'>
+		<div className='relative justify-center m-auto mt-20 bg-white rounded-md shadow-md z-999 align-center w-450 border-1 border-info'>
 			<span className='flex my-10 font-bold text-20 ml-15'>
 				실시간 트렌드 식품 검색어 👑
 			</span>

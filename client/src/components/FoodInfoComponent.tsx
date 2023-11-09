@@ -13,7 +13,7 @@ export default function FoodInfoComponent({
 					에너지(kcal)
 				</span>
 				<span className='p-3 m-5 text-info_s'>
-					{foodInfo.enerc ? foodInfo.enerc : 0}
+					{foodInfo.calorie ? foodInfo.calorie : 0}
 				</span>
 			</div>
 			<div className='flex justify-between'>
@@ -21,7 +21,7 @@ export default function FoodInfoComponent({
 					탄수화물
 				</span>
 				<span className='p-3 m-5 text-info_s'>
-					{foodInfo.chocdf ? foodInfo.chocdf : 0}g
+					{foodInfo.carbohydrate ? foodInfo.carbohydrate : 0}g
 				</span>
 			</div>
 			<div className='flex justify-between'>
@@ -29,7 +29,7 @@ export default function FoodInfoComponent({
 					단백질
 				</span>
 				<span className='p-3 m-5 text-info_s'>
-					{foodInfo.prot ? foodInfo.prot : 0}g
+					{foodInfo.protein ? foodInfo.protein : 0}g
 				</span>
 			</div>
 			<div className='flex justify-between'>
@@ -37,7 +37,7 @@ export default function FoodInfoComponent({
 					지방
 				</span>
 				<span className='p-3 m-5 text-info_s'>
-					{foodInfo.fatce ? foodInfo.fatce : 0}g
+					{foodInfo.fat ? foodInfo.fat : 0}g
 				</span>
 			</div>
 			<div className='flex justify-between'>
@@ -45,7 +45,7 @@ export default function FoodInfoComponent({
 					당류
 				</span>
 				<span className='p-3 m-5 text-info_s'>
-					{foodInfo.sugar ? foodInfo.sugar : 0}g
+					{foodInfo.totalSugar ? foodInfo.totalSugar : 0}g
 				</span>
 			</div>
 		</div>

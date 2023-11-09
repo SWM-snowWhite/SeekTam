@@ -7,7 +7,7 @@ type ViewsRankingProps = {
 	ranking: number
 	foodId: number
 	foodName: string
-	calories: number
+	calorie: number
 	liked: boolean
 }
 
@@ -81,7 +81,7 @@ export default function ViewsRanking({
 	}
 	return (
 		<div className='justify-center p-0 m-auto rounded-md shadow-md align-center w-450 mt-30 border-1 border-info '>
-			<span className='flex ml-20 font-bold text-20 text-grey900 my-15'>
+			<span className='flex ml-20 font-bold text-20 text-g900 my-15'>
 				유저들이 많이 찾는 식품 🥗
 			</span>
 			<div className=''>
@@ -91,7 +91,7 @@ export default function ViewsRanking({
 							(item: ViewsRankingProps, idx: number) => (
 								<div
 									key={idx}
-									className='flex justify-between w-[90%] ml-15 mt-10 rounded-md text-16 h-70 border-1 border-grey200 items-center'
+									className='flex justify-between w-[90%] ml-15 mt-10 rounded-md text-16 h-70 border-1 border-g200 items-center'
 								>
 									<div
 										onClick={() => {
@@ -101,11 +101,11 @@ export default function ViewsRanking({
 										}}
 										className='flex flex-col cursor-pointer'
 									>
-										<span className='mb-5 ml-20 font-bold text-grey900'>
+										<span className='mb-5 ml-20 font-bold text-g900'>
 											{item.foodName}
 										</span>
-										<span className='ml-20 text-grey500'>
-											{item.calories} kcal
+										<span className='ml-20 text-g500'>
+											{item.calorie} kcal
 										</span>
 									</div>
 									<div className='flex items-center justify-end h-full m-10 w-30'>

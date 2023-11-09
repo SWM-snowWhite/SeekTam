@@ -1,29 +1,28 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
-export interface UserInfo {
-    id: number;
-    nickname: string;
-    email: string;
+export interface IComparisonFood {
+	foodId: number
+	companyName: string
+	foodName: string
+	imageUrl: string
+	like: boolean
 }
-const initialState: UserInfo = {
-    id: 0,
-    nickname: "",
-    email: "",
-}
+const initialState: IComparisonFood[] = []
 
 export const comparisonSlice = createSlice({
-    name: "comparisonList",
-    initialState,
-    reducers: {
-        update: (state: UserInfo, action: PayloadAction<UserInfo>) => {
-            const { id, nickname, email } = action.payload;
-            state.id = id;
-            state.nickname = nickname;
-            state.email = email;
-        },
-        reset: () => initialState
-    },
+	name: 'comparisonList',
+	initialState,
+	reducers: {
+		updateComparisonFood: (
+			state: IComparisonFood[],
+			action: PayloadAction<IComparisonFood[]>,
+		) => {
+			state = action.payload
+		},
+		resetComparisonFood: () => initialState,
+	},
 })
 
-export const { update, reset }  = comparisonSlice.actions
+export const { updateComparisonFood, resetComparisonFood } =
+	comparisonSlice.actions
 export default comparisonSlice.reducer

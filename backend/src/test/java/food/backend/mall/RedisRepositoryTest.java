@@ -1,4 +1,3 @@
-//package food.backend.mall;
 //
 //import food.backend.mall.dao.MallRepository;
 //import org.junit.jupiter.api.DisplayName;

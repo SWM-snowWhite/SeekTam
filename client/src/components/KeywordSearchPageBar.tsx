@@ -30,7 +30,7 @@ export default function KeywordSearchPageBar({
 					onClick={() => navigate(-1)}
 				/>
 				<input
-					className='text-16 text-main w-[100%] rounded-2xl focus:outline-none ml-10 placeholder:text-16 placeholder:text-grey400 '
+					className='text-16 text-main w-[100%] rounded-2xl focus:outline-none ml-10 placeholder:text-16 placeholder:text-g400 '
 					onChange={handleChangeKeyword}
 					onKeyUp={handleKeyUp}
 					placeholder='찾고자 하는 식품명을 입력해 주세요'
@@ -51,7 +51,7 @@ export default function KeywordSearchPageBar({
 					<PiMagnifyingGlass size={26} className='mr-10 text-main' />
 				</button>
 			</div>
-			<hr className='mt-10 text-grey200'></hr>
+			<hr className='mt-10 text-g200'></hr>
 		</div>
 	)
 }

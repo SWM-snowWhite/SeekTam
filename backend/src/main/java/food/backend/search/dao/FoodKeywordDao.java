@@ -69,4 +69,3 @@ public class FoodKeywordDao {
                 rs.getString("food_name");
     }
 }
-
