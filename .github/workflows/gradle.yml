@@ -11,8 +11,8 @@ on:
   push:
     branches:
       - develop
-    paths:
-      - 'backend/**'
+    # paths:
+    #   - 'backend/**'
     
 permissions:
   contents: read
@@ -32,8 +32,9 @@ jobs:
         distribution: 'temurin'
         
     - name: gradlew에 실행 권한 부여
+      run: chmod +x ./backend/gradlew
       working-directory: ./backend
-      run: chmod +x gradlew
 
     - name: Build with Gradle
       run: ./gradlew build
+      working-directory: ./backend
