@@ -19,7 +19,7 @@ bin/
 !**/src/test/**/bin/
 
 ### ignore config ###
-application.yml
+!**/src/main/resources/application.yml
 
 
 ### IntelliJ IDEA ###
