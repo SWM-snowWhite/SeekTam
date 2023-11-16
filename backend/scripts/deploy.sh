@@ -1,15 +1,16 @@
 #!/bin/bash
 
-BUILD_JAR=$(ls /home/ubuntu/cicd/build/libs/backend-0.0.1-SNAPSHOT.jar)
-JAR_NAME=$(basename $BUILD_JAR)
-echo ">>> build 파일명: $JAR_NAME" >> /home/ubuntu/cicd/deploy.log
+BUILD_PATH=/home/ubuntu/cicd/build/libs
+BUILD_FILE_NAME="backend-0.0.1-SNAPSHOT.jar"
 
-echo ">>> build 파일 복사" >> /home/ubuntu/cicd/deploy.log
-DEPLOY_PATH=/home/ubuntu/cicd/
-cp $BUILD_JAR $DEPLOY_PATH
+echo ">>> gradlew 권한 부여" >> /home/ubuntu/cicd/deploy.log
+chmod +x ./gradlew
+
+echo ">>> 프로젝트 빌드" >> /home/ubuntu/cicd/deploy.log
+./gradlew build
 
 echo ">>> 현재 실행중인 애플리케이션 pid 확인" >> /home/ubuntu/cicd/deploy.log
-CURRENT_PID=$(pgrep -f $JAR_NAME)
+CURRENT_PID=$(pgrep -f $BUILD_FILE_NAME)
 
 if [ -z $CURRENT_PID ]
 then
@@ -20,6 +21,8 @@ else
   sleep 5
 fi
 
-DEPLOY_JAR=$DEPLOY_PATH$JAR_NAME
-echo ">>> DEPLOY_JAR 배포"    >> /home/ubuntu/cicd/deploy.log
-nohup java -jar $DEPLOY_JAR >> /home/ubuntu/deploy.log 2>/home/ubuntu/cicd/deploy_err.log &
+echo ">>> 빌드 파일 경로로 이동" >> /home/ubuntu/cicd/deploy.log
+cd $BUILD_PATH
+
+echo ">>> 백그라운드 배포 시작" >> /home/ubuntu/cicd/deploy.log
+nohup java -jar $BUILD_FILE_NAME >> /home/ubuntu/deploy.log 2>/home/ubuntu/cicd/deploy_err.log &
