@@ -38,12 +38,13 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
         
-    - name: gradlew에 실행 권한 부여
-      working-directory: ${{ env.working-directory }}
+    - name: backend 디렉토리로 이동
+      run: cd ./backend
+
+    - name: gradlew 권한 부여
       run: chmod +x ./gradlew
 
     - name: Gradle로 빌드
-      working-directory: ${{ env.working-directory }}
       run: ./gradlew build
 
     - name: zip 파일 생성
