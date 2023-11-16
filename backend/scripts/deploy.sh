@@ -1,6 +1,7 @@
 #!/bin/bash
 
-JAR_NAME=$(basename backend-0.0.1-SNAPSHOT.jar)
+BUILD_JAR=$(ls /home/ubuntu/cicd/build/libs/*.jar)
+JAR_NAME=$(basename $BUILD_JAR)
 echo ">>> build 파일명: $JAR_NAME" >> /home/ubuntu/cicd/deploy.log
 
 echo ">>> 현재 실행중인 애플리케이션 pid 확인" >> /home/ubuntu/cicd/deploy.log
@@ -20,4 +21,4 @@ echo ">>> 빌드 파일 경로: $DEPLOY_PATH" >> /home/ubuntu/cicd/deploy.log
 DEPLOY_JAR=$JAR_PATH$JAR_NAME
 
 echo ">>> DEPLOY_JAR 배포"    >> /home/ubuntu/cicd/deploy.log
-nohup java -jar $DEPLOY_JAR & >> /home/ubuntu/deploy.log 2>/home/ubuntu/cicd/deploy_err.log
+nohup java -jar $DEPLOY_JAR >> /home/ubuntu/deploy.log 2>/home/ubuntu/cicd/deploy_err.log &
