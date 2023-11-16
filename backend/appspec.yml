@@ -14,6 +14,6 @@ permissions:
 
 hooks:
   ApplicationStart:
-    - location: *.sh
+    - location: backend-deploy.sh
       timeout: 60
       runas: ubuntu
