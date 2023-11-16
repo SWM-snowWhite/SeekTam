@@ -8,10 +8,10 @@
 name: 백엔드 서버 CI/CD
 on:
   push:
-    branches:
-      - develop
-    paths:
-      - 'backend/**'
+    # branches:
+    #   - develop
+    # paths:
+    #   - 'backend/**'
 
 env:
   S3_BUCKET_NAME: seektam-backend-deploy
