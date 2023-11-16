@@ -11,41 +11,42 @@ on:
   push:
     branches:
       - develop
-    paths:
-      - 'backend/**'
+    # paths:
+    #   - 'backend/**'
 
 env:
   S3_BUCKET_NAME: seektam-backend-deploy
   AWS_REGION: ap-northeast-2
   CODEDEPLOY_NAME: seektam-backend-codedeploy
   CODEDEPLOY_GROUP: seektam-backend-codedeploy-group
+  working-directory: ./backend
     
 permissions:
   contents: read
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Seektam Repository로 Checkout
+      uses: actions/checkout@v3
     
-    - name: Set up JDK 11
+    - name: JDK 11 설치
       uses: actions/setup-java@v3
       with:
         java-version: '11'
         distribution: 'temurin'
         
     - name: gradlew에 실행 권한 부여
+      working-directory: ${{ env.working-directory }}
       run: chmod +x ./gradlew
-      working-directory: ./backend
 
-    - name: Build with Gradle
+    - name: Gradle로 빌드
+      working-directory: ${{ env.working-directory }}
       run: ./gradlew build
-      working-directory: ./backend
 
-    - name: Make zip file
+    - name: zip 파일 생성
       run: zip -r ./$GITHUB_SHA.zip .
       shell: bash
 
@@ -59,5 +60,5 @@ jobs:
     - name: Upload to S3
       run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://$S3_BUCKET_NAME/$GITHUB_SHA.zip
 
-    - name: Code Deploy
-      run: aws deploy create-deployment --application-name $CODEDEPLOY_NAME --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name $CODEDEPLOY_GROUP --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=$GITHUB_SHA.zip
+    # - name: Code Deploy
+    #   run: aws deploy create-deployment --application-name $CODEDEPLOY_NAME --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name $CODEDEPLOY_GROUP --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=$GITHUB_SHA.zip
