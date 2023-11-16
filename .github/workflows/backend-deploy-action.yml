@@ -39,7 +39,10 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
 
-    - name: resources 폴더와 application.yml 파일 생성
+    - name: resources 폴더 생성
+      run: mkdir ./src/main/resources
+      
+    - name: application.yml 파일 생성
       run: touch ./src/main/resources/application.yml
 
     - name: application.yml 정보 주입
