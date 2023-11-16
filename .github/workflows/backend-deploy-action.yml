@@ -40,11 +40,12 @@ jobs:
         
     - name: Move to Backend Directory
       run: cd backend
-
+      
     - name: Initialize Gradle Wrapper
-      run: |
-        chmod +x ./gradlew
-        ./gradlew wrapper --gradle-version=<8.1.1>
+      run: gradle wrapper
+
+    - name: Run chmod +x ./gradlew
+      run: chmod +x ./gradlew
 
     - name: Build Backend
       run: ./gradlew build
