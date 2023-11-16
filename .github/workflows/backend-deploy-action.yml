@@ -37,15 +37,15 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
-
-    - name: gradlew 권한 부여
-      run: chmod +x ./gradlew
-
+        
     - name: backend 디렉토리로 이동
       run: cd ./backend
 
+    - name: gradlew 권한 부여
+      run: chmod +x gradlew
+
     - name: Gradle로 빌드
-      run: ./gradlew build
+      run: gradlew build
 
     - name: zip 파일 생성
       run: zip -r ./$GITHUB_SHA.zip .
