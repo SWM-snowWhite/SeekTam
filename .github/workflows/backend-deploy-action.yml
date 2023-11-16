@@ -33,18 +33,18 @@ jobs:
       uses: actions/checkout@v3
     
     - name: JDK 11 설치
-      uses: actions/setup-java@v3
-      with:
-        java-version: '11'
-        distribution: 'temurin'
+    #   uses: actions/setup-java@v3
+    #   with:
+    #     java-version: '11'
+    #     distribution: 'temurin'
 
-    - name: gradlew 권한 부여
-      run: chmod +x ./gradlew
-      working-directory: ${{ env.working-directory }}
+    # - name: gradlew 권한 부여
+    #   run: chmod +x ./gradlew
+    #   working-directory: ${{ env.working-directory }}
 
-    - name: backend 프로젝트 빌드
-      run: ./gradlew build
-      working-directory: ${{ env.working-directory }}
+    # - name: backend 프로젝트 빌드
+    #   run: ./gradlew build
+    #   working-directory: ${{ env.working-directory }}
       
     - name: backend 프로젝트 zip 파일 생성
       run: zip -r ./$GITHUB_SHA.zip backend
