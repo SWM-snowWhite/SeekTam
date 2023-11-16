@@ -8,12 +8,10 @@ files:
 
 permissions:
   - object: /
-    pattern: "**"
     owner: ubuntu
     group: ubuntu
 
 hooks:
   ApplicationStart:
-    - location: backend-deploy.sh
+    - location: deploy.sh
       timeout: 60
-      runas: ubuntu
