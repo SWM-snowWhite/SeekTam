@@ -11,6 +11,10 @@ java {
 	sourceCompatibility = '11'
 }
 
+jar {
+	enable = false
+}
+
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
