@@ -18,20 +18,3 @@ hooks:
   ApplicationStart:
     - location: scripts/start.sh
       timeout: 60
-
-# files:
-#   - source:  /
-#     destination: /home/ubuntu/cicd
-#     overwrite: yes
-
-# permissions:
-#   - object: /
-#     pattern: "**"
-#     owner: ubuntu
-#     group: ubuntu
-
-# hooks:
-#   ApplicationStart:
-#     - location: scripts/backend_deploy.sh
-#       timeout: 60
-#       runas: ubuntu
