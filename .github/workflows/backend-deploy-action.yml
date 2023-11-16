@@ -38,11 +38,16 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
         
-    - name: Build Backend
+    - name: Move to Backend Directory
+      run: cd backend
+
+    - name: Initialize Gradle Wrapper
       run: |
-        cd backend
         chmod +x ./gradlew
-        ./gradlew build
+        ./gradlew wrapper --gradle-version=<8.1.1>
+
+    - name: Build Backend
+      run: ./gradlew build
         
     - name: zip 파일 생성
       run: zip -r ./$GITHUB_SHA.zip .
