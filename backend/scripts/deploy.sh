@@ -16,8 +16,8 @@ else
 fi
 
 JAR_PATH=$(/home/ubuntu/cicd/build/libs/)
-echo ">>> 빌드 파일 경로: $DEPLOY_PATH" >> /home/ubuntu/cicd/deploy.log
-DEPLOY_JAR=$JAR_PATH$JAR_NAME
+echo ">>> 빌드 파일 경로: $JAR_PATH" >> /home/ubuntu/cicd/deploy.log
 
+DEPLOY_JAR=$JAR_PATH$JAR_NAME
 echo ">>> DEPLOY_JAR 배포"    >> /home/ubuntu/cicd/deploy.log
 nohup java -jar $DEPLOY_JAR >> /home/ubuntu/deploy.log 2>/home/ubuntu/cicd/deploy_err.log &
