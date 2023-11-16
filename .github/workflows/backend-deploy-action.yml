@@ -32,7 +32,7 @@ jobs:
     - name: Seektam Repository로 Checkout
       uses: actions/checkout@v3
     
-    - name: JDK 11 설치
+    # - name: JDK 11 설치
     #   uses: actions/setup-java@v3
     #   with:
     #     java-version: '11'
