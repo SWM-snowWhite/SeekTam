@@ -19,7 +19,6 @@ env:
   AWS_REGION: ap-northeast-2
   CODEDEPLOY_NAME: seektam-backend-codedeploy
   CODEDEPLOY_GROUP: seektam-backend-codedeploy-group
-  working-directory: ./backend
     
 permissions:
   contents: read
@@ -27,6 +26,8 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      working-directory: ./backend
 
     steps:
     - name: Seektam Repository로 Checkout
@@ -38,27 +39,17 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
 
-    - name: 디렉토리 확인
-      run: ls
-    
-    - name: Move to Backend Directory
-      run: cd backend
+    - name: Run chmod +x ./gradlew
+      run: chmod +x ./gradlew
+      working-directory: ${{ env.working-directory }}
 
-    - name: 디렉토리 확인2
-      run: ls
+    - name: Build Backend
+      run: ./gradlew build
+      working-directory: ${{ env.working-directory }}
       
-    # - name: Initialize Gradle Wrapper
-    #   run: gradle wrapper
-
-    # - name: Run chmod +x ./gradlew
-    #   run: chmod +x ./gradlew
-
-    # - name: Build Backend
-    #   run: ./gradlew build
-        
-    # - name: zip 파일 생성
-    #   run: zip -r ./$GITHUB_SHA.zip .
-    #   shell: bash
+    - name: zip 파일 생성
+      run: zip -r ./$GITHUB_SHA.zip .
+      shell: bash
 
     # - name: Configure AWS credentials
     #   uses: aws-actions/configure-aws-credentials@v1
