@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 
 files:
-  - source:  /
+  - source: /
     destination: /home/ubuntu/cicd
     overwrite: yes
 
@@ -14,6 +14,6 @@ permissions:
 
 hooks:
   ApplicationStart:
-    - location: scripts/backend_deploy.sh
+    - location: /cicd/scripts/backend_deploy.sh
       timeout: 60
       runas: ubuntu
