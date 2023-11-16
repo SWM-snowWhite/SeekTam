@@ -8,10 +8,10 @@
 name: 백엔드 서버 CI/CD
 on:
   push:
-    # branches:
-    #   - develop
-    # paths:
-    #   - 'backend/**'
+    branches:
+      - develop
+    paths:
+      - 'backend/**'
 
 env:
   S3_BUCKET_NAME: seektam-backend-deploy
@@ -25,26 +25,31 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      working-directory: ./backend
+    defaults:
+      run:
+        working-directory: "./backend"
 
     steps:
     - name: Seektam Repository로 Checkout
       uses: actions/checkout@v3
     
-    # - name: JDK 11 설치
-    #   uses: actions/setup-java@v3
-    #   with:
-    #     java-version: '11'
-    #     distribution: 'temurin'
+    - name: JDK 11 설치
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'temurin'
 
-    # - name: gradlew 권한 부여
-    #   run: chmod +x ./gradlew
-    #   working-directory: ${{ env.working-directory }}
+    - name: resources 폴더와 application.yml 파일 생성
+      run: touch ./src/main/resources/application.yml
 
-    # - name: backend 프로젝트 빌드
-    #   run: ./gradlew build
-    #   working-directory: ${{ env.working-directory }}
+    - name: application.yml 정보 주입
+      run: echo "${{ secrets.APPLICATION }}" > ./src/main/resources/application.yml
+
+    - name: gradlew 권한 부여
+      run: chmod +x ./gradlew
+
+    - name: backend 프로젝트 빌드
+      run: ./gradlew build
       
     - name: backend 프로젝트 zip 파일 생성
       run: zip -r ./$GITHUB_SHA.zip backend
