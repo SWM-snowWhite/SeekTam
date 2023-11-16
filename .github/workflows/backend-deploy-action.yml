@@ -25,9 +25,8 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: "./backend"
+    env:
+      working-directory: "./backend"
 
     steps:
     - name: Seektam Repository로 Checkout
@@ -41,18 +40,23 @@ jobs:
 
     - name: resources 폴더 생성
       run: mkdir ./src/main/resources
+      working-directory: ${{ env.working-directory }}
       
     - name: application.yml 파일 생성
       run: touch ./src/main/resources/application.yml
+      working-directory: ${{ env.working-directory }}
 
     - name: application.yml 정보 주입
       run: echo "${{ secrets.APPLICATION }}" > ./src/main/resources/application.yml
+      working-directory: ${{ env.working-directory }}
 
     - name: gradlew 권한 부여
       run: chmod +x ./gradlew
+      working-directory: ${{ env.working-directory }}
 
     - name: backend 프로젝트 빌드
       run: ./gradlew build
+      working-directory: ${{ env.working-directory }}
       
     - name: backend 프로젝트 zip 파일 생성
       run: zip -r ./$GITHUB_SHA.zip backend
