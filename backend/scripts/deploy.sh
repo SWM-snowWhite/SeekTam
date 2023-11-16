@@ -1,7 +1,6 @@
 #!/bin/bash
 
-BUILD_JAR=$(ls /home/ubuntu/cicd/build/libs/*.jar)
-JAR_NAME=$(basename $BUILD_JAR)
+JAR_NAME=$(backend-0.0.1-SNAPSHOT.jar)
 echo ">>> build 파일명: $JAR_NAME" >> /home/ubuntu/cicd/deploy.log
 
 echo ">>> 현재 실행중인 애플리케이션 pid 확인" >> /home/ubuntu/cicd/deploy.log
@@ -16,7 +15,7 @@ else
   sleep 5
 fi
 
-JAR_PATH=$(/home/ubuntu/cicd/build/libs)
+JAR_PATH=$(/home/ubuntu/cicd/build/libs/)
 echo ">>> 빌드 파일 경로: $DEPLOY_PATH" >> /home/ubuntu/cicd/deploy.log
 DEPLOY_JAR=$JAR_PATH$JAR_NAME
 
