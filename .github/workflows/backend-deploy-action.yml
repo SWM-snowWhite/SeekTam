@@ -42,7 +42,7 @@ jobs:
       run: cd ./backend
 
     - name: gradlew 권한 부여
-      run: chmod +x ./gradlew
+      run: chmod +x ./backend/gradlew
 
     - name: Gradle로 빌드
       run: ./gradlew build
