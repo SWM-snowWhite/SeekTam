@@ -1,13 +1,14 @@
 #!/bin/bash
 
+ROOT_DIRECTORY=/home/ubuntu/cicd
 BUILD_PATH=/home/ubuntu/cicd/build/libs
 BUILD_FILE_NAME="backend-0.0.1-SNAPSHOT.jar"
 
 echo ">>> gradlew 권한 부여" >> /home/ubuntu/cicd/deploy.log
+cd $ROOT_DIRECTORY
 chmod +x ./gradlew
 
 echo ">>> 프로젝트 빌드" >> /home/ubuntu/cicd/deploy.log
-cd $BUILD_PATH
 ./gradlew build
 
 echo ">>> 현재 실행중인 애플리케이션 pid 확인" >> /home/ubuntu/cicd/deploy.log
