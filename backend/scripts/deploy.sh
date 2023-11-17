@@ -16,8 +16,11 @@ else
   sleep 5
 fi
 
+echo ">>> 새 빌드파일 덮어쓰기" >> /home/ubuntu/cicd/deploy.log
+cp $BUILD_PATH/$BUILD_FILE_NAME $ROOT_DIRECTORY
+
 echo ">>> 빌드 파일 경로로 이동" >> /home/ubuntu/cicd/deploy.log
-cd $BUILD_PATH
+cd $ROOT_DIRECTORY
 
 echo ">>> 백그라운드 배포 시작" >> /home/ubuntu/cicd/deploy.log
 nohup java -jar $BUILD_FILE_NAME >> /home/ubuntu/deploy.log 2>/home/ubuntu/cicd/deploy_err.log &
