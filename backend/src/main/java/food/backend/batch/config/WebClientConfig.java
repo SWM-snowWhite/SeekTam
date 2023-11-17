@@ -1,5 +1,6 @@
 package food.backend.batch.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -10,6 +11,9 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Configuration
 public class WebClientConfig {
 
+    @Value("${openapi.url}")
+    private String OPENAPI_URL;
+
     /**
      * WebClient Bean 등록 기본 URL을 설정한다
      *
@@ -18,7 +22,7 @@ public class WebClientConfig {
     @Bean
     public WebClient webClient() {
         return WebClient.builder()
-                .baseUrl("http://api.data.go.kr/openapi/tn_pubr_public_nutri_info_api")
+                .baseUrl(OPENAPI_URL)
                 .build();
     }
 }

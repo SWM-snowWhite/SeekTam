@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -27,9 +28,11 @@ import java.util.Map;
 @Transactional
 public class FoodDataApiService {
 
+    @Value("${openapi.key}")
+    private String serviceKey;
+
     private static final int initPage = 1;
     private static final int readPerPage = 200;
-    private final String serviceKey = "SxNmD8Ax8VbMjc4NFG2oTMXRV3xxkFOYYABFd4lq9Rgfg17R0KTniwy6Ya0EaLuKmdV32Dd9swbx/T2boSFP6Q==";
     private static int totalData;
     private final WebClient webClient;
     public final ObjectMapper objectMapper;
