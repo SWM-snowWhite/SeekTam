@@ -32,8 +32,8 @@ public class StoreFoodDataService {
     public void saveFoodDataToDatabase(FoodNutritionDto foodData) {
         BeanPropertySqlParameterSource param = new BeanPropertySqlParameterSource(foodData);
         String sql =
-                "INSERT INTO food_main (food_code, food_name, data_code, data_type_name, enerc, nut_con_srtr_qua, water, prot, fatce, ash, chocdf, sugar, fibtg, ca, fe, p, k, nat, vita_rae, retol, cartb, thia, ribf, nia, vitc, vitd, chole, fasat, fatrn, refuse, src_code, src_name, food_size, impt_yn, coo_code, coo_name, company_name, data_prod_code, data_prod_name, crt_ymd, crtr_ymd, instt_code, update_date) " +
-                        "VALUES (:foodCd, :foodNm, :dataCd, :typeNm, :enerc, :nutConSrtrQua, :water, :prot, :fatce, :ash, :chocdf, :sugar, :fibtg, :ca, :fe, :p, :k, :nat, :vitaRae, :retol, :cartb, :thia, :ribf, :nia, :vitc, :vitd, :chole, :fasat, :fatrn, :refuse, :srcCd, :srcNm, :foodSize, :imptYn, :cooCd, :cooNm, :companyNm, :dataProdCd, :dataProdNm, :crtYmd, :crtrYmd, :insttCode, :updateDate) " +
+                "INSERT INTO food_main (food_code, food_name, data_code, data_type_name, enerc, nut_con_srtr_qua, water, prot, fatce, ash, chocdf, sugar, fibtg, ca, fe, p, k, nat, vita_rae, retol, cartb, thia, ribf, nia, vitc, vitd, chole, fasat, fatrn, refuse, src_code, src_name, food_size, impt_yn, coo_code, coo_name, company_name, data_prod_code, data_prod_name, crt_ymd, crtr_ymd, instt_code) " +
+                        "VALUES (:foodCd, :foodNm, :dataCd, :typeNm, :enerc, :nutConSrtrQua, :water, :prot, :fatce, :ash, :chocdf, :sugar, :fibtg, :ca, :fe, :p, :k, :nat, :vitaRae, :retol, :cartb, :thia, :ribf, :nia, :vitc, :vitd, :chole, :fasat, :fatrn, :refuse, :srcCd, :srcNm, :foodSize, :imptYn, :cooCd, :cooNm, :companyNm, :dataProdCd, :dataProdNm, :crtYmd, :crtrYmd, :insttCode) " +
                         "ON DUPLICATE KEY UPDATE " +
                         "food_name = :foodNm, " +
                         "data_code = :dataCd, " +
@@ -75,8 +75,7 @@ public class StoreFoodDataService {
                         "data_prod_name = :dataProdNm, " +
                         "crt_ymd = :crtYmd, " +
                         "crtr_ymd = :crtrYmd, " +
-                        "instt_code = :insttCode, " +
-                        "update_date = :updateDate";
+                        "instt_code = :insttCode ";
 
         jdbcTemplate.update(sql, param);
     }
