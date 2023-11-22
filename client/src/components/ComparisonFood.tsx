@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { FoodType } from '../pages/Search'
 import { useDispatch, useSelector } from 'react-redux'
-import { updateComparisonFood } from '../store/ComparisonSlice'
+import { filteredComparisonFood } from '../store/ComparisonSlice'
 import { RootState } from '..'
 export default function ComparisonFood({ food }: { food: FoodType }) {
 	const DEFAULT_IMAGE = '/images/Graphic/2x/food@2x.png'
@@ -11,29 +11,23 @@ export default function ComparisonFood({ food }: { food: FoodType }) {
 	)
 
 	const handleDeleteFood = () => {
-		dispatcher(
-			updateComparisonFood(
-				comparisonList.filter(item => item.foodId !== food.foodId),
-			),
-		)
+		dispatcher(filteredComparisonFood(food))
 	}
 	return (
-		<div className='rounded-md shadow-md border-1 bg-white border-g100 flex-col h-180 m-10'>
+		<div className='flex-col items-center justify-center m-10 bg-white rounded-md shadow-md border-1 border-g100 h-160'>
 			<img
 				src={food.imageUrl ? food.imageUrl : DEFAULT_IMAGE}
 				alt={`${food.foodName} 이미지`}
-				className='rounded-md w-80 h-80 m-auto'
+				className='m-auto rounded-md w-80 h-80'
 			/>
-			<h1 className='text-center text-grey900 text-14 mt-10'>
-				{food.foodName}asdasdasd
+			<h1 className='mt-10 text-center text-g900 text-12 h-30'>
+				{food.foodName}
 			</h1>
-			<div className='flex justify-center m-10 items-center'>
-				<div
-					onClick={handleDeleteFood}
-					className='m-0 w-30 bg-grey200 text-grey900 rounded-md text-12 text-center'
-				>
-					<span>삭제</span>
-				</div>
+			<div
+				onClick={handleDeleteFood}
+				className='flex items-center justify-center m-10 rounded-md bg-g200 text-g900 text-12'
+			>
+				<p>삭제</p>
 			</div>
 		</div>
 	)

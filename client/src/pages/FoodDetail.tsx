@@ -51,7 +51,6 @@ export default function FoodDetail() {
 			const url = new URL(window.location.href)
 			const foodId = url.searchParams.get('foodId')
 
-			console.log(`foodID: ${foodId}`)
 			if (foodId) {
 				setSelectedFoodId(Number(foodId))
 				fetchFoodDetailByFoodId(Number(foodId))
@@ -142,49 +141,71 @@ export default function FoodDetail() {
 			</div>
 			<div className='my-20'>
 				<div className='flex items-center m-auto w-420 '>
-					<div className='flex w-100 ml-20'>열량</div>
-					<Range value={foodInfo.calorie} max={100} />
+					<div className='flex ml-20 w-100'>열량</div>
+					<Range value={foodInfo.calorie} max={2150} />
 				</div>
-				<div className='flex justify-between ml-160 w-300 text-14 my-5'>
-					<span>{foodInfo.calorie} g</span>
-					<span>{100} g</span>
+				<div className='flex justify-between my-5 ml-160 w-300 text-14'>
+					<span>{foodInfo.calorie} kcal</span>
+					<span>{2150} kcal</span>
 				</div>
 				<hr className='text-g200'></hr>
 			</div>
 			<div className='my-20'>
 				<div className='flex items-center m-auto w-420'>
-					<div className='flex w-100 ml-20'>탄수화물</div>
-					<Range value={foodInfo.calorie} max={100} />
+					<div className='flex ml-20 w-100'>탄수화물</div>
+					<Range value={foodInfo.carbohydrate} max={324} />
 				</div>
-				<div className='flex justify-between ml-160 w-300 text-14 my-5'>
+				<div className='flex justify-between my-5 ml-160 w-300 text-14'>
 					<span>{foodInfo.carbohydrate} g</span>
-					<span>{100} g</span>
+					<span>{324} g</span>
 				</div>
 				<hr className='text-g200'></hr>
 			</div>
 			<div className='my-20'>
 				<div className='flex items-center m-auto w-420'>
-					<div className='flex w-100 ml-20'>단백질</div>
-					<Range value={foodInfo.protein} max={100} />
+					<div className='flex ml-20 w-100'>단백질</div>
+					<Range value={foodInfo.protein} max={55} />
 				</div>
-				<div className='flex justify-between ml-160 w-300 text-14 my-5'>
+				<div className='flex justify-between my-5 ml-160 w-300 text-14'>
 					<span>{foodInfo.protein} g</span>
-					<span>{100} g</span>
+					<span>{55} g</span>
 				</div>
 				<hr className='text-g200'></hr>
 			</div>
 			<div className='my-20'>
 				<div className='flex items-center m-auto w-420'>
 					<div className='flex ml-20 w-100'>지방</div>
+					<Range value={foodInfo.fat} max={54} />
+				</div>
+				<div className='flex justify-between my-5 ml-160 w-300 text-14'>
+					<span>{foodInfo.fat} g</span>
+					<span>{54} g</span>
+				</div>
+				<hr className='text-g200'></hr>
+			</div>
+			<div className='my-20'>
+				<div className='flex items-center m-auto w-420'>
+					<div className='flex ml-20 w-100'>포화지방</div>
+					<Range value={foodInfo.fat} max={15} />
+				</div>
+				<div className='flex justify-between my-5 ml-160 w-300 text-14'>
+					<span>{foodInfo.fat} g</span>
+					<span>{15} g</span>
+				</div>
+				<hr className='text-g200'></hr>
+			</div>
+			<div className='my-20'>
+				<div className='flex items-center m-auto w-420'>
+					<div className='flex ml-20 w-100'>당류</div>
 					<Range value={foodInfo.fat} max={100} />
 				</div>
-				<div className='flex justify-between ml-160 w-300 text-14 my-5'>
+				<div className='flex justify-between my-5 ml-160 w-300 text-14'>
 					<span>{foodInfo.fat} g</span>
 					<span>{100} g</span>
 				</div>
 				<hr className='text-g200'></hr>
 			</div>
-			<div className='flex items-center justify-center w-full h-150 m-0'>
+			<div className='flex items-center justify-center w-full m-0 h-150'>
 				<button
 					className='ml-10 text-white rounded-lg h-50 w-400 bg-p900 text-20 mb-100'
 					onClick={() => handlePurchaseClick()}

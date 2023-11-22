@@ -94,10 +94,7 @@ export default function SearchOptionBar({
 				</div>
 			)}
 			{selectedOption && isOptionHandlerOpened && (
-				<SearchOption
-					searchOptionList={searchOptionList}
-					selectedOption={selectedOption}
-				/>
+				<SearchOption selectedOption={selectedOption} />
 			)}
 		</div>
 	)

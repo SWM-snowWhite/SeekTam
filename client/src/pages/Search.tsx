@@ -6,30 +6,30 @@ import ComparisonViewModal from '../components/modal/ComparisonViewModal'
 import ComparisonModal from '../components/modal/ComparisonModal'
 import KeywordComponent from '../components/KeywordComponent'
 import FoodList from '../components/FoodList'
-import SearchOption from '../components/SearchOption'
 import SearchOptionBar from '../components/SearchOptionBar'
 import { useDispatch, useSelector } from 'react-redux'
-import { updateSearchFirst, updateSearchOnOff } from '../store/SearchInfoSlice'
+import {
+	updateSearchFirst,
+	updateSearchOnOff,
+	SearchCondition,
+} from '../store/SearchInfoSlice'
 import { RootState } from '..'
 
-export type SearchTitleTypeEng =
-	| 'calorie'
-	| 'carbohydrate'
-	| 'protein'
-	| 'fat'
-	| 'default'
+export type SearchTitleTypeEng = 'calorie' | 'carbohydrate' | 'protein' | 'fat'
 
-export type SearchTitleTypeKor =
-	| '열량'
-	| '탄수화물'
-	| '단백질'
-	| '지방'
-	| '기본'
+export type SearchTitleTypeKor = '열량' | '탄수화물' | '단백질' | '지방'
 export type SearchOptionObjectType = {
 	title: string
 	gram: number
 	condition: number
 	view: number
+}
+
+const titleKrToEn = {
+	열량: 'calorie',
+	탄수화물: 'carbohydrate',
+	단백질: 'protein',
+	지방: 'fat',
 }
 
 export type SearchOptionType = {
@@ -71,12 +71,6 @@ const searchOptionList: SearchOptionType = {
 		condition: 1,
 		view: 0,
 	},
-	default: {
-		title: '지방',
-		gram: 0,
-		condition: 1,
-		view: 0,
-	},
 }
 
 export default function Search() {
@@ -94,6 +88,7 @@ export default function Search() {
 	const comparisonFood = useSelector(
 		(state: RootState) => state.comparisonFood,
 	)
+
 	// 무한스크롤 관련 상태값
 	const [end, setEnd] = useState(false) // 추가로 받아올 데이터 없을 시 더 이상 무한 스크롤 작동안하게 하는 상태값
 	const [page, setPage] = useState(2) // 현재 페이지
@@ -253,10 +248,12 @@ export default function Search() {
 			clicked ? clicked : keyword
 		}&`
 
-		await Object.keys(searchConditions).forEach((key: string) => {
-			const option = searchOptions[key as SearchTitleTypeEng]
-			// url += `${key}=${option.gram}&`
-			// url += `${key}_con=${option.condition}&`
+		await searchConditions.forEach((condition: SearchCondition) => {
+			const { krName, content, contentUpDown } = condition
+			const enName = titleKrToEn[krName]
+
+			url += `${enName}=${content}&`
+			url += `${enName}Con=${contentUpDown}&`
 		})
 		return url.slice(0, -1)
 	}
@@ -271,6 +268,12 @@ export default function Search() {
 
 	return (
 		<div className='absolute flex-row h-[100vh] overflow-scroll bg-white w-500'>
+			{viewComparison && (
+				<ComparisonViewModal
+					comparisonFood={comparisonFood}
+					handleComparisonView={handleComparisonView}
+				/>
+			)}
 			<KeywordSearchPageBar
 				fetchKeywordSearch={fetchKeywordSearch}
 				keyword={keyword}
@@ -284,11 +287,6 @@ export default function Search() {
 				<InfoModal
 					selectedFoodId={selectedFoodId}
 					handleSelectedFood={handleSelectedFood}
-				/>
-			)}
-			{viewComparison && (
-				<ComparisonViewModal
-					handleComparisonView={handleComparisonView}
 				/>
 			)}
 			{comparisonFood.length > 0 && (
