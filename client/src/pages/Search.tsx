@@ -8,27 +8,28 @@ import KeywordComponent from '../components/KeywordComponent'
 import FoodList from '../components/FoodList'
 import SearchOptionBar from '../components/SearchOptionBar'
 import { useDispatch, useSelector } from 'react-redux'
-import { updateSearchFirst, updateSearchOnOff } from '../store/SearchInfoSlice'
+import {
+	updateSearchFirst,
+	updateSearchOnOff,
+	SearchCondition,
+} from '../store/SearchInfoSlice'
 import { RootState } from '..'
 
-export type SearchTitleTypeEng =
-	| 'calorie'
-	| 'carbohydrate'
-	| 'protein'
-	| 'fat'
-	| 'default'
+export type SearchTitleTypeEng = 'calorie' | 'carbohydrate' | 'protein' | 'fat'
 
-export type SearchTitleTypeKor =
-	| '열량'
-	| '탄수화물'
-	| '단백질'
-	| '지방'
-	| '기본'
+export type SearchTitleTypeKor = '열량' | '탄수화물' | '단백질' | '지방'
 export type SearchOptionObjectType = {
 	title: string
 	gram: number
 	condition: number
 	view: number
+}
+
+const titleKrToEn = {
+	열량: 'calorie',
+	탄수화물: 'carbohydrate',
+	단백질: 'protein',
+	지방: 'fat',
 }
 
 export type SearchOptionType = {
@@ -65,12 +66,6 @@ const searchOptionList: SearchOptionType = {
 		view: 0,
 	},
 	fat: {
-		title: '지방',
-		gram: 0,
-		condition: 1,
-		view: 0,
-	},
-	default: {
 		title: '지방',
 		gram: 0,
 		condition: 1,
@@ -253,10 +248,12 @@ export default function Search() {
 			clicked ? clicked : keyword
 		}&`
 
-		await Object.keys(searchConditions).forEach((key: string) => {
-			const option = searchOptions[key as SearchTitleTypeEng]
-			// url += `${key}=${option.gram}&`
-			// url += `${key}_con=${option.condition}&`
+		await searchConditions.forEach((condition: SearchCondition) => {
+			const { krName, content, contentUpDown } = condition
+			const enName = titleKrToEn[krName]
+
+			url += `${enName}=${content}&`
+			url += `${enName}Con=${contentUpDown}&`
 		})
 		return url.slice(0, -1)
 	}

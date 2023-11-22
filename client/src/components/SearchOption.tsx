@@ -1,19 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { SearchOptionObjectType, SearchTitleTypeKor } from '../pages/Search'
+import { SearchTitleTypeKor } from '../pages/Search'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../index'
 import {
 	updateSearchCondition,
-	updateSearchFirst,
-	updateSearchOnOff,
 	updateSearchOptionHandlerOpenState,
 } from '../store/SearchInfoSlice'
 
 export default function SearchOption({
-	searchOptionList,
 	selectedOption,
 }: {
-	searchOptionList: SearchOptionObjectType
 	selectedOption: SearchTitleTypeKor
 }) {
 	const [contentUpDown, setContentUpDown] = useState<number>(-1)
@@ -23,9 +19,7 @@ export default function SearchOption({
 	)
 	const dispatcher = useDispatch()
 
-	useEffect(() => {
-		console.log(isOptionOpened, isSearchOn, searchConditions)
-	}, [isOptionOpened, isSearchOn, searchConditions])
+	useEffect(() => {}, [isOptionOpened, isSearchOn, searchConditions])
 
 	const handleContentUpDownClick = (btnType: number) => {
 		if (btnType === 1) {
@@ -72,11 +66,11 @@ export default function SearchOption({
 		}
 
 		const tmpDict = {
-			name: selectedOption,
+			krName: selectedOption,
 			content: content,
 			contentUpDown: contentUpDown,
 		}
-		console.log(searchConditions)
+
 		if (searchConditions) {
 			dispatcher(updateSearchCondition([...searchConditions, tmpDict]))
 		} else {

@@ -1,8 +1,8 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { SearchTitleTypeKor } from '../pages/Search'
+import { SearchTitleTypeEng, SearchTitleTypeKor } from '../pages/Search'
 
 export interface SearchCondition {
-	name: SearchTitleTypeKor
+	krName: SearchTitleTypeKor
 	content: number
 	contentUpDown: number // -1(default) / 0(이하) / 1(이상)
 }
@@ -19,13 +19,7 @@ const initialState: SearchInfo = {
 	isOptionOpened: false,
 	isOptionHandlerOpened: false,
 	isSearchOn: false,
-	searchConditions: [
-		{
-			name: '기본',
-			content: 1,
-			contentUpDown: 1,
-		},
-	],
+	searchConditions: [],
 }
 
 export const searchInfoSlice = createSlice({
