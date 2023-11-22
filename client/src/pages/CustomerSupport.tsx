@@ -4,6 +4,7 @@ import { RootState } from '..'
 import PrivacyPolicy from '../components/PrivacyPolicy'
 import AgreementUtilization from '../components/AgreementUtilization'
 import { CurrentPageType, currentPageUpdate } from '../store/CurrentPageSlice'
+import Navigator from '../components/Navigator'
 
 export default function CustomerSupport() {
 	const dispatcher = useDispatch()
@@ -11,18 +12,12 @@ export default function CustomerSupport() {
 		(state: RootState) => state.currentPage,
 	)
 
-	useEffect(() => {
-		console.log(`currentPage: ${currentPage}`)
-	}, [currentPage])
 	return (
 		<div className='absolute bg-white w-500 m-0 overflow-y-scroll h-[100vh]'>
 			<div>
-				<div className='flex flex-col justify-center w-auto mb-10 h-50'>
-					<h1 className='m-15 font-bold text-20'>고객지원</h1>
-					<hr className='text-g200'></hr>
-				</div>
+				<Navigator title='고객지원' />
 			</div>
-			<div className='flex justify-around m-0 w-full h-40 items-center'>
+			<div className='flex items-center justify-around w-full h-40 m-0'>
 				<div
 					onClick={() => dispatcher(currentPageUpdate('agreement'))}
 					className={
@@ -60,7 +55,7 @@ export default function CustomerSupport() {
 					}
 				></hr>
 			</div>
-			<div className='bg-g100 w-full h-full m-auto overflow-hidden'>
+			<div className='w-full h-full m-auto overflow-hidden bg-g100'>
 				{currentPage === 'privacy' ? (
 					<PrivacyPolicy />
 				) : (
