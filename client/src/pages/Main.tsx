@@ -10,6 +10,7 @@ import { FoodListType, SearchTitleTypeKor } from './Search'
 import { useSelector } from 'react-redux'
 import { RootState } from '..'
 import { SearchCondition } from '../store/SearchInfoSlice'
+import FooterMain from '../components/FooterMain'
 
 export default function Main() {
 	const [relatedFoodList, setRelatedFoodList] = useState([])
@@ -51,7 +52,7 @@ export default function Main() {
 				fetchNonOptionKeywordSearch={fetchNonOptionKeywordSearch}
 			/>
 			<ViewsRanking fetchKeywordSearch={fetchKeywordSearch} />
-			{/* <FooterMain/> */}
+			<FooterMain />
 		</div>
 	)
 }
