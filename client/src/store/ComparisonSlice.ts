@@ -13,16 +13,29 @@ export const comparisonSlice = createSlice({
 	name: 'comparisonList',
 	initialState,
 	reducers: {
-		updateComparisonFood: (
+		addComparisonFood: (
 			state: IComparisonFood[],
-			action: PayloadAction<IComparisonFood[]>,
+			action: PayloadAction<IComparisonFood>,
 		) => {
-			state = action.payload
+			if (state.length >= 5) {
+				alert('비교함에는 상품을 5개까지 추가 가능합니다.')
+				return state
+			}
+			state.push(action.payload)
+		},
+		filteredComparisonFood: (
+			state: IComparisonFood[],
+			action: PayloadAction<IComparisonFood>,
+		) => {
+			return state.filter(item => item.foodId !== action.payload.foodId)
 		},
 		resetComparisonFood: () => initialState,
 	},
 })
 
-export const { updateComparisonFood, resetComparisonFood } =
-	comparisonSlice.actions
+export const {
+	addComparisonFood,
+	filteredComparisonFood,
+	resetComparisonFood,
+} = comparisonSlice.actions
 export default comparisonSlice.reducer

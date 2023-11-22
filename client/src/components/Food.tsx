@@ -4,7 +4,7 @@ import { AiFillHeart, AiOutlineHeart, AiOutlinePlus } from 'react-icons/ai'
 import { FoodType } from '../pages/Search'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '..'
-import { updateComparisonFood } from '../store/ComparisonSlice'
+import { addComparisonFood } from '../store/ComparisonSlice'
 import { useNavigate } from 'react-router-dom'
 
 export default function Food({ foodItem }: { foodItem: FoodType }) {
@@ -59,7 +59,7 @@ export default function Food({ foodItem }: { foodItem: FoodType }) {
 	}
 
 	const handleAddComparisonFood = () => {
-		dispatcher(updateComparisonFood([...comparisonFood, foodItem]))
+		dispatcher(addComparisonFood(foodItem))
 	}
 	return (
 		<div className='rounded-md shadow-md w-190 h-270 border-1 border-g100'>
@@ -67,12 +67,12 @@ export default function Food({ foodItem }: { foodItem: FoodType }) {
 				<img
 					src={foodItem.imageUrl ? foodItem.imageUrl : DEFAULT_IMAGE}
 					alt={foodItem.foodName}
-					className='object-cover rounded-lg w-190 h-190  cursor-pointer'
+					className='object-cover rounded-lg cursor-pointer w-190 h-190'
 					onClick={handleFoodDetail}
 				/>
 				<h1
 					onClick={handleFoodDetail}
-					className='mt-5 font-bold text-g900 text-14  cursor-pointer'
+					className='mt-5 font-bold cursor-pointer text-g900 text-14'
 				>
 					{foodItem.foodName}
 				</h1>

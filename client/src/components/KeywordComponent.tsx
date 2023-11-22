@@ -14,7 +14,7 @@ export default function KeywordComponent({
 	focusedFoodIdx,
 }: KeywordComponentProps) {
 	return (
-		<div className='fixed left-140 top-80 bg-white m-auto rounded-md w-450 border-1 border-p900'>
+		<div className='fixed bg-white rounded-md w-480 top-80 border-1 border-p900'>
 			{relatedFoodList &&
 				relatedFoodList.map((foodName: string, index: number) => {
 					if (foodName.length > 22) {

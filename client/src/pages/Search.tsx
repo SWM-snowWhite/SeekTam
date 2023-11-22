@@ -6,7 +6,6 @@ import ComparisonViewModal from '../components/modal/ComparisonViewModal'
 import ComparisonModal from '../components/modal/ComparisonModal'
 import KeywordComponent from '../components/KeywordComponent'
 import FoodList from '../components/FoodList'
-import SearchOption from '../components/SearchOption'
 import SearchOptionBar from '../components/SearchOptionBar'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateSearchFirst, updateSearchOnOff } from '../store/SearchInfoSlice'
@@ -94,6 +93,7 @@ export default function Search() {
 	const comparisonFood = useSelector(
 		(state: RootState) => state.comparisonFood,
 	)
+
 	// 무한스크롤 관련 상태값
 	const [end, setEnd] = useState(false) // 추가로 받아올 데이터 없을 시 더 이상 무한 스크롤 작동안하게 하는 상태값
 	const [page, setPage] = useState(2) // 현재 페이지
@@ -271,6 +271,12 @@ export default function Search() {
 
 	return (
 		<div className='absolute flex-row h-[100vh] overflow-scroll bg-white w-500'>
+			{viewComparison && (
+				<ComparisonViewModal
+					comparisonFood={comparisonFood}
+					handleComparisonView={handleComparisonView}
+				/>
+			)}
 			<KeywordSearchPageBar
 				fetchKeywordSearch={fetchKeywordSearch}
 				keyword={keyword}
@@ -284,11 +290,6 @@ export default function Search() {
 				<InfoModal
 					selectedFoodId={selectedFoodId}
 					handleSelectedFood={handleSelectedFood}
-				/>
-			)}
-			{viewComparison && (
-				<ComparisonViewModal
-					handleComparisonView={handleComparisonView}
 				/>
 			)}
 			{comparisonFood.length > 0 && (

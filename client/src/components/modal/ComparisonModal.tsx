@@ -25,16 +25,13 @@ export default function ComparisonModal({
 		handleComparisonView()
 	}
 
-	useEffect(() => {
-		console.log('여기여기여기')
-	})
 	return (
 		<div className='fixed flex-row items-center justify-center bg-white rounded-md shadow-2xl cursor-pointer w-500 bottom-64 border-g300'>
 			{isOpenModal ? (
 				<div className=''>
 					<div
 						onClick={handleOpenModal}
-						className='flex items-center justify-center h-40 m-auto rounded-md w-500 border-1 border-g300'
+						className='flex items-center justify-center h-40 m-auto rounded-md w-500 border-1 border-g200'
 					>
 						<span className='mx-10 font-bold text-g600'>
 							식품 비교 닫기
@@ -57,7 +54,7 @@ export default function ComparisonModal({
 					</div>
 					<div>
 						{comparisonFood && (
-							<div className='flex h-160 w-500 bottom-64'>
+							<div className='flex h-180 w-500 bottom-64'>
 								{comparisonFood.map((food: FoodType) => (
 									<ComparisonFood food={food} />
 								))}
@@ -66,17 +63,17 @@ export default function ComparisonModal({
 					</div>
 					<div
 						onClick={openComparisonView}
-						className='cursor-pointer flex items-center justify-center rounded-[10px] bg-p1000 w-350 h-40 text-white text-20 '
+						className='cursor-pointer flex items-center justify-center rounded-[10px] bg-p900 w-350 h-40 text-white text-20 m-auto mb-20'
 					>
 						<span>비교하기</span>
 					</div>
 				</div>
 			) : (
 				<div
-					className='flex items-center justify-center m-auto transform bg-white shadow-lg border-1 border-g200 bottom-64 w-500 h-30'
+					className='flex items-center justify-center h-40 m-auto transform bg-white shadow-lg border-1 border-g200 bottom-64 w-500'
 					onClick={handleOpenModal}
 				>
-					<span className='mx-10 font-bold text-g600 '>
+					<span className='mx-10 font-bold text-g600'>
 						식품 비교하기
 					</span>
 					<IoIosArrowUp
