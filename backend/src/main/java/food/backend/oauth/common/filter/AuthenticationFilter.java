@@ -25,7 +25,7 @@ import org.springframework.util.PatternMatchUtils;
 @Slf4j
 public class AuthenticationFilter implements Filter {
 
-    private static final String[] WHITE_LIST = {"/", "/login", "/api/oauth/*", "/mall/*"};
+    private static final String[] WHITE_LIST = {"/", "member/login", "/api/oauth/*", "/mall/*"};
     private final JwtProvider jwtProvider;
     private final OAuthLoginService oAuthLoginService;
 
