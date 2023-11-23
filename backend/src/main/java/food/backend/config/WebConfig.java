@@ -31,7 +31,8 @@ public class WebConfig implements WebMvcConfigurer {
                         "http://www.seektam.com",
                         "https://www.seektam.link",
                         "https://www.seektam.com",
-                        "https://seektam.com"
+                        "https://seektam.com",
+                        "https://seektam.link"
                 )
                 .allowedHeaders("*")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
