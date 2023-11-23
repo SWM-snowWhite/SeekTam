@@ -22,9 +22,9 @@ jobs:
 
       - name: .env setting
         run: |
-          echo "REACT_APP_SERVER_API_URL=${{ secrets.REACT_APP_SERVER_API_URL }}" >> .env.production
-          echo "REACT_APP_REDIRECT_URL=${{ secrets.REACT_APP_REDIRECT_URL }}" >> .env.production
-          cat .env.production
+          echo "REACT_APP_SERVER_API_URL=${{ secrets.REACT_APP_SERVER_API_URL }}" >> .env
+          echo "REACT_APP_REDIRECT_URL=${{ secrets.REACT_APP_REDIRECT_URL }}" >> .env
+          cat .env
 
       - name: Cache node modules # node modules 캐싱
         uses: actions/cache@v1
