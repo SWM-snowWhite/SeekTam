@@ -1,5 +1,5 @@
 #!/bin/bash
-
+ 
 ROOT_DIRECTORY=/home/ubuntu/cicd
 BUILD_PATH=/home/ubuntu/cicd/build/libs
 BUILD_FILE_NAME="backend-0.0.1-SNAPSHOT.jar"
