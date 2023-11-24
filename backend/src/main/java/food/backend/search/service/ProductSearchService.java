@@ -52,7 +52,7 @@ public class ProductSearchService {
     public ProductDetailDto getProductDetail(Long foodId, String email) {
         increaseViewCount(foodId, email);
         try {
-            ProductDetailDto result = productDetailDao.getProductDetail(foodId);
+            ProductDetailDto result = productDetailDao.getProductDetail(email, foodId);
             System.out.println("result = " + result);
             return result;
         } catch (DataAccessException dataAccessException) {

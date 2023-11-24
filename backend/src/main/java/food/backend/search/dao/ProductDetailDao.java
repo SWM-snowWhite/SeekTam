@@ -24,9 +24,19 @@ public class ProductDetailDao {
     @PersistenceContext
     private final EntityManager em;
     private final JdbcTemplate jdbcTemplate;
-    public ProductDetailDto getProductDetail(Long foodId) {
-        String sql = "SELECT * FROM products WHERE food_id = ?";
-        return jdbcTemplate.queryForObject(sql, productRowMapper(), foodId);
+    public ProductDetailDto getProductDetail(String email, Long foodId) {
+        String sql = "SELECT *,  \n" +
+                "CASE \n" +
+                "    WHEN\n" +
+                "        (\n" +
+                "            SELECT 1\n" +
+                "            FROM like_list ll\n" +
+                "            WHERE p.food_id = ll.food_id\n" +
+                "            AND ll.member_id = ?" +
+                "        ) IS NOT NULL THEN TRUE ELSE FALSE\n" +
+                "END AS liked\n" +
+                "FROM products p WHERE food_id = ?";
+        return jdbcTemplate.queryForObject(sql, productRowMapper(), email, foodId);
     }
 
     private RowMapper<ProductDetailDto> productRowMapper() {
@@ -53,6 +63,7 @@ public class ProductDetailDao {
                         .totalSaturatedFat(rs.getDouble("total_saturated_fat"))
                         .transFat(rs.getDouble("trans_fat"))
                         .totalUnsaturatedFat(rs.getDouble("total_unsaturated_fat"))
+                        .liked(rs.getBoolean("liked"))
                         .build();
     }
 
