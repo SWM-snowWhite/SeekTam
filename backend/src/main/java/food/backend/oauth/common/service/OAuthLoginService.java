@@ -73,16 +73,18 @@ public class OAuthLoginService {
     }
 
     public void setupCookies(String accessToken, String refreshToken, HttpServletResponse response) {
-        Cookie accessTokenCookie = new Cookie("access_token", accessToken);
-        Cookie refreshTokenCookie = new Cookie("refresh_token", refreshToken);
+        // Access Token Cookie 설정
+        String accessTokenCookie = String.format(
+                "access_token=%s; Max-Age=3600; Path=/; HttpOnly; Secure; SameSite=None",
+                accessToken
+        );
+        response.addHeader("Set-Cookie", accessTokenCookie);
 
-        accessTokenCookie.setMaxAge(3600);
-        refreshTokenCookie.setMaxAge(3600);
-
-        accessTokenCookie.setPath("/");
-        refreshTokenCookie.setPath("/");
-
-        response.addCookie(accessTokenCookie);
-        response.addCookie(refreshTokenCookie);
+        // Refresh Token Cookie 설정
+        String refreshTokenCookie = String.format(
+                "refresh_token=%s; Max-Age=3600; Path=/; HttpOnly; Secure; SameSite=None",
+                refreshToken
+        );
+        response.addHeader("Set-Cookie", refreshTokenCookie);
     }
 }
