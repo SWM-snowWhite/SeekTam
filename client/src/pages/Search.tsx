@@ -14,6 +14,7 @@ import {
 	SearchCondition,
 } from '../store/SearchInfoSlice'
 import { RootState } from '..'
+import { useNavigate } from 'react-router-dom'
 
 export type SearchTitleTypeEng = 'calorie' | 'carbohydrate' | 'protein' | 'fat'
 
@@ -46,6 +47,17 @@ export type FoodType = {
 
 export type FoodListType = Array<FoodType> | []
 
+export type searchParams = {
+	keyword: string
+	carbohydrate: string
+	carbohydrateCon: string
+	calorie: string
+	calorieCon: string
+	protein: string
+	proteinCon: string
+	fat: string
+	fatCon: string
+}
 const searchOptionList: SearchOptionType = {
 	calorie: {
 		title: '칼로리',
@@ -96,26 +108,52 @@ export default function Search() {
 	const SERVER_API_URL = process.env.REACT_APP_SERVER_API_URL
 	const isInitialMount = useRef(true)
 	const dispatcher = useDispatch()
+	const navigator = useNavigate()
+
 	//** useEffect 시작
-	// 최초 렌더링 시 url에 있는 code값 전달
 	useEffect(() => {
-		if (isInitialMount.current) {
+		if (typeof window !== 'undefined') {
 			const url = new URL(window.location.href)
 
 			// authorization server로부터 클라이언트로 리디렉션된 경우, authorization code가 함께 전달
-			const keyword = url.searchParams.get('keyword')
+			const keyword = url.searchParams.get('keyword')!!
+			const carbohydrate = url.searchParams.get('carbohydrate')!!
+			const carbohydrateCon = url.searchParams.get('carbohydrateCon')!!
+			const calorie = url.searchParams.get('calorie')!!
+			const calorieCon = url.searchParams.get('calorieCon')!!
+			const protein = url.searchParams.get('protein')!!
+			const proteinCon = url.searchParams.get('proteinCon')!!
+			const fat = url.searchParams.get('fat')!!
+			const fatCon = url.searchParams.get('fatCon')!!
+			const params = {
+				keyword,
+				carbohydrate,
+				carbohydrateCon,
+				fat,
+				fatCon,
+				protein,
+				proteinCon,
+				calorie,
+				calorieCon,
+			}
+
 			if (keyword) {
-				fetchNonOptionKeywordSearch(keyword)
+				;(async () => {
+					await fetchNonOptionKeywordSearch(params)
+				})()
 			}
 			isInitialMount.current = false
 		}
-	})
+	}, [selectedKeyword])
 
+	const initializeFoodList = () => {
+		setRelatedFoodList([])
+		setFocusedFoodIdx(-1)
+	}
 	// 키워드가 초기화 될 경우 관련 검색어 초기화
 	useEffect(() => {
 		if (keyword === '') {
-			setRelatedFoodList([])
-			setFocusedFoodIdx(-1)
+			initializeFoodList()
 		} else {
 			fetchKeywordSearch(keyword)
 		}
@@ -161,13 +199,30 @@ export default function Search() {
 		setKeyword('')
 	}
 
-	const fetchNonOptionKeywordSearch = async (keyword: string) => {
-		await axios
-			.get(`${SERVER_API_URL}/foods/search?keyword=${keyword}`, {
-				withCredentials: true,
-			})
+	const fetchNonOptionKeywordSearch = async (params: searchParams) => {
+		console.log(`params : ${JSON.stringify(params)}`)
+		const {
+			keyword,
+			carbohydrate,
+			carbohydrateCon,
+			protein,
+			proteinCon,
+			calorie,
+			calorieCon,
+			fat,
+			fatCon,
+		} = params
+
+		axios
+			.get(
+				`${SERVER_API_URL}/foods/search?keyword=${keyword}&carbohydrate=${carbohydrate}&carbohydrateCon=${carbohydrateCon}&protein=${protein}&proteinCon=${proteinCon}&calorie=${calorie}&calorieCon=${calorieCon}&fat=${fat}&fatCon=${fatCon}`,
+				{
+					withCredentials: true,
+				},
+			)
 			.then(response => {
 				let fetchedFoodList = response.data.slice(0, 10)
+				initializeFoodList()
 				setSelectedKeyword(keyword)
 				setFoodList(fetchedFoodList)
 				dispatcher(updateSearchFirst(true))
@@ -228,25 +283,27 @@ export default function Search() {
 		const foodName = clicked ? clicked : keyword
 
 		setSelectedKeyword(foodName)
-
+		modifySearchOn()
+		dispatcher(updateSearchFirst(true))
+		initializeFoodList()
+		navigator(optionKeywordUrl)
 		try {
-			const response = await axios.get(optionKeywordUrl, {
-				withCredentials: true,
-			})
-
-			let fetchedFoodList = response.data
-			modifySearchOn()
-			setFoodList(fetchedFoodList)
-			dispatcher(updateSearchFirst(true))
+			// const response = await axios.get(optionKeywordUrl, {
+			// 	withCredentials: true,
+			// })
+			// let fetchedFoodList = response.data
+			// setFoodList(fetchedFoodList)
 		} catch (e) {
 			console.log('검색 결과가 없습니다.', e)
 		}
 	}
 
 	const makeOptionKeywordUrl = async (clicked?: string) => {
-		let url = `${SERVER_API_URL}/foods/search?keyword=${
-			clicked ? clicked : keyword
-		}&`
+		// let url = `${SERVER_API_URL}/foods/search?keyword=${
+		// 	clicked ? clicked : keyword
+		// }&`
+
+		let url = `/search?keyword=${clicked ? clicked : keyword}&`
 
 		await searchConditions.forEach((condition: SearchCondition) => {
 			const { krName, content, contentUpDown } = condition

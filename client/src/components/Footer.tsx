@@ -6,16 +6,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '..'
 import { currentPageUpdate } from '../store/CurrentPageSlice'
 
-type currentPageProps = 'home' | 'profile' | 'wishlist'
+export type currentPageProps = 'home' | 'profile' | 'wishlist'
 
 function Footer() {
 	const navigator = useNavigate()
 	const dispatcher = useDispatch()
 	const currentPage = useSelector((state: RootState) => state.currentPage)
 
-	useEffect(() => {
-		console.log(`현재 페이지 : ${currentPage}`)
-	})
 	const handleProfileClick = () => {
 		dispatcher(currentPageUpdate('profile'))
 		navigator('/profile')
