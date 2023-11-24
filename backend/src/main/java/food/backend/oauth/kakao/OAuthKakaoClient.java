@@ -85,7 +85,7 @@ public class OAuthKakaoClient implements OAuthClient {
 
         KakaoUserInfo kakaoUserInfo = restTemplate.postForObject(infoURI, request, KakaoUserInfo.class);
         String jwtInfo = makeJwt(kakaoUserInfo.getKakaoAccount().getEmail().toString(), accessExpirationTime);
-        System.out.println("jwtInfo : ", jwtInfo);
+        System.out.println("jwtInfo : " + jwtInfo);
         return jwtInfo;
     }
 
