@@ -283,9 +283,9 @@ export default function Search() {
 		const foodName = clicked ? clicked : keyword
 
 		setSelectedKeyword(foodName)
-		modifySearchOn()
-		dispatcher(updateSearchFirst(true))
-		initializeFoodList()
+		// modifySearchOn()
+		// dispatcher(updateSearchFirst(true))
+		// initializeFoodList()
 		navigator(optionKeywordUrl)
 		try {
 			// const response = await axios.get(optionKeywordUrl, {
