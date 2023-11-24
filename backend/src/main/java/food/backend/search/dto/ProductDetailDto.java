@@ -31,4 +31,5 @@ public class ProductDetailDto {
     private Double totalSaturatedFat;
     private Double transFat;
     private Double cholesterol;
+    private boolean liked;
 }

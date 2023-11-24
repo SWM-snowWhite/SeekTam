@@ -20,11 +20,7 @@ export default function WishList() {
 
 	useEffect(() => {
 		getWishListItems()
-		try {
-			dispatcher(currentPageUpdate('wishlist'))
-		} catch (error) {
-			console.log(error)
-		}
+		dispatcher(currentPageUpdate('wishlist'))
 	}, [])
 
 	const getWishListItems = () => {

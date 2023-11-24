@@ -115,7 +115,7 @@ export default function ViewsRanking({
 													unLikeFood(item.foodId)
 												}
 												size={24}
-												className='text-main'
+												className='cursor-pointer text-main'
 											/>
 										) : (
 											<AiOutlineHeart
@@ -123,7 +123,7 @@ export default function ViewsRanking({
 													likeFood(item.foodId)
 												}
 												size={24}
-												className='text-main'
+												className='cursor-pointer text-main'
 											/>
 										)}
 									</div>
