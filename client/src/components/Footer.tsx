@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { BsFillPersonLinesFill } from 'react-icons/bs'
 import { AiFillHome, AiFillHeart } from 'react-icons/ai'
@@ -13,6 +13,9 @@ function Footer() {
 	const dispatcher = useDispatch()
 	const currentPage = useSelector((state: RootState) => state.currentPage)
 
+	useEffect(() => {
+		console.log(`현재 페이지 : ${currentPage}`)
+	})
 	const handleProfileClick = () => {
 		dispatcher(currentPageUpdate('profile'))
 		navigator('/profile')
@@ -28,7 +31,7 @@ function Footer() {
 		navigator('/wishlist')
 	}
 
-	return (
+	return currentPage !== '' ? (
 		<div className='absolute bottom-0 flex justify-around p-4 m-auto bg-white rounded-lg shadow-main border-g200 w-500 items-around text-main border-1'>
 			<div
 				onClick={handleProfileClick}
@@ -79,6 +82,8 @@ function Footer() {
 				</span>
 			</div>
 		</div>
+	) : (
+		<div></div>
 	)
 }
 

@@ -7,15 +7,25 @@ import MallRanking from '../components/MallRanking'
 import ViewsRanking from '../components/ViewsRanking'
 
 import { FoodListType, SearchTitleTypeKor } from './Search'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '..'
 import { SearchCondition } from '../store/SearchInfoSlice'
 import FooterMain from '../components/FooterMain'
+import { currentPageUpdate } from '../store/CurrentPageSlice'
 
 export default function Main() {
 	const [relatedFoodList, setRelatedFoodList] = useState([])
 	const [foodList, setFoodList] = useState<FoodListType>([])
 	const SERVER_API_URL = process.env.REACT_APP_SERVER_API_URL
+	const dispatcher = useDispatch()
+	const currentPage = useSelector((state: RootState) => state.currentPage)
+
+	// 현재 페이지가 Home이 아니라면 home으로 변경
+	useEffect(() => {
+		if (currentPage !== 'home') {
+			dispatcher(currentPageUpdate('home'))
+		}
+	}, [])
 
 	const fetchKeywordSearch = (keyword: string) => {
 		if (keyword === '') return

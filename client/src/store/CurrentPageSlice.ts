@@ -6,8 +6,9 @@ export type CurrentPageType =
 	| 'profile'
 	| 'privacy'
 	| 'agreement'
+	| ''
 
-const initialState: CurrentPageType = 'home'
+const initialState: CurrentPageType = ''
 
 export const currentPageSlice = createSlice({
 	name: 'currentPage',
