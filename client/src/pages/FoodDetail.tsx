@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import FoodInfoComponent from '../components/FoodInfoComponent'
 import Range from '../components/Range'
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
@@ -24,6 +24,21 @@ export type FoodInfoType = {
 }
 
 export default function FoodDetail() {
+	function useDebounce(callback: () => void, delay: number) {
+		const timer = useRef<number | null>(null)
+
+		const debouncedCallback = useCallback(() => {
+			if (timer.current !== null) {
+				clearTimeout(timer.current)
+			}
+			setTimeout(() => {
+				callback()
+			}, delay)
+		}, [callback, delay])
+
+		return debouncedCallback
+	}
+
 	const [foodInfo, setFoodInfo] = React.useState<FoodInfoType>({
 		foodId: 0,
 		foodName: 0,
@@ -73,7 +88,7 @@ export default function FoodDetail() {
 			)
 	}
 
-	const handleUnLikeFood = () => {
+	const handleUnLikeFood = async () => {
 		axios
 			.delete(`${REACT_APP_SERVER_API_URL}/member/unlike`, {
 				data: {
@@ -84,12 +99,12 @@ export default function FoodDetail() {
 			.then(_ => {
 				setStateLike(prevStateLike => !prevStateLike)
 			})
-			.catch(_ => {
-				console.log('fail')
+			.catch(err => {
+				console.log(err, 'fail')
 			})
 	}
 
-	const handleLikeFood = () => {
+	const handleLikeFood = async () => {
 		axios
 			.put(
 				`${REACT_APP_SERVER_API_URL}/member/like`,
@@ -99,16 +114,17 @@ export default function FoodDetail() {
 			.then(_ => {
 				setStateLike(prevStateLike => !prevStateLike)
 			})
-			.catch(_ => {
-				console.log('fail')
+			.catch(err => {
+				console.log(err, 'fail')
 			})
-
-		setStateLike(!stateLike)
 	}
 
 	const handlePurchaseClick = () => {
 		window.location.href = `https://www.coupang.com/np/search?component=&q=${foodInfo.foodName}&channel=user`
 	}
+
+	const debouncedHandleLikeFood = useDebounce(handleLikeFood, 300)
+	const debouncedHandleUnLikeFood = useDebounce(handleUnLikeFood, 300)
 	return (
 		<div className='absolute  flex-col h-[100vh] bg-white w-500 overflow-scroll'>
 			<Navigator title={'식품 상세정보'} />
@@ -215,13 +231,13 @@ export default function FoodDetail() {
 				<div className='h-50 flex w-[15%] justify-center items-center bg-g800 rounded-lg m-auto mb-100'>
 					{stateLike ? (
 						<AiFillHeart
-							onClick={handleUnLikeFood}
+							onClick={debouncedHandleUnLikeFood}
 							className='text-red mw-10 my-5 justify-self-center w-[50%] cursor-pointer'
 							size={24}
 						></AiFillHeart>
 					) : (
 						<AiOutlineHeart
-							onClick={handleLikeFood}
+							onClick={debouncedHandleLikeFood}
 							className='text-g100 mw-10 my-5 justify-self-center w-[50%] cursor-pointer'
 							size={24}
 						></AiOutlineHeart>
