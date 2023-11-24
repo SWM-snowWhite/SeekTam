@@ -15,7 +15,7 @@
 
 ### ✅ Architecture
 
-![image](https://github.com/SWM-snowWhite/SeekTam/assets/108510951/75220ab3-873a-4f7b-9fb9-161171f4714c)
+![image](https://github.com/SWM-snowWhite/SeekTam/assets/108510951/7edc9a18-5fbe-4907-aa66-59cade6a81da)
 ![image](https://github.com/SWM-snowWhite/SeekTam/assets/108510951/ba6b16f1-7339-4dc1-83e5-e82f7139a8fb)
 ![image](https://github.com/SWM-snowWhite/SeekTam/assets/108510951/d48cd585-3e3f-46d6-a70e-ac5156f081f1)
 ![image](https://github.com/SWM-snowWhite/SeekTam/assets/108510951/027c10da-8a93-4ceb-af23-459c492b8191)
