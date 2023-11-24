@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { PiNotePencil } from 'react-icons/pi'
 import { BsArrowRightCircle } from 'react-icons/bs'
 import { useDispatch, useSelector } from 'react-redux'
@@ -13,17 +13,24 @@ export default function Profile() {
 	const navigator = useNavigate()
 	const dispatcher = useDispatch()
 	const SERVER_API_URL = process.env.REACT_APP_SERVER_API_URL
+
+	useEffect(() => {
+		dispatcher(currentPageUpdate('profile'))
+	}, [])
+
 	const handleLogout = () => {
 		axios
 			.get(`${SERVER_API_URL}/member/logout`, { withCredentials: true })
 			.then(response => {
 				console.log('로그아웃 성공')
 				localStorage.clear()
+				dispatcher(currentPageUpdate(''))
 				navigator('/')
 			})
 			.catch(err => {
 				console.log(err)
 				alert('로그아웃에 실패하였습니다.')
+				dispatcher(currentPageUpdate(''))
 				navigator('/')
 			})
 	}

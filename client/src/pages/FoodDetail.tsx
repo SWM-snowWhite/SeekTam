@@ -21,6 +21,7 @@ export type FoodInfoType = {
 	imageUrl: string
 	servingSize: number
 	servingUnit: string
+	liked: boolean
 }
 
 export default function FoodDetail() {
@@ -53,6 +54,7 @@ export default function FoodDetail() {
 		imageUrl: '',
 		servingSize: 0,
 		servingUnit: 'g',
+		liked: false,
 	})
 	const SERVER_API_URL = process.env.REACT_APP_SERVER_API_URL
 	const isInitialMount = React.useRef(true)
@@ -74,6 +76,10 @@ export default function FoodDetail() {
 		}
 	}, [])
 
+	useEffect(() => {
+		setStateLike(foodInfo.liked)
+	}, [foodInfo])
+
 	const fetchFoodDetailByFoodId = async (foodId: number) => {
 		// 초기값일 경우 api 던지지 않음
 		axios
@@ -81,6 +87,7 @@ export default function FoodDetail() {
 				withCredentials: true,
 			})
 			.then(response => {
+				console.log(`response.data : ${JSON.stringify(response.data)}`)
 				setFoodInfo(response.data)
 			})
 			.catch(err =>

@@ -63,7 +63,7 @@ export default function Food({ foodItem }: { foodItem: FoodType }) {
 	}
 	return (
 		<div className='rounded-md shadow-md w-190 h-270 border-1 border-g100'>
-			<div className='flex flex-col items-center justify-center p-4 bg-white rounded-lg shadow-md'>
+			<div className='flex flex-col items-center justify-center p-10 bg-white rounded-lg shadow-md'>
 				<img
 					src={foodItem.imageUrl ? foodItem.imageUrl : DEFAULT_IMAGE}
 					alt={foodItem.foodName}
@@ -86,7 +86,7 @@ export default function Food({ foodItem }: { foodItem: FoodType }) {
 							비교함
 						</span>
 					</div>
-					<div className='flex items-center justify-center m-auto my-5 rounded-lg bg-g100'>
+					{/* <div className='flex items-center justify-center m-auto my-5 rounded-lg bg-g100'>
 						{stateLike ? (
 							<AiFillHeart
 								onClick={handleUnLikeFood}
@@ -100,7 +100,7 @@ export default function Food({ foodItem }: { foodItem: FoodType }) {
 								size={22}
 							></AiOutlineHeart>
 						)}
-					</div>
+					</div> */}
 				</div>
 			</div>
 		</div>
