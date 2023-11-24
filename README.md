@@ -1,7 +1,7 @@
 # SeekTam
 
 - 소프트웨어 마에스트로 14기 순백팀 프로젝트
-- 11월 중 배포 예정
+- 11월 배포 완료
 
 ### ✅ 개요
 
@@ -9,17 +9,16 @@
 
 ### ✅ 사용 기술 및 개발 환경
 
-- `Server`: Java(11), Spring Boot(2.7.14), Elasticsearch(8.1), Redis(6.2)
+- `Server`: Java(11), Spring Boot(2.7.14), Elasticsearch(7.17), Redis(6.2)
 - `Client`: React(18.2), TailwindCSS
-- `DevOps`: MySQL(8.0.33), AWS EC2, S3, Codedeploy, Route53, Cloudfront
+- `DevOps`: MySQL(8.0.33), AWS EC2, S3, Codedeploy, Route53, Cloudfront, Github Actions
 
 ### ✅ Architecture
 
-![image](https://github.com/SWM-snowWhite/SeekTam/assets/91880235/d651f3c2-5ea3-4267-ab9d-c52223f1ea5d)
-![image](https://github.com/SWM-snowWhite/SeekTam/assets/91880235/8d458609-c13f-4dec-8a51-c3ba586ac69c)
-![image](https://github.com/SWM-snowWhite/SeekTam/assets/91880235/ac495f42-3021-4edc-87af-814b1e20f41d)
-![image](https://github.com/SWM-snowWhite/SeekTam/assets/91880235/6bdb3c88-4fda-4c96-8dd7-b61664c26aa8)
-![image](https://github.com/SWM-snowWhite/SeekTam/assets/91880235/9ef7cbe2-0f8a-4c73-8fd9-a524750ce835)
+![image](https://github.com/SWM-snowWhite/SeekTam/assets/108510951/75220ab3-873a-4f7b-9fb9-161171f4714c)
+![image](https://github.com/SWM-snowWhite/SeekTam/assets/108510951/ba6b16f1-7339-4dc1-83e5-e82f7139a8fb)
+![image](https://github.com/SWM-snowWhite/SeekTam/assets/108510951/d48cd585-3e3f-46d6-a70e-ac5156f081f1)
+![image](https://github.com/SWM-snowWhite/SeekTam/assets/108510951/027c10da-8a93-4ceb-af23-459c492b8191)
 
 ### ✅ ERD
 
