@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
@@ -85,10 +86,11 @@ public class ProductKeywordDao {
     private SearchResponse getResponse(SearchRequest searchRequest) {
         // ES 요청 후 결과를 담을 객체 생성
         SearchResponse searchResponse = null;
+        RestHighLevelClient client = elasticsearchConfig.client();
         try {
             // ES 요청 후 결과를 저장
-            searchResponse = elasticsearchConfig.client().search(searchRequest, RequestOptions.DEFAULT);
-            System.out.println("searchResponse = " + searchResponse);
+            searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+            client.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

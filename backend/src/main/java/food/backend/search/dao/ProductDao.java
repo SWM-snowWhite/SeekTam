@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.RangeQueryBuilder;
@@ -158,8 +159,10 @@ public class ProductDao {
      */
     private SearchResponse getResponse(SearchRequest searchRequest) {
         SearchResponse searchResponse = null;
+        RestHighLevelClient client = elasticsearchConfig.client();
         try {
-            searchResponse = elasticsearchConfig.client().search(searchRequest, RequestOptions.DEFAULT);
+            searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+            client.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
