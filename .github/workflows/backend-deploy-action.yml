@@ -75,4 +75,4 @@ jobs:
             docker rm backend
             docker image rm $(docker images -q)
             docker pull seektam/backend
-            nohup docker run -d --name backend -p 8080:8080 seektam/backend
+            nohup docker run -d --name backend -p 8080:8080 seektam/backend &
