@@ -63,6 +63,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
+          file: ./backend/Dockerfile
           push: true
           tags: seektam/backend:latest
           platforms: |
