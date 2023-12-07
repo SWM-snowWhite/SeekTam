@@ -6,12 +6,6 @@ on:
     paths:
       - 'backend/**'
 
-env:
-  S3_BUCKET_NAME: seektam-backend-deploy
-  AWS_REGION: ap-northeast-2
-  CODEDEPLOY_NAME: seektam-backend-deploy
-  CODEDEPLOY_GROUP: seektam-backend-deploy-group
-
 permissions:
   contents: read
 
@@ -47,19 +41,19 @@ jobs:
       - name: backend 프로젝트 빌드
         run: ./gradlew build
 
-      - name: Set up QEMU
+      - name: Set up QEMU(멀티 플랫폼 이미지 빌드를 위한 buildx 설치과정 1/2)
         uses: docker/setup-qemu-action@v2
 
-      - name: Set up Docker Buildx
+      - name: Set up Docker Buildx(멀티 플랫폼 이미지 빌드를 위한 buildx 설치과정 2/2)
         uses: docker/setup-buildx-action@v2
 
-      - name: Login to Docker hub
+      - name: Dockerhub 로그인
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_ID }}
           password: ${{ secrets.DOCKER_PW }}
 
-      - name: Build and push
+      - name: arm64, amd64 아키텍쳐에서 구동 가능한 멀티 플랫폼 이미지 빌드 및 private repository로 push
         uses: docker/build-push-action@v4
         with:
           context: .
@@ -70,7 +64,7 @@ jobs:
             linux/amd64
             linux/arm64
 
-      - name: Deploy
+      - name: backend ec2 instance에 접근해 배포 스크립트 실행
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.BACKEND_EC2_HOST }}
