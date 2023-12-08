@@ -71,8 +71,8 @@ jobs:
           username: ${{ secrets.BACKEND_EC2_USERNAME }}
           key: ${{ secrets.BACKEND_EC2_PRIVATE_KEY }}
           script: |
-            docker stop backend
-            docker rm backend
-            docker image rm $(docker images -q)
-            docker pull seektam/backend
-            docker run -d --name backend -p 8080:8080 seektam/backend
+            sudo docker stop backend
+            sudo docker rm backend
+            sudo docker image rm $(docker images -q)
+            sudo docker pull seektam/backend
+            sudo docker run -d --name backend -p 8080:8080 seektam/backend
