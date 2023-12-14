@@ -52,7 +52,7 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_GITHUB_ACCESS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_GITHUB_SECRET_ACCESS_KEY }}
         run: |
-          aws s3 sync --delete --region ap-northeast-2 ./build s3://seektam-deploy
+          aws s3 sync --delete --region ap-northeast-2 ./build s3://seektam-client
 
       - name: CDN_INVALIDATE
         working-directory: ./client
