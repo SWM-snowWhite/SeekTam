@@ -93,7 +93,6 @@ export default function Search() {
 	const [selectedKeyword, setSelectedKeyword] = useState('')
 	const [focusedFoodIdx, setFocusedFoodIdx] = useState<number>(-1)
 	const [selectedFoodId, setSelectedFoodId] = useState<number>(-1)
-	const [viewComparison, setViewComparison] = useState(false)
 	const { searchConditions } = useSelector(
 		(state: RootState) => state.searchInfo,
 	)
@@ -320,7 +319,7 @@ export default function Search() {
 	}
 
 	const handleComparisonView = () => {
-		setViewComparison(!viewComparison)
+		navigator('/comparison')
 	}
 
 	return (
@@ -339,7 +338,6 @@ export default function Search() {
 				clearKeyword={clearKeyword}
 				fetchOptionKeywordSearch={fetchOptionKeywordSearch}
 			/>
-			<SearchOptionBar searchOptionList={searchOptionList} />
 			{relatedFoodList.length > 0 && (
 				<KeywordComponent
 					relatedFoodList={relatedFoodList}
@@ -348,6 +346,7 @@ export default function Search() {
 					focusedFoodIdx={focusedFoodIdx}
 				/>
 			)}
+			<SearchOptionBar searchOptionList={searchOptionList} />
 			{selectedFoodId !== -1 && (
 				<InfoModal
 					selectedFoodId={selectedFoodId}
