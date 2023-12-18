@@ -60,4 +60,10 @@ public class MemberController {
             return ResponseEntity.ok("로그아웃 실패");
         }
     }
+
+    @GetMapping("/withdrawal")
+    public ResponseEntity<String> logout(@Authenticated MemberDto memberDto) {
+        memberService.withdrawal(memberDto.getEmail());
+        return ResponseEntity.ok("회원탈퇴 성공");
+    }
 }

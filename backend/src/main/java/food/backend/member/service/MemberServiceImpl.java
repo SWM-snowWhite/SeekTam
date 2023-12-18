@@ -3,6 +3,7 @@ package food.backend.member.service;
 import food.backend.member.Member;
 import food.backend.member.MemberRepository;
 import food.backend.member.dao.LikeDao;
+import food.backend.member.dao.MemberDao;
 import food.backend.member.dto.SignupRequestDto;
 import food.backend.member.request.LikeRequest;
 import food.backend.member.request.MemberDto;
@@ -23,6 +24,7 @@ import java.util.Optional;
 public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
     private final LikeDao likeDao;
+    private final MemberDao memberDao;
     public Member signup(SignupRequestDto signupRequestDto) {
         Member savedMember = memberRepository.save(signupRequestDto.toEntity());
         log.info("savedMember" + savedMember.toString());
@@ -74,5 +76,10 @@ public class MemberServiceImpl implements MemberService {
         } else {
             return false;
         }
+    }
+
+    public void withdrawal(String email) {
+        log.info("email: " + email);
+        memberDao.withdrawalByEmail(email);
     }
 }

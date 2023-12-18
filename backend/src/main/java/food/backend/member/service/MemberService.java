@@ -26,4 +26,6 @@ public interface MemberService {
     boolean checkLike(LikeRequest likeRequest, MemberDto memberDto);
 
     boolean logout(MemberDto memberDto, HttpServletRequest request, HttpServletResponse response);
+
+    void withdrawal(String email);
 }

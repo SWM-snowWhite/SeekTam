@@ -96,7 +96,7 @@ public class FoodDetailDao {
                 FoodRankingResponseDto.builder()
                         .foodId(rs.getLong("food_id"))
                         .foodName(rs.getString("food_name"))
-                        .calorie(rs.getInt("calories"))
+                        .calorie(rs.getInt("calorie"))
                         .ranking(rs.getInt("ranking"))
                         .liked(rs.getBoolean("liked"))
                         .build();

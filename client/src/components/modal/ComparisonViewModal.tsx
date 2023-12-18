@@ -32,6 +32,7 @@ export default function ComparisonViewModal({
 				}),
 			)
 			setComparisonInfo(newComparisonInfo)
+			console.log(JSON.stringify(comparisonInfo))
 		} catch (error) {
 			console.log('Error fetching ComparisonFood info:', error)
 		}
