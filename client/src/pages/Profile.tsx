@@ -34,6 +34,23 @@ export default function Profile() {
 				navigator('/')
 			})
 	}
+
+	const handleWithdrawal = () => {
+		axios
+			.get(`${SERVER_API_URL}/member/withdrawal`, {
+				withCredentials: true,
+			})
+			.then(response => {
+				console.log('회원탈퇴 성공')
+				localStorage.clear()
+				navigator('/')
+			})
+			.catch(err => {
+				console.log(err)
+				alert('회원탈퇴에 실패하였습니다.')
+				navigator('/')
+			})
+	}
 	return (
 		<div className='absolute h-full m-0 bg-white w-500'>
 			<Navigator title='내 정보' />
@@ -100,7 +117,11 @@ export default function Profile() {
 				<div className='text-16 text-g900 flex w-[90%] bg-blue justify-between mb-24'>
 					<span className='font-medium'>회원탈퇴</span>
 					<BsArrowRightCircle
+<<<<<<< HEAD
 						onClick={() => alert('서비스 준비 중입니다.')}
+=======
+						onClick={handleWithdrawal}
+>>>>>>> 6ae5cca (feat: 회원탈퇴 화면 기능 적용)
 						className='cursor-pointer text-g400'
 						size={24}
 					/>

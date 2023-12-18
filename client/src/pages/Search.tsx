@@ -340,6 +340,14 @@ export default function Search() {
 				fetchOptionKeywordSearch={fetchOptionKeywordSearch}
 			/>
 			<SearchOptionBar searchOptionList={searchOptionList} />
+			{relatedFoodList.length > 0 && (
+				<KeywordComponent
+					relatedFoodList={relatedFoodList}
+					keyword={keyword}
+					fetchOptionKeywordSearch={fetchOptionKeywordSearch}
+					focusedFoodIdx={focusedFoodIdx}
+				/>
+			)}
 			{selectedFoodId !== -1 && (
 				<InfoModal
 					selectedFoodId={selectedFoodId}
@@ -349,14 +357,7 @@ export default function Search() {
 			{comparisonFood.length > 0 && (
 				<ComparisonModal handleComparisonView={handleComparisonView} />
 			)}
-			{relatedFoodList.length > 0 && (
-				<KeywordComponent
-					relatedFoodList={relatedFoodList}
-					keyword={keyword}
-					fetchOptionKeywordSearch={fetchOptionKeywordSearch}
-					focusedFoodIdx={focusedFoodIdx}
-				/>
-			)}
+
 			<FoodList
 				foodList={foodList}
 				selectedKeyword={selectedKeyword}

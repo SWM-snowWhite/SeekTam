@@ -13,7 +13,7 @@ import Search from './pages/Search'
 import Main from './pages/Main'
 import storage from 'redux-persist/lib/storage'
 import { combineReducers } from 'redux'
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
+import { configureStore } from '@reduxjs/toolkit'
 
 import { CurrentPageType } from './store/CurrentPageSlice'
 import { UserInfo } from './store/UserInfoSlice'
